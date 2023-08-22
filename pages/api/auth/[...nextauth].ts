@@ -13,8 +13,8 @@ const options: AuthOptions = {
       clientSecret: process.env.GITHUB_SECRET || "",
     }),
   ],
-  /*   adapter: PrismaAdapter(prisma),
-  secret: process.env.NEXTAUTH_SECRET, */
+  adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default authHandler;
