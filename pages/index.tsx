@@ -1,20 +1,13 @@
+import prisma from "../lib/prisma";
 import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
 import Post, { PostProps } from "../components/Post";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = [
-    {
-      id: "1",
-      title: "My first blog post",
-      content: "This is my very first blog post.",
-      published: false,
-      author: {
-        name: "Zeno Rocha",
-        email: "paradox@apostle.y",
-      },
-    },
-  ];
+  const feed = await prisma.post.findMany({
+    where: { published: true },
+    include: { author: { select: { name: true } } },
+  });
   return {
     props: { feed },
     revalidate: 10,
