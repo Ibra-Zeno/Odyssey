@@ -17,11 +17,14 @@ export default async function handle(req, res) {
   });
   res.json(result);
 } */
-
+import { NextApiRequest, NextApiResponse } from "next/types";
 import { getSession } from "next-auth/react";
 import prisma from "../../../lib/prisma";
 
-export default async function handle(req, res) {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     // Input validation
     const { title, content } = req.body;
@@ -36,11 +39,12 @@ export default async function handle(req, res) {
     }
 
     // Create post
+    const userEmail = session?.user?.email || "";
     const result = await prisma.post.create({
       data: {
         title: title,
         content: content || null,
-        author: { connect: { email: session.user.email } },
+        author: { connect: { email: userEmail } },
       },
     });
 
