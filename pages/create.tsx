@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Layout from "../components/Layout";
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const router = useRouter();
+  const { data: session } = useSession();
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const body = { title, content };
     console.log(body);
     console.log(JSON.stringify(body));
-    const session = await getSession();
     console.log(session);
 
     try {
@@ -21,6 +21,7 @@ const Draft: React.FC = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
+        credentials: "include",
       });
 
       // Assuming the response indicates success (e.g., a status code 201)

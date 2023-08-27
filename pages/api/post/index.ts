@@ -1,30 +1,8 @@
-/* import { getSession } from "next-auth/react";
 import prisma from "../../../lib/prisma";
+import { getServerSession } from "next-auth/next";
+import { options } from "../auth/[...nextauth]";
 
-// POST /api/post
-// Required fields in body: title
-// Optional fields in body: content
 export default async function handle(req, res) {
-  const { title, content } = req.body;
-
-  const session = await getSession({ req });
-  const result = await prisma.post.create({
-    data: {
-      title: title,
-      content: content,
-      author: { connect: { email: session?.user?.email } },
-    },
-  });
-  res.json(result);
-} */
-import { NextApiRequest, NextApiResponse } from "next/types";
-import { getSession } from "next-auth/react";
-import prisma from "../../../lib/prisma";
-
-export default async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
   try {
     // Input validation
     const { title, content } = req.body;
@@ -32,19 +10,31 @@ export default async function handle(
       return res.status(400).json({ error: "Title is required." });
     }
 
-    // Authentication
-    const session = await getSession({ req });
-    if (!session) {
-      return res.status(401).json({ error: "You are not authorized." });
+    // Get cookies from the request
+    const cookies = req.headers.cookie;
+
+    const session = await getServerSession(req, res, options);
+    // console.log(session);
+
+    if (!session || !session.user || !session.user.email) {
+      return res.status(401).json({ error: "User not authenticated." });
     }
 
-    // Create post
-    const userEmail = session?.user?.email || "";
+    // Find the user by email
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    // Create post using the user's ID
     const result = await prisma.post.create({
       data: {
         title: title,
         content: content || null,
-        author: { connect: { email: userEmail } },
+        authorId: user.id,
       },
     });
 
