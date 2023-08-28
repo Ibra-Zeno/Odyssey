@@ -10,11 +10,8 @@ export default async function handle(req, res) {
       return res.status(400).json({ error: "Title is required." });
     }
 
-    // Get cookies from the request
-    const cookies = req.headers.cookie;
-
+    // Get user session from server-side
     const session = await getServerSession(req, res, options);
-    // console.log(session);
 
     if (!session || !session.user || !session.user.email) {
       return res.status(401).json({ error: "User not authenticated." });

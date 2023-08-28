@@ -1,20 +1,16 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import Layout from "../components/Layout";
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const router = useRouter();
-  const { data: session } = useSession();
 
+  // Send a POST request to the API to create a new draft
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const body = { title, content };
-    console.log(body);
-    console.log(JSON.stringify(body));
-    console.log(session);
 
     try {
       const response = await fetch("/api/post", {

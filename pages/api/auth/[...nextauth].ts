@@ -51,22 +51,6 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET || "",
     }),
   ],
-  callbacks: {
-    async session({ session, user, token }) {
-      console.log("Session callback triggered!");
-      console.log("User:", user);
-      console.log("Token:", token);
-      return session;
-    },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      console.log("JWT callback triggered!");
-      console.log("User:", user);
-      console.log("Account:", account);
-      console.log("Profile:", profile);
-      console.log("Token: ", token);
-      return token;
-    },
-  },
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
 };
