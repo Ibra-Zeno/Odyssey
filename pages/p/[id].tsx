@@ -70,6 +70,10 @@ const Post: React.FC<PostProps> = (props) => {
     router.push("/");
   }
 
+  async function editPost(id: string): Promise<void> {
+    router.push(`/edit/${props.id}`);
+  }
+
   return (
     <Layout>
       <div className="page">
@@ -87,12 +91,20 @@ const Post: React.FC<PostProps> = (props) => {
           </button>
         )}
         {userHasValidSession && postBelongsToUser && (
-          <button
-            onClick={() => deletePost(props.id)}
-            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4 ml-4"
-          >
-            Delete
-          </button>
+          <>
+            <button
+              onClick={() => editPost(props.id)}
+              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mt-4"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => deletePost(props.id)}
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4 ml-4"
+            >
+              Delete
+            </button>
+          </>
         )}
       </div>
     </Layout>

@@ -8,6 +8,12 @@ export default async function handle(req, res) {
       where: { id: postId },
     });
     res.json(post);
+  } else if (req.method === "GET") {
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+      include: { author: true },
+    });
+    res.json(post);
   } else {
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`
