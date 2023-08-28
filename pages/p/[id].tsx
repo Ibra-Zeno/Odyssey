@@ -1,4 +1,6 @@
 import prisma from "../../lib/prisma";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import Layout from "../../components/Layout";
 import { PostProps } from "../../components/Post";
@@ -18,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       },
       include: {
         author: {
-          select: { name: true },
+          select: { name: true, email: true },
         },
       },
     });
@@ -42,16 +44,56 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 };
 
-const Post: React.FC<PostProps> = ({ title, author, content, published }) => {
-  const displayTitle = published ? title : `${title} (Draft)`;
-  const authorName = author?.name || "Unknown author";
+const Post: React.FC<PostProps> = (props) => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  if (status === "loading") {
+    return <div>Authenticating...</div>;
+  }
+
+  const userHasValidSession = Boolean(session);
+  const postBelongsToUser = session?.user?.email === props.author?.email;
+  const title = !props.published ? `${props.title} (Draft)` : props.title;
+
+  const publishPost = async (id: string) => {
+    await fetch(`/api/publish/${id}`, {
+      method: "PUT",
+    });
+    await router.push("/");
+  };
+
+  async function deletePost(id: string): Promise<void> {
+    await fetch(`/api/post/${id}`, {
+      method: "DELETE",
+    });
+    router.push("/");
+  }
 
   return (
     <Layout>
-      <div className="bg-white p-8">
-        <h2 className="text-xl font-bold">{displayTitle}</h2>
-        <p className="text-gray-600">By {authorName}</p>
-        <ReactMarkdown className="prose">{content}</ReactMarkdown>
+      <div className="page">
+        <h2 className="text-2xl font-bold mb-4">{title}</h2>
+        <p className="text-sm mb-4">
+          By {props?.author?.name || "Unknown author"}
+        </p>
+        <ReactMarkdown>{props.content}</ReactMarkdown>
+        {!props.published && userHasValidSession && postBelongsToUser && (
+          <button
+            onClick={() => publishPost(props.id)}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4"
+          >
+            Publish
+          </button>
+        )}
+        {userHasValidSession && postBelongsToUser && (
+          <button
+            onClick={() => deletePost(props.id)}
+            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4 ml-4"
+          >
+            Delete
+          </button>
+        )}
       </div>
     </Layout>
   );
