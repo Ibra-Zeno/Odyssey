@@ -2,7 +2,7 @@ import prisma from "../../../lib/prisma";
 
 export default async function handle(req, res) {
   try {
-    const postId = req.query.postId;
+    const postId = req.query.id;
 
     const comments = await prisma.comment.findMany({
       where: {

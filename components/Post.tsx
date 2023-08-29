@@ -5,11 +5,35 @@ export type PostProps = {
   id: string;
   title: string;
   author: {
+    id: string;
     name: string;
     email: string;
   } | null;
   content: string;
   published: boolean;
+  comments: CommentProps[];
+  likes: LikeProps[];
+};
+
+export type CommentProps = {
+  id: string;
+  content: string;
+  createdAt: string; // You might want to format this as needed
+  author: {
+    id: string;
+    name: string;
+    email: string;
+  } | null;
+};
+
+export type LikeProps = {
+  id: string;
+  createdAt: string; // You might want to format this as needed
+  author: {
+    id: string;
+    name: string;
+    email: string;
+  };
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {

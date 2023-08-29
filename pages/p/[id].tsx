@@ -83,8 +83,6 @@ const Post: React.FC<PostProps> = (props) => {
           By {props?.author?.name || "Unknown author"}
         </p>
         <div dangerouslySetInnerHTML={{ __html: props.content }} />
-        <Like postId={props.id} />
-        <Comment postId={props.id} />
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button
             onClick={() => publishPost(props.id)}
@@ -107,6 +105,12 @@ const Post: React.FC<PostProps> = (props) => {
             >
               Delete
             </button>
+          </>
+        )}
+        {props.published && (
+          <>
+            <Like postId={props.id} />
+            <Comment postId={props.id} />
           </>
         )}
       </div>

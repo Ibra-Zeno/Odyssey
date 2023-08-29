@@ -66,13 +66,13 @@ const Like: React.FC<{ postId: string }> = ({ postId }) => {
       <p>
         {likesCount} {likesCount === 1 ? "like" : "likes"}
       </p>
-      {session ? (
+      {/*       {session ? (
         <p className="ml-10">
           {liked ? "You liked this post" : "Like this post"}
         </p>
       ) : (
         <p>Please sign in to like this post.</p>
-      )}
+      )} */}
     </div>
   );
 };
