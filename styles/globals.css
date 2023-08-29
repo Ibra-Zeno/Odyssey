@@ -30,3 +30,15 @@ textarea {
 button {
   cursor: pointer;
 }
+
+h1 {
+  @apply text-2xl font-bold;
+}
+
+h2 {
+  @apply text-xl font-bold;
+}
+
+.ql-syntax {
+  @apply bg-gray-700 text-gray-50 border border-gray-300 rounded p-2;
+}

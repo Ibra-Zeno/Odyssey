@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import QuillEditor from "../../components/QuillEditor";
 import Layout from "../../components/Layout";
 
 const EditPost: React.FC = () => {
@@ -45,15 +46,7 @@ const EditPost: React.FC = () => {
             type="text"
             className="border p-2 mb-4 rounded-md"
           />
-          <textarea
-            value={content}
-            autoFocus
-            cols={50}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Content"
-            rows={8}
-            className="border p-2 rounded-md"
-          />
+          <QuillEditor content={content} setContent={setContent} />
           <button
             type="submit"
             className="bg-gray-300 py-2 px-6 rounded-md mb-4"

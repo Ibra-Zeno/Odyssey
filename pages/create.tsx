@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import QuillEditor from "../components/QuillEditor";
 import Layout from "../components/Layout";
 
 const Draft: React.FC = () => {
@@ -44,14 +45,7 @@ const Draft: React.FC = () => {
             value={title}
             className="border p-2 mb-4 rounded-md"
           />
-          <textarea
-            cols={50}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Content"
-            rows={8}
-            value={content}
-            className="border p-2 rounded-md"
-          />
+          <QuillEditor content={content} setContent={setContent} />
           <button
             type="submit"
             disabled={!content || !title}
@@ -73,7 +67,4 @@ const Draft: React.FC = () => {
 
 export default Draft;
 
-// To do:
-// 1. Implement a RTE
-// 2. Sanitize input when sending to database
 // 3. Add date and locations

@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import Layout from "../../components/Layout";
 import { PostProps } from "../../components/Post";
-import ReactMarkdown from "react-markdown";
+import Comment from "../../components/Comments";
+import Like from "../../components/Like";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params || typeof params.id !== "string") {
@@ -81,7 +82,9 @@ const Post: React.FC<PostProps> = (props) => {
         <p className="text-sm mb-4">
           By {props?.author?.name || "Unknown author"}
         </p>
-        <ReactMarkdown>{props.content}</ReactMarkdown>
+        <div dangerouslySetInnerHTML={{ __html: props.content }} />
+        <Like postId={props.id} />
+        <Comment postId={props.id} />
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button
             onClick={() => publishPost(props.id)}

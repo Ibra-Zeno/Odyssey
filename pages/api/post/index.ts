@@ -1,6 +1,7 @@
 import prisma from "../../../lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { options } from "../auth/[...nextauth]";
+import { sanitizeContent } from "../../../utils/sanitizeUtil";
 
 export default async function handle(req, res) {
   try {
@@ -25,12 +26,12 @@ export default async function handle(req, res) {
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
-
+    const sanitizedContent = sanitizeContent(content);
     // Create post using the user's ID
     const result = await prisma.post.create({
       data: {
         title: title,
-        content: content || null,
+        content: sanitizedContent || null,
         authorId: user.id,
       },
     });
