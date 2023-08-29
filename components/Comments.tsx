@@ -15,7 +15,7 @@ const Comment: React.FC<{ postId: string }> = ({ postId }) => {
       const response = await fetch(`/api/comment/${postId}`);
       const data = await response.json();
       setComments(data);
-      console.log(comments);
+      // console.log(comments);
     } catch (error) {
       console.error("Error fetching comments:", error);
     }

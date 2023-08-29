@@ -19,7 +19,7 @@ const Like: React.FC<{ postId: string }> = ({ postId }) => {
 
       if (session) {
         const userLiked = likes.some(
-          (like) => like.userId === session?.user?.id
+          (like: any) => like.userId === session?.user?.id
         );
         setLiked(userLiked);
       }

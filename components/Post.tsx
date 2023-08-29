@@ -1,5 +1,6 @@
 import Router from "next/router";
 import Like from "./Like";
+import CommentCount from "./CommentCount";
 
 export type PostProps = {
   id: string;
@@ -47,7 +48,12 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       <h2 className="text-xl font-bold">{post.title}</h2>
       <small className="text-gray-800">By {authorName}</small>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
-      <Like postId={post.id} />
+      {post.published && (
+        <div className="flex items-center mt-4">
+          <Like postId={post.id} />
+          <CommentCount postId={post.id} />
+        </div>
+      )}
     </div>
   );
 };
