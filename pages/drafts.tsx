@@ -1,4 +1,4 @@
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 import { options } from "../pages/api/auth/[...nextauth]";
 import Layout from "../components/Layout";

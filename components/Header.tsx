@@ -11,7 +11,6 @@ const Header: React.FC = () => {
 
   const { data: session, status } = useSession();
   const [searchResults, setSearchResults] = useState([]);
-
   const handleSearch = async (query: string) => {
     try {
       const response = await fetch(`/api/search?q=${query}`);
@@ -64,6 +63,17 @@ const Header: React.FC = () => {
         )}
         {session && (
           <>
+            <Link href={`/profile/${session.user?.email}`}>
+              <span
+                className={`font-bold cursor-pointer ${
+                  isActive(`/profile/${session.user?.email}`)
+                    ? "text-gray-500"
+                    : "text-black"
+                }`}
+              >
+                My Profile
+              </span>
+            </Link>
             <p className="text-sm">
               {session.user?.name} ({session.user?.email})
             </p>
