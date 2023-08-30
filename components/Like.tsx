@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 
 const Like: React.FC<{ postId: string }> = ({ postId }) => {
   const { data: session } = useSession();
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [isUpdating, setIsUpdating] = useState(false); // Track whether a like/unlike action is in progress
+
+  /*   async function getStaticProps(context) {
+    const session = await getSession(context);
+    getLikes();
+  }
+  Something to get the likes before a render? */
 
   useEffect(() => {
     getLikes();

@@ -1,8 +1,12 @@
 import { getServerSession } from "next-auth/next";
 import { options } from "../auth/[...nextauth]";
 import prisma from "../../../lib/prisma";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handle(req, res) {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     const { postId } = req.body;
     const session = await getServerSession(req, res, options);

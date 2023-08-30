@@ -1,0 +1,30 @@
+// api/search.ts
+import prisma from "../../lib/prisma";
+
+export default async function handle(req, res) {
+  const { q } = req.query;
+
+  try {
+    if (!q) {
+      return res.status(400).json({ error: "Query parameter is required." });
+    }
+
+    // Sanitize the input to prevent potential SQL injection
+    const sanitizedQuery = q.trim();
+
+    const searchResults = await prisma.post.findMany({
+      where: {
+        OR: [
+          { title: { contains: sanitizedQuery, mode: "insensitive" } },
+          { content: { contains: sanitizedQuery, mode: "insensitive" } },
+        ],
+      },
+      take: 10, // Limit the number of results per page
+    });
+
+    res.status(200).json(searchResults);
+  } catch (error) {
+    console.error("Error searching posts:", error);
+    res.status(500).json({ error: "An error occurred while searching posts." });
+  }
+}
