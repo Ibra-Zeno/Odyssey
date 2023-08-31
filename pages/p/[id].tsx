@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import Layout from "../../components/Layout";
+import Link from "next/link";
 import { PostProps } from "../../components/Post";
 import Comment from "../../components/Comments";
 import Like from "../../components/Like";
@@ -79,9 +80,11 @@ const Post: React.FC<PostProps> = (props) => {
     <Layout>
       <div className="page">
         <h2 className="text-2xl font-bold mb-4">{title}</h2>
-        <p className="text-sm mb-4">
-          By {props?.author?.name || "Unknown author"}
-        </p>
+        <Link href={`/profile/${props.author?.email}`}>
+          <p className="text-sm mb-4 hover:text-red-500">
+            By {props?.author?.name || "Unknown author"}
+          </p>
+        </Link>
         <div dangerouslySetInnerHTML={{ __html: props.content }} />
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button

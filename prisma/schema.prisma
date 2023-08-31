@@ -83,10 +83,9 @@ model Comment {
 }
 
 model Like {
-  id        String   @id @default(cuid())
-  postId    String
-  post      Post     @relation(fields: [postId], references: [id])
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
-  createdAt DateTime @default(now())
+  id       String  @id @default(cuid())
+  postId   String
+  post     Post    @relation(fields: [postId], references: [id])
+  authorId String?
+  author   User?   @relation(fields: [authorId], references: [id])
 }

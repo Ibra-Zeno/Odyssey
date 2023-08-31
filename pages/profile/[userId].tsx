@@ -25,7 +25,19 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             author: {
               select: { name: true, email: true },
             },
+            // Like: true, // Include likes associated with the posts
           },
+        },
+        Like: {
+          include: {
+            post: {
+              include: {
+                author: {
+                  select: { name: true, email: true },
+                },
+              },
+            },
+          }, // Include likes associated with the user
         },
       },
     });
@@ -52,11 +64,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
-  const router = useRouter();
   const [isEditingBio, setIsEditingBio] = useState(false);
   const [editedBio, setEditedBio] = useState(user.bio || "");
+  const [activeTab, setActiveTab] = useState("posts");
   const { data: session } = useSession();
   const isUser = session?.user?.email === user.email;
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+  };
 
   const handleEditClick = () => {
     setIsEditingBio(true);
@@ -66,7 +82,7 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
   const handleBioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEditedBio(event.target.value);
   };
-
+  // Update the user's bio
   const handleBioUpdate = async () => {
     try {
       await fetch(`/api/user/updateBio`, {
@@ -90,6 +106,7 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
         <h2>{user.name}</h2>
         <p>
           <strong>Bio:</strong>{" "}
+          {/* Allow user to edit if it is their profile */}
           {isUser && isEditingBio ? (
             <>
               <input type="text" value={editedBio} onChange={handleBioChange} />
@@ -103,10 +120,48 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
           )}
         </p>
         <div>
-          <h3>Posts by {user.name}</h3>
-          {user.posts.map((post) => (
-            <Post key={post.id} post={post} />
-          ))}
+          <button
+            onClick={() => handleTabChange("posts")}
+            className={`${
+              activeTab === "posts"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-300 text-gray-700"
+            } px-4 py-2 rounded-md transition duration-300 ease-in-out`}
+          >
+            Posts
+          </button>
+          <button
+            onClick={() => handleTabChange("likes")}
+            className={`${
+              activeTab === "likes"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-300 text-gray-700"
+            } px-4 py-2 rounded-md transition duration-300 ease-in-out`}
+          >
+            Likes
+          </button>
+          {activeTab === "posts" && (
+            <>
+              <h3>Posts by {user.name}</h3>
+              {/* Mapping out posts by user */}
+              {user.posts.map((post) => (
+                <Post key={post.id} post={post} />
+              ))}
+            </>
+          )}
+          {activeTab === "likes" && (
+            <>
+              <h3>Likes by {user.name}</h3>
+              {user.Like &&
+                user.Like.map((like) => (
+                  <Post key={like.id} post={like.post} />
+                ))}
+            </>
+          )}
+
+          {/* 
+          // Mapping out the user's likes
+           */}
         </div>
       </div>
     </Layout>

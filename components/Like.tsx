@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSession, getSession } from "next-auth/react";
 
+// get serverSideProps for likes before render to show red or nah
+
 const Like: React.FC<{ postId: string }> = ({ postId }) => {
   const { data: session } = useSession();
   const [liked, setLiked] = useState(false);
@@ -15,7 +17,7 @@ const Like: React.FC<{ postId: string }> = ({ postId }) => {
 
   useEffect(() => {
     getLikes();
-  }, []);
+  }, [liked]);
 
   const getLikes = async () => {
     try {
@@ -25,7 +27,7 @@ const Like: React.FC<{ postId: string }> = ({ postId }) => {
 
       if (session) {
         const userLiked = likes.some(
-          (like: any) => like.userId === session?.user?.id
+          (like: any) => like.author.email === session?.user?.email
         );
         setLiked(userLiked);
       }

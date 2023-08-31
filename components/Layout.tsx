@@ -7,7 +7,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="font-sans bg-gray-100">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-yellow-100 via-yellow-50 to-gray-100">
       <Header />
       <div className="container mx-auto p-8">{children}</div>
     </div>
