@@ -55,7 +55,7 @@ const EditPost: React.FC = () => {
           </button>
           <a
             className="text-blue-500 hover:underline cursor-pointer ml-4"
-            onClick={() => router.push("/")}
+            onClick={() => router.push(`/p/${router.query.id}`)}
           >
             or Cancel
           </a>

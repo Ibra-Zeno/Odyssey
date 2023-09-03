@@ -1,25 +1,14 @@
 import Link from "next/link";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import SearchBar from "./SearchBar";
-import SearchResults from "./SearchResults";
+// import SearchBar from "./SearchBar";
+import SearchBar from "./Search";
 
 const Header: React.FC = () => {
   const router = useRouter();
   const isActive = (pathname: string) => router.pathname === pathname;
 
   const { data: session, status } = useSession();
-  const [searchResults, setSearchResults] = useState([]);
-  const handleSearch = async (query: string) => {
-    try {
-      const response = await fetch(`/api/search?q=${query}`);
-      const results = await response.json();
-      setSearchResults(results);
-    } catch (error) {
-      console.error("Error searching:", error);
-    }
-  };
 
   const leftLinks = [
     { label: "Feed", href: "/", alwaysShow: true },
@@ -46,8 +35,7 @@ const Header: React.FC = () => {
           return null;
         })}
       </div>
-      <SearchBar onSearch={handleSearch} />
-      {searchResults.length > 0 && <SearchResults results={searchResults} />}
+      <SearchBar />
       <div className="flex ml-auto space-x-4">
         {status === "loading" && <p>Validating session ...</p>}
         {!session && (
