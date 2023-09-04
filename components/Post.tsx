@@ -46,7 +46,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   };
 
   return (
-    <div className="text-black p-8">
+    <div className="p-8 text-black">
       <h2 className="text-xl font-bold" onClick={handlePostClick}>
         {post.title}
       </h2>
@@ -62,11 +62,12 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </small>
       </Link>
       <div
+        className="max-h-16 overflow-y-hidden"
         dangerouslySetInnerHTML={{ __html: post.content }}
         onClick={handlePostClick}
       />
       {post.published && (
-        <div className="flex items-center mt-4">
+        <div className="mt-4 flex items-center">
           <Like postId={post.id} />
           <CommentCount postId={post.id} />
         </div>

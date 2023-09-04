@@ -51,18 +51,18 @@ const Comment: React.FC<{ postId: string }> = ({ postId }) => {
 
   return (
     <div className="my-4">
-      <h3 className="text-lg font-semibold mb-2">Comments</h3>
+      <h3 className="mb-2 text-lg font-semibold">Comments</h3>
       {session ? (
         <div className="mb-4">
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Add a comment..."
-            className="w-full p-2 border rounded"
+            className="w-full rounded border p-2"
           />
           <button
             onClick={submitComment}
-            className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            className="mt-2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
           >
             Submit
           </button>
@@ -73,13 +73,13 @@ const Comment: React.FC<{ postId: string }> = ({ postId }) => {
       <div className="mt-4">
         {comments.length > 0 ? (
           comments.map((comment: any) => (
-            <div key={comment.id} className="border p-2 mb-2 relative">
+            <div key={comment.id} className="relative mb-2 border p-2">
               <p>{comment.content}</p>
               {comment.author && <small>By {comment.author.name}</small>}
               {session?.user?.email === comment.author?.email && (
                 <button
                   onClick={() => handleDeleteClick(comment.id)}
-                  className="text-red-500 absolute right-10 top-6 hover:underline cursor-pointer ml-4"
+                  className="absolute right-10 top-6 ml-4 cursor-pointer text-red-500 hover:underline"
                 >
                   Delete
                 </button>

@@ -28,7 +28,7 @@ const QuillEditor: FC<QuillEditorProps> = ({ content, setContent }) => {
       value={content}
       onChange={setContent}
       modules={modules}
-      className="border p-2 rounded-md mb-4"
+      className="mb-4 rounded-md border p-2"
     />
   );
 };

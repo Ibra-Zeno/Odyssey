@@ -27,7 +27,7 @@ const Like: React.FC<{ postId: string }> = ({ postId }) => {
 
       if (session) {
         const userLiked = likes.some(
-          (like: any) => like.author.email === session?.user?.email
+          (like: any) => like.author.email === session?.user?.email,
         );
         setLiked(userLiked);
       }
@@ -62,7 +62,7 @@ const Like: React.FC<{ postId: string }> = ({ postId }) => {
   };
 
   return (
-    <div className="flex items-center mt-4">
+    <div className="mt-4 flex items-center">
       <button
         onClick={toggleLike}
         className={`mr-2 ${liked ? "text-red-500" : "text-gray-500"} ${

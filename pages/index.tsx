@@ -27,7 +27,7 @@ const Blog: React.FC<BlogProps> = ({ feed }) => {
           {feed.map((post) => (
             <div
               key={post.id}
-              className="post bg-white transition-shadow hover:shadow-md mt-8"
+              className="post mt-8 bg-white transition-shadow hover:shadow-md"
             >
               <Post post={post} />
             </div>

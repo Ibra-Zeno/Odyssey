@@ -36,7 +36,7 @@ export default function Drafts({ drafts }) {
   if (!session) {
     return (
       <Layout>
-        <h1 className="text-2xl font-bold mb-4">My Drafts</h1>
+        <h1 className="mb-4 text-2xl font-bold">My Drafts</h1>
         <div>Have you signed in?</div>
       </Layout>
     );
@@ -45,7 +45,7 @@ export default function Drafts({ drafts }) {
   return (
     <Layout>
       <div className="page">
-        <h1 className="text-2xl font-bold mb-4">My Drafts</h1>
+        <h1 className="mb-4 text-2xl font-bold">My Drafts</h1>
         <main>
           {drafts.map((post) => (
             <div key={post.id} className="post">

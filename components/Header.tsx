@@ -1,7 +1,15 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/react";
-// import SearchBar from "./SearchBar";
+import { useSession } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Newspaper, PenSquare, LogIn, FilePlus } from "lucide-react";
 import SearchBar from "./Search";
 
 const Header: React.FC = () => {
@@ -10,72 +18,117 @@ const Header: React.FC = () => {
 
   const { data: session, status } = useSession();
 
-  const leftLinks = [
-    { label: "Feed", href: "/", alwaysShow: true },
-    { label: "My drafts", href: "/drafts", showWhenSessionExists: true },
-  ];
+  // Get the initials of user from session
+  function getInitials(name: string): string {
+    const words = name.split(" ");
+    const initials = words.map((word) => word.charAt(0).toUpperCase()).join("");
+    return initials;
+  }
+
+  const nameInitials = getInitials(session?.user?.name || "");
+  const userName = session?.user?.name || undefined;
+  const avatarImage = session?.user?.image || undefined;
 
   return (
-    <nav className="flex p-5 items-center">
+    <nav className="relative flex w-full items-center justify-between space-x-0 rounded-sm bg-slate-800 p-3 px-4 text-gray-300">
       <div className="flex space-x-4">
-        {leftLinks.map((link) => {
-          if (link.alwaysShow || (link.showWhenSessionExists && session)) {
-            return (
-              <Link key={link.href} href={link.href}>
-                <span
-                  className={`font-bold cursor-pointer ${
-                    isActive(link.href) ? "text-gray-500" : "text-black"
-                  }`}
-                >
-                  {link.label}
-                </span>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Link
+                href="/"
+                className="pointer animate flex rounded-md border-gray-400 border-opacity-30 bg-transparent p-2 duration-300 ease-in-out hover:bg-slate-900 hover:shadow-2xl hover:shadow-gray-400"
+              >
+                <Newspaper />
               </Link>
-            );
-          }
-          return null;
-        })}
+            </TooltipTrigger>
+            <TooltipContent className="-translate-x-2">Feed</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        {session && (
+          <>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link
+                    href="/drafts"
+                    className="pointer animate flex rounded-md border-gray-400 border-opacity-30 bg-transparent p-2 duration-300 ease-in-out hover:bg-slate-900 hover:shadow-2xl hover:shadow-gray-400"
+                  >
+                    <PenSquare />
+                  </Link>
+                </TooltipTrigger>
+
+                <TooltipContent className="-translate-x-4">
+                  Drafts
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link
+                    href="/create"
+                    className="pointer animate flex rounded-md border-gray-400 border-opacity-30 bg-transparent p-2 duration-300 ease-in-out hover:bg-slate-900 hover:shadow-2xl hover:shadow-gray-400"
+                  >
+                    <FilePlus />
+                  </Link>
+                </TooltipTrigger>
+
+                <TooltipContent className="-translate-x-4">
+                  Create
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </>
+        )}
       </div>
-      <SearchBar />
-      <div className="flex ml-auto space-x-4">
-        {status === "loading" && <p>Validating session ...</p>}
-        {!session && (
-          <Link href="/api/auth/signin">
-            <span
-              className={`cursor-pointer border border-gray-500 px-2 py-1 rounded ${
-                isActive("/signup") ? "text-gray-500" : "text-black"
-              }`}
-            >
-              Log in
-            </span>
-          </Link>
+      <div className="flex items-center space-x-4">
+        <SearchBar />
+      </div>
+      <div className="ml-auto flex space-x-4">
+        {status === "loading" && (
+          <Skeleton className="h-10 w-10 rounded-full" />
+        )}
+        {status === "unauthenticated" && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Link
+                  href="/api/auth/signin"
+                  className="pointer animate flex rounded-md border-gray-400 border-opacity-30 bg-transparent p-2 duration-300 ease-in-out hover:bg-slate-900 hover:shadow-2xl hover:shadow-gray-400"
+                >
+                  <LogIn />
+                </Link>
+              </TooltipTrigger>
+
+              <TooltipContent className="-translate-x-6">Log in</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
         {session && (
           <>
-            <Link href={`/profile/${session.user?.email}`}>
-              <span
-                className={`font-bold cursor-pointer ${
-                  isActive(`/profile/${session.user?.email}`)
-                    ? "text-gray-500"
-                    : "text-black"
-                }`}
-              >
-                My Profile
-              </span>
-            </Link>
-            <p className="text-sm">
-              {session.user?.name} ({session.user?.email})
-            </p>
-            <Link href="/create">
-              <button className="border-none bg-blue-500 text-white px-3 py-1 rounded">
-                New post
-              </button>
-            </Link>
-            <button
-              onClick={() => signOut()}
-              className="border-none bg-red-500 text-white px-3 py-1 rounded"
-            >
-              Log out
-            </button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link href={`/profile/${session.user?.email}`}>
+                    <Avatar>
+                      <AvatarImage
+                        src={avatarImage}
+                        alt={userName}
+                        className="h-10 w-10"
+                      />
+                      <AvatarFallback className="h-10 w-10">
+                        {nameInitials}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Link>
+                </TooltipTrigger>
+
+                <TooltipContent className="-translate-x-6">
+                  Profile
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </>
         )}
       </div>

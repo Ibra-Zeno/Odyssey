@@ -126,7 +126,7 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
               activeTab === "posts"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-300 text-gray-700"
-            } px-4 py-2 rounded-md transition duration-300 ease-in-out`}
+            } rounded-md px-4 py-2 transition duration-300 ease-in-out`}
           >
             Posts
           </button>
@@ -136,7 +136,7 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
               activeTab === "likes"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-300 text-gray-700"
-            } px-4 py-2 rounded-md transition duration-300 ease-in-out`}
+            } rounded-md px-4 py-2 transition duration-300 ease-in-out`}
           >
             Likes
           </button>
@@ -169,3 +169,5 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
 };
 
 export default UserProfile;
+
+// Implement log out on user profile page

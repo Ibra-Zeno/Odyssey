@@ -12,7 +12,7 @@ import {
 
 const SearchResults: React.FC<{ results: any[] }> = ({ results }) => {
   return (
-    <div className="mt-4 absolute bg-gray-300 left-1/2 top-10">
+    <div className="absolute left-1/2 top-10 mt-4 bg-gray-300">
       <ul className="list-disc pl-6">
         <DropdownMenu>
           <DropdownMenuTrigger></DropdownMenuTrigger>

@@ -36,25 +36,25 @@ const EditPost: React.FC = () => {
 
   return (
     <Layout>
-      <div className="flex justify-center items-center bg-gray-100 p-12">
+      <div className="flex items-center justify-center bg-gray-100 p-12">
         <form onSubmit={updatePost} className="flex flex-col">
-          <h1 className="text-xl mb-4">Edit Post</h1>
+          <h1 className="mb-4 text-xl">Edit Post</h1>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
             type="text"
-            className="border p-2 mb-4 rounded-md"
+            className="mb-4 rounded-md border p-2"
           />
           <QuillEditor content={content} setContent={setContent} />
           <button
             type="submit"
-            className="bg-gray-300 py-2 px-6 rounded-md mb-4"
+            className="mb-4 rounded-md bg-gray-300 px-6 py-2"
           >
             Save Changes
           </button>
           <a
-            className="text-blue-500 hover:underline cursor-pointer ml-4"
+            className="ml-4 cursor-pointer text-blue-500 hover:underline"
             onClick={() => router.push(`/p/${router.query.id}`)}
           >
             or Cancel

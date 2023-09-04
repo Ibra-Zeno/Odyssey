@@ -79,9 +79,9 @@ const Post: React.FC<PostProps> = (props) => {
   return (
     <Layout>
       <div className="page">
-        <h2 className="text-2xl font-bold mb-4">{title}</h2>
+        <h2 className="mb-4 text-2xl font-bold">{title}</h2>
         <Link href={`/profile/${props.author?.email}`}>
-          <p className="text-sm mb-4 hover:text-red-500">
+          <p className="mb-4 text-sm hover:text-red-500">
             By {props?.author?.name || "Unknown author"}
           </p>
         </Link>
@@ -89,7 +89,7 @@ const Post: React.FC<PostProps> = (props) => {
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button
             onClick={() => publishPost(props.id)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4"
+            className="mt-4 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-600"
           >
             Publish
           </button>
@@ -98,13 +98,13 @@ const Post: React.FC<PostProps> = (props) => {
           <>
             <button
               onClick={() => editPost(props.id)}
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mt-4"
+              className="mt-4 rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-600"
             >
               Edit
             </button>
             <button
               onClick={() => deletePost(props.id)}
-              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4 ml-4"
+              className="ml-4 mt-4 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600"
             >
               Delete
             </button>

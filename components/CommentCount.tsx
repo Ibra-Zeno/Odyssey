@@ -19,7 +19,7 @@ const CommentCount: React.FC<{ postId: string }> = ({ postId }) => {
   };
 
   return (
-    <div className="flex items-center ml-4">
+    <div className="ml-4 flex items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"

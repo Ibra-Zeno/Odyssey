@@ -9,7 +9,7 @@ export type UserProps = {
   image: string | null;
   posts: PostProps[];
   Like: LikeProps[];
-}
+};
 
 interface ProfileProps {
   user: UserProps;
