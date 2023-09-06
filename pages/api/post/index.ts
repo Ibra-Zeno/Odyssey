@@ -2,11 +2,15 @@ import prisma from "../../../lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { options } from "../auth/[...nextauth]";
 import { sanitizeContent } from "../../../utils/sanitizeUtil";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handle(req, res) {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   try {
     // Input validation
-    const { title, content } = req.body;
+    const { title, content, tags } = req.body;
     if (!title) {
       return res.status(400).json({ error: "Title is required." });
     }
@@ -26,20 +30,28 @@ export default async function handle(req, res) {
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
+
     const sanitizedContent = sanitizeContent(content);
-    // Create post using the user's ID
-    const result = await prisma.post.create({
+
+    const post = await prisma.post.create({
       data: {
         title: title,
-        content: sanitizedContent || null,
+        content: sanitizedContent,
         authorId: user.id,
+        tags: {
+          create: tags.map((tagName: string) => ({
+            tag: {
+              connectOrCreate: {
+                where: { name: tagName },
+                create: { name: tagName },
+              },
+            },
+          })),
+        },
       },
     });
 
-    // Respond with success
-    res
-      .status(201)
-      .json({ message: "Post created successfully.", post: result });
+    res.status(201).json({ message: "Post created successfully", post: post });
   } catch (error) {
     // Error handling
     console.error("Error creating post:", error);

@@ -1,20 +1,5 @@
 import Post from "./Post"; // Import your existing Post component
-import { PostProps, LikeProps } from "./Post"; // Import your existing PostProps type
-
-export type UserProps = {
-  id: string;
-  name: string | null;
-  email: string | null;
-  bio: string | null;
-  image: string | null;
-  posts: PostProps[];
-  Like: LikeProps[];
-};
-
-interface ProfileProps {
-  user: UserProps;
-  posts: PostProps[];
-}
+import { ProfileProps } from "../utils/types"; // Import your existing PostProps type
 
 const Profile: React.FC<ProfileProps> = ({ user, posts }) => {
   return (

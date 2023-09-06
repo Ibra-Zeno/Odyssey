@@ -3,9 +3,8 @@ import { GetServerSideProps } from "next";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Layout from "../../components/Layout";
-import { useRouter } from "next/router";
 import Post from "../../components/Post"; // Import your Post component here
-import { UserProps } from "../../components/Profile"; // Import your User type here
+import { UserProps } from "../../utils/types"; // Import your User type here
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params || typeof params.userId !== "string") {
@@ -25,7 +24,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             author: {
               select: { name: true, email: true },
             },
-            // Like: true, // Include likes associated with the posts
+            tags: {
+              include: { tag: true },
+            },
           },
         },
         Like: {
@@ -34,6 +35,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
               include: {
                 author: {
                   select: { name: true, email: true },
+                },
+                tags: {
+                  include: { tag: true },
                 },
               },
             },

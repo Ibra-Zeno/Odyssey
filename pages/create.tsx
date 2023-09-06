@@ -2,16 +2,18 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import QuillEditor from "../components/QuillEditor";
 import Layout from "../components/Layout";
+import { tagsArray } from "../utils/tags";
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const router = useRouter();
 
   // Send a POST request to the API to create a new draft
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const body = { title, content };
+    const body = { title, content, tags: selectedTags };
 
     try {
       const response = await fetch("/api/post", {
@@ -45,6 +47,26 @@ const Draft: React.FC = () => {
             value={title}
             className="mb-4 rounded-md border p-2"
           />
+          <label htmlFor="tags" className="mb-1 block">
+            Select Tags
+          </label>
+          <select
+            id="tags"
+            className="mb-4 rounded-md border p-2"
+            value={selectedTags}
+            multiple
+            onChange={(e) =>
+              setSelectedTags(
+                Array.from(e.target.selectedOptions, (item) => item.value),
+              )
+            }
+          >
+            {tagsArray.map((tag) => (
+              <option key={tag} value={tag}>
+                {tag}
+              </option>
+            ))}
+          </select>
           <QuillEditor content={content} setContent={setContent} />
           <button
             type="submit"

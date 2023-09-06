@@ -2,12 +2,8 @@
 
 import { FC } from "react";
 import ReactQuill from "react-quill";
+import { QuillEditorProps } from "../utils/types";
 import "react-quill/dist/quill.snow.css"; // Import styles
-
-interface QuillEditorProps {
-  content: string;
-  setContent: (content: string) => void;
-}
 
 const QuillEditor: FC<QuillEditorProps> = ({ content, setContent }) => {
   const modules = {

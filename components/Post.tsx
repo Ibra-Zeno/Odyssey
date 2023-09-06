@@ -2,41 +2,8 @@ import Router from "next/router";
 import Like from "./Like";
 import CommentCount from "./CommentCount";
 import Link from "next/link";
-
-export type PostProps = {
-  id: string;
-  title: string;
-  author: {
-    id: string;
-    name: string;
-    email: string;
-  } | null;
-  content: string;
-  published: boolean;
-  comments: CommentProps[];
-  likes: LikeProps[];
-};
-
-export type CommentProps = {
-  id: string;
-  content: string;
-  createdAt: string; // You might want to format this as needed
-  author: {
-    id: string;
-    name: string;
-    email: string;
-  } | null;
-};
-
-export type LikeProps = {
-  id: string;
-  author: {
-    id: string;
-    name: string;
-    email: string;
-  };
-  post: PostProps;
-};
+import { PostProps } from "../utils/types";
+import { tagColourMap } from "../utils/tags";
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
@@ -57,6 +24,25 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
             : ""
         }
       >
+        <div className="mt-4 flex items-center">
+          <div className="flex items-center space-x-2">
+            {post.tags.length > 0 && (
+              <div className="flex items-center space-x-2">
+                <span className="font-semibold">Tags:</span>
+                {post.tags.map((postTag) => (
+                  <span
+                    key={postTag.tag.id}
+                    className={`text-gray-800 shadow-md ${
+                      tagColourMap[postTag.tag.name] || "bg-gray-300"
+                    } rounded-md px-2 py-1 text-sm`}
+                  >
+                    {postTag.tag.name}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
         <small className="text-gray-800 hover:text-red-500">
           By {authorName}
         </small>

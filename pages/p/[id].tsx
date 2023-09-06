@@ -4,9 +4,10 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import Layout from "../../components/Layout";
 import Link from "next/link";
-import { PostProps } from "../../components/Post";
+import { PostProps } from "../../utils/types";
 import Comment from "../../components/Comments";
 import Like from "../../components/Like";
+import { tagColourMap } from "../../utils/tags";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params || typeof params.id !== "string") {
@@ -23,6 +24,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       include: {
         author: {
           select: { name: true, email: true },
+        },
+        tags: {
+          include: { tag: true },
         },
       },
     });
@@ -85,6 +89,21 @@ const Post: React.FC<PostProps> = (props) => {
             By {props?.author?.name || "Unknown author"}
           </p>
         </Link>
+        {props.tags && (
+          <div className="flex items-center space-x-2">
+            <span className="font-semibold">Tags:</span>
+            {props.tags.map((postTag) => (
+              <span
+                key={postTag.tag.id}
+                className={`text-gray-800 shadow-md ${
+                  tagColourMap[postTag.tag.name] || "bg-gray-300"
+                } rounded-md px-2 py-1 text-sm`}
+              >
+                {postTag.tag.name}
+              </span>
+            ))}
+          </div>
+        )}
         <div dangerouslySetInnerHTML={{ __html: props.content }} />
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button

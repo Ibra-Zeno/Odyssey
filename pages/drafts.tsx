@@ -4,6 +4,7 @@ import { options } from "../pages/api/auth/[...nextauth]";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
 import prisma from "../lib/prisma";
+import { DraftsProps } from "../utils/types";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, options);
@@ -22,6 +23,9 @@ export async function getServerSideProps(context) {
       author: {
         select: { name: true },
       },
+      tags: {
+        include: { tag: true },
+      },
     },
   });
 
@@ -30,7 +34,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function Drafts({ drafts }) {
+const Drafts: React.FC<DraftsProps> = ({ drafts }) => {
   const { data: session } = useSession();
 
   if (!session) {
@@ -47,7 +51,7 @@ export default function Drafts({ drafts }) {
       <div className="page">
         <h1 className="mb-4 text-2xl font-bold">My Drafts</h1>
         <main>
-          {drafts.map((post) => (
+          {drafts.map((post: any) => (
             <div key={post.id} className="post">
               <Post post={post} />
             </div>
@@ -56,4 +60,6 @@ export default function Drafts({ drafts }) {
       </div>
     </Layout>
   );
-}
+};
+
+export default Drafts;

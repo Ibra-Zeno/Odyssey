@@ -11,7 +11,12 @@ export default async function handle(req, res) {
   } else if (req.method === "GET") {
     const post = await prisma.post.findUnique({
       where: { id: postId },
-      include: { author: true },
+      include: {
+        author: true,
+        tags: {
+          include: { tag: true },
+        },
+      },
     });
     res.json(post);
   } else {
