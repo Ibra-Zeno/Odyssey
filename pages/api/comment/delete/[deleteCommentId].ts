@@ -17,9 +17,13 @@ export default async function handle(
       return res.status(401).json({ error: "User not authenticated." });
     }
 
+    if (!deleteCommentId) {
+      return res.status(400).json({ error: "Comment ID is required." });
+    }
+
     const comment = await prisma.comment.findUnique({
       where: {
-        id: deleteCommentId,
+        id: deleteCommentId.toString(),
       },
       include: {
         author: true,
@@ -30,7 +34,7 @@ export default async function handle(
       return res.status(404).json({ error: "Comment not found." });
     }
 
-    if (comment.author.email !== session.user.email) {
+    if (!comment.author || comment.author.email !== session.user.email) {
       return res
         .status(403)
         .json({ error: "You are not authorized to delete this comment." });
@@ -38,7 +42,7 @@ export default async function handle(
 
     await prisma.comment.delete({
       where: {
-        id: deleteCommentId,
+        id: deleteCommentId.toString(),
       },
     });
 

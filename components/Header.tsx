@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -9,7 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Newspaper, PenSquare, LogIn, FilePlus } from "lucide-react";
+import { Newspaper, PenSquare, LogIn, FilePlus, LogOut } from "lucide-react";
 import SearchBar from "./Search";
 
 const Header: React.FC = () => {
@@ -107,6 +107,7 @@ const Header: React.FC = () => {
         )}
         {session && (
           <>
+            <LogOut onClick={() => signOut()} />
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>

@@ -13,7 +13,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   };
 
   return (
-    <div className="p-8 text-black">
+    <div className="rounded-lg p-8 text-black">
       <h2 className="text-xl font-bold" onClick={handlePostClick}>
         {post.title}
       </h2>
@@ -49,7 +49,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       </Link>
       <div
         className="max-h-16 overflow-y-hidden"
-        dangerouslySetInnerHTML={{ __html: post.content }}
+        dangerouslySetInnerHTML={{ __html: post.content || "" }}
         onClick={handlePostClick}
       />
       {post.published && (

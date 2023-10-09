@@ -1,11 +1,16 @@
-import blog_hero from "../public/images/blog_hero.jpg";
+import map from "../public/images/map.svg";
 import Image from "next/image";
 
 const Hero: React.FC = () => {
   return (
-    <div className="relative flex h-auto min-h-[300px] w-full flex-col-reverse ">
-      <div className="relative w-1/2">
-        <Image src={blog_hero} alt="Hero Image" className="object-cover" />
+    <div className="bg-palBg relative flex h-auto w-full flex-col-reverse ">
+      <div className="relative w-full">
+        <Image
+          src={map}
+          alt="Hero Image"
+          className="mx-auto object-cover"
+          draggable={false}
+        />
       </div>
       <div className="bg-slate-500 mix-blend-multiply"></div>
       <div className="relative flex h-full w-full flex-col items-center justify-center text-center">

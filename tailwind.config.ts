@@ -17,7 +17,13 @@ module.exports = {
       },
     },
     extend: {
-      colors: {},
+      colors: {
+        palBg: "#2C3333",
+        pal1: "#321E1E",
+        pal2: "#4E3636",
+        pal3: "#4E3636",
+        pal4: "",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },

@@ -104,7 +104,7 @@ const Post: React.FC<PostProps> = (props) => {
             ))}
           </div>
         )}
-        <div dangerouslySetInnerHTML={{ __html: props.content }} />
+        <div dangerouslySetInnerHTML={{ __html: props.content ?? '' }} />
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button
             onClick={() => publishPost(props.id)}

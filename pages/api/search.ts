@@ -1,7 +1,11 @@
 // api/search.ts
 import prisma from "../../lib/prisma";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handle(req, res) {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   const { q } = req.query;
 
   try {
@@ -10,7 +14,12 @@ export default async function handle(req, res) {
     }
 
     // Sanitize the input to prevent potential SQL injection
-    const sanitizedQuery = q.trim();
+    let sanitizedQuery = "";
+    if (typeof q === "string") {
+      sanitizedQuery = q.trim();
+    } else if (Array.isArray(q)) {
+      sanitizedQuery = q[0].trim();
+    }
 
     const searchResults = await prisma.post.findMany({
       where: {

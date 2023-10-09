@@ -28,14 +28,47 @@ const options: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
 }; */
-
-import { NextApiHandler } from "next";
-import NextAuth, { NextAuthOptions } from "next-auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import NextAuth, { SessionStrategy } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
 
-const authHandler: NextApiHandler = async (req, res) => {
+export const options = {
+  providers: [
+    GithubProvider({
+      clientId: process.env.GITHUB_ID || "",
+      clientSecret: process.env.GITHUB_SECRET || "",
+    }),
+    CredentialsProvider({
+      id: "demo",
+      name: "Demo",
+      credentials: {
+        demoLogin: { label: "Demo Login", type: "hidden" },
+      },
+      authorize: async (credentials) => {
+        const user = await prisma.user.findFirst({
+          where: {
+            email: "demo@example.com",
+          },
+        });
+        return user;
+      },
+    }),
+  ],
+  adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: "jwt" as SessionStrategy,
+    maxAge: 24 * 60 * 60, // 1 day
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+};
+
+const authHandler: NextApiHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+) => {
   try {
     return await NextAuth(req, res, options);
   } catch (error) {
@@ -44,15 +77,36 @@ const authHandler: NextApiHandler = async (req, res) => {
   }
 };
 
-export const options: NextAuthOptions = {
-  providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID || "",
-      clientSecret: process.env.GITHUB_SECRET || "",
-    }),
-  ],
-  adapter: PrismaAdapter(prisma),
-  secret: process.env.NEXTAUTH_SECRET,
-};
-
 export default authHandler;
+
+/* CredentialsProvider({
+      name: "Demo Account",
+      credentials: {
+        username: { label: "Username", type: "text", placeholder: "demo" },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "demopassword",
+        },
+      },
+      async authorize(
+        credentials: Record<"username" | "password", string> | undefined,
+        req: Pick<NextApiRequest, "body" | "headers" | "method">,
+      ): Promise<User | null> {
+        // Check if the provided credentials match your demo account
+        if (
+          credentials?.username === "demo" &&
+          credentials?.password === "demopassword"
+        ) {
+          // Return a user object for the demo account
+          return Promise.resolve({
+            id: 1,
+            name: "Demo User",
+            email: "demo@example.com",
+          });
+        }
+
+        // Return null if the credentials are invalid
+        return Promise.resolve(null);
+      },
+    }), */

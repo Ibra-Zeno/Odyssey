@@ -1,12 +1,16 @@
 import prisma from "../../../lib/prisma";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handle(req, res) {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   try {
-    const postId = req.query.id;
+    const postId = req.query.id?.toString();
 
     const comments = await prisma.comment.findMany({
       where: {
-        postId,
+        postId: postId as string,
       },
       include: {
         author: true,
