@@ -1,8 +1,12 @@
 import prisma from "../../../../lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { options } from "../../auth/[...nextauth]";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handle(req, res) {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   const deleteCommentId = req.query.deleteCommentId;
 
   try {

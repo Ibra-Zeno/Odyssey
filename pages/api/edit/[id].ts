@@ -56,7 +56,7 @@ export default async function handle(
       (tagName) => !tags.includes(tagName),
     );
     const tagsToConnect = tags.filter(
-      (tagName) => !currentTagId.includes(tagName),
+      (tagName: string) => !currentTagId.includes(tagName),
     );
 
     // Update post

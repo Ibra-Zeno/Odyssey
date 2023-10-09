@@ -5,8 +5,9 @@ import Layout from "../components/Layout";
 import Post from "../components/Post";
 import prisma from "../lib/prisma";
 import { DraftsProps } from "../utils/types";
+import { GetServerSidePropsContext } from "next";
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, options);
 
   if (!session) {
