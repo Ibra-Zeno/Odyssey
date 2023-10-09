@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import QuillEditor from "../components/QuillEditor";
+import dynamic from "next/dynamic";
 import Layout from "../components/Layout";
 import { tagsArray } from "../utils/tags";
+
+// Dynamically import the QuillEditor component
+const QuillEditor = dynamic(() => import("../components/QuillEditor"), {
+  ssr: false, // This will load the component on the client side only
+  loading: () => <p>Loading editor...</p>, // Optional loading component
+});
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -88,5 +94,3 @@ const Draft: React.FC = () => {
 };
 
 export default Draft;
-
-// 3. Add date and locations

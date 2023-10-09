@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import QuillEditor from "../../components/QuillEditor";
+import dynamic from "next/dynamic";
 import Layout from "../../components/Layout";
 import { tagsArray } from "../../utils/tags";
+
+const QuillEditor = dynamic(() => import("../../components/QuillEditor"), {
+  ssr: false, // This will load the component on the client side only
+  loading: () => <p>Loading editor...</p>, // Optional loading component
+});
 
 const EditPost: React.FC = () => {
   const router = useRouter();
