@@ -108,3 +108,8 @@ model PostTag {
 
   @@id([postId, tagId])
 }
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+

@@ -14,16 +14,31 @@ export const tagsArray: string[] = [
 ];
 
 export const tagColourMap: { [tagName: string]: string } = {
-  Technology: "bg-blue-300",
-  Fitness: "bg-green-300",
-  Travel: "bg-purple-300",
-  Fashion: "bg-pink-300",
-  Health: "bg-red-300",
-  "Tips & Tricks": "bg-orange-300",
-  Finance: "bg-yellow-300",
-  Nature: "bg-teal-300",
-  Education: "bg-indigo-300",
-  Entertainment: "bg-cyan-300",
-  Coding: "bg-gray-300",
-  Food: "bg-brown-300",
+  Technology: "bg-red-400",
+  Fitness: "bg-orange-400",
+  Travel: "bg-indigo-400",
+  Fashion: "bg-teal-600",
+  Health: "bg-rose-300",
+  "Tips & Tricks": "bg-sky-500",
+  Finance: "bg-green-300",
+  Nature: "bg-lime-300",
+  Education: "bg-cyan-300",
+  Entertainment: "bg-fuchsia-400",
+  Coding: "bg-blue-300",
+  Food: "bg-violet-400 ",
 };
+
+/* 
+red-500
+orange-400
+amber-800
+lime-300
+green-300
+teal-600
+cyan-300
+sky-800
+blue-300
+fuchsia-400
+
+violet-400 
+*/

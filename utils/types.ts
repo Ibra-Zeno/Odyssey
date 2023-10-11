@@ -43,7 +43,7 @@ export type LikeProps = {
 export type TagProps = {
   id: string;
   name: string;
-  posts: PostProps[]; // Modified to use PostProps[]
+  posts: PostTag[]; // Modified to use PostProps[]
 };
 
 export type UserProps = {
@@ -63,6 +63,7 @@ export type ProfileProps = {
 
 export type BlogProps = {
   feed: PostProps[];
+  tagPosts: TagProps[];
 };
 export type DraftsProps = {
   drafts: PostProps[];
