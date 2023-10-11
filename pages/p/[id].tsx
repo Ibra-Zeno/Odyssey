@@ -22,6 +22,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         id: String(params?.id),
       },
       include: {
+        Like: { select: { id: true } },
+        Comment: { select: { id: true } },
         author: {
           select: { name: true, email: true },
         },
@@ -104,7 +106,7 @@ const Post: React.FC<PostProps> = (props) => {
             ))}
           </div>
         )}
-        <div dangerouslySetInnerHTML={{ __html: props.content ?? '' }} />
+        <div dangerouslySetInnerHTML={{ __html: props.content ?? "" }} />
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button
             onClick={() => publishPost(props.id)}
@@ -131,7 +133,7 @@ const Post: React.FC<PostProps> = (props) => {
         )}
         {props.published && (
           <>
-            <Like postId={props.id} />
+            <Like post={props} />
             <Comment postId={props.id} />
           </>
         )}
