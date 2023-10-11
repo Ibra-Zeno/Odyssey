@@ -21,7 +21,7 @@ module.exports = {
         palBg: "#2C3333",
         pal1: "#321E1E",
         pal2: "#4E3636",
-        pal3: "#4E3636",
+        pal3: "#008170",
         pal4: "",
       },
       keyframes: {

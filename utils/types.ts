@@ -9,8 +9,10 @@ export type PostProps = {
   content: string | null;
   published: boolean;
   comments: CommentProps[];
+  Comment: any;
   likes: LikeProps[];
   tags: PostTag[]; // Modified to use TagProps
+  Like?: any;
 };
 export type PostTag = {
   postId: string;
@@ -64,6 +66,7 @@ export type ProfileProps = {
 export type BlogProps = {
   feed: PostProps[];
   tagPosts: TagProps[];
+  topLikedPostsResponse: PostProps[];
 };
 export type DraftsProps = {
   drafts: PostProps[];

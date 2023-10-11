@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const router = useRouter();
   const isActive = (pathname: string) => router.pathname === pathname;
   return (
-    <div className=" relative flex h-full w-screen flex-col items-center justify-center bg-palBg">
+    <div className="relative flex h-full w-screen flex-col items-center justify-center bg-palBg">
       <Header />
       {isActive("/") && <Hero />}
       <div className="container mx-auto p-8">{children}</div>

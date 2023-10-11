@@ -1,7 +1,7 @@
 import Router from "next/router";
 import Like from "./Like";
-import CommentCount from "./CommentCount";
 import Link from "next/link";
+import { MessageSquare } from "lucide-react";
 import { PostProps } from "../utils/types";
 import { tagColourMap } from "../utils/tags";
 
@@ -53,10 +53,15 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         onClick={handlePostClick}
       />
       {post.published && (
-        <div className="mt-4 flex items-center">
-          <Like postId={post.id} />
-          <CommentCount postId={post.id} />
-        </div>
+        <>
+          <div className="mt-4 flex items-center">
+            <Like post={post} />
+            <div className="flex flex-row text-sm">
+              <MessageSquare />
+              <span className="ml-2">{post.Comment.length}</span>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
