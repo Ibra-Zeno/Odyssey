@@ -66,10 +66,6 @@ const Blog: React.FC<BlogProps> = ({
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1); // Initialize the current page
 
-  console.log(feed[0]);
-  console.log(tagPosts[0]);
-  console.log(topLikedPostsResponse[0]);
-
   const topLikedPosts = topLikedPostsResponse.map((post) => ({
     ...post,
     likesCount: post.Like.length,
