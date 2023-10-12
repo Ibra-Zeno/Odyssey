@@ -3,6 +3,7 @@ import Like from "./Like";
 import Link from "next/link";
 import { MessageSquare } from "lucide-react";
 import { PostProps } from "../utils/types";
+import { Badge } from "@/components/ui/badge";
 import { tagColourMap } from "../utils/tags";
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
@@ -13,8 +14,11 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   };
 
   return (
-    <div className="rounded-lg p-8 text-black">
-      <h2 className="text-xl font-bold" onClick={handlePostClick}>
+    <div className="rounded p-8 text-black">
+      <h2
+        className="font-display text-xl font-semibold"
+        onClick={handlePostClick}
+      >
         {post.title}
       </h2>
       <Link
@@ -24,29 +28,29 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
             : ""
         }
       >
-        <div className="mt-4 flex items-center">
-          <div className="flex items-center space-x-2">
-            {post.tags.length > 0 && (
-              <div className="flex items-center space-x-2">
-                <span className="font-semibold">Tags:</span>
-                {post.tags.map((postTag) => (
-                  <span
-                    key={postTag.tag.id}
-                    className={`text-gray-800 shadow-md ${
-                      tagColourMap[postTag.tag.name] || "bg-gray-300"
-                    } rounded-md px-2 py-1 text-sm`}
-                  >
-                    {postTag.tag.name}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
         <small className="text-gray-800 hover:text-red-500">
           By {authorName}
         </small>
       </Link>
+      <div className="mt-4 flex items-center">
+        <div className="flex items-center space-x-2">
+          {post.tags.length > 0 && (
+            <div className="flex items-center space-x-2">
+              {post.tags.map((postTag) => (
+                <Badge
+                  variant="outline"
+                  key={postTag.tag.id}
+                  className={`font-display tracking-wide text-gray-800 shadow-md ${
+                    tagColourMap[postTag.tag.name] || "bg-gray-300"
+                  } border-gray-300/30`}
+                >
+                  {postTag.tag.name}
+                </Badge>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
       <div
         className="max-h-16 overflow-y-hidden"
         dangerouslySetInnerHTML={{ __html: post.content || "" }}

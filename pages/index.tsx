@@ -3,9 +3,10 @@ import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
 import Like from "../components/Like";
+import { Badge } from "@/components/ui/badge";
 import { MessageSquare } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { tagsArray, tagColourMap } from "../utils/tags";
-import { useSession } from "next-auth/react";
 import { PostProps, BlogProps } from "../utils/types";
 import { useState, useEffect } from "react";
 
@@ -32,7 +33,7 @@ export const getStaticProps: GetStaticProps = async () => {
       Like: { select: { id: true } }, // Include only the 'id' of likes
     },
     orderBy: [{ Like: { _count: "desc" } }], // Order by the count of likes in descending order
-    take: 5, // Get the top 5 liked posts
+    take: 6, // Get the top 5 liked posts
   });
   const tagPosts = await prisma.tag.findMany({
     where: { name: { in: tagsArray } },
@@ -78,7 +79,6 @@ const Blog: React.FC<BlogProps> = ({
   const handleShowFeed = () => {
     setSelectedTag(null); // Reset selectedTag to null to show the feed
   };
-
   // Calculate the range of posts to display based on the current page
   const startIndex = (currentPage - 1) * postsPerPage;
   const endIndex = startIndex + postsPerPage;
@@ -94,88 +94,105 @@ const Blog: React.FC<BlogProps> = ({
 
   return (
     <Layout>
-      <div className="page flex flex-row gap-x-6">
-        <main className="flex-[3]">
-          <h1 className="text-2xl font-bold">Public Feed</h1>
-          <section className="flex flex-row flex-wrap items-center gap-4">
-            {tagsArray.map((tag, i) => (
-              <div
-                key={i}
-                className="flex h-12 w-[15%] items-center justify-center rounded bg-white/[0.15]"
-              >
-                <span
-                  className={`${tagColourMap[tag]} rounded px-2 py-1`}
-                  onClick={() => setSelectedTag(tag)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {tag}
-                </span>
-              </div>
-            ))}
-          </section>
-
-          {/* Show the "Show Feed" button if a tag is selected */}
-          {selectedTag && (
-            <div className="mt-4 flex justify-center">
-              <button
-                className="rounded bg-blue-500 px-4 py-2 text-white"
-                onClick={handleShowFeed}
-              >
-                Show All
-              </button>
-            </div>
-          )}
-
-          {paginatedPosts.map((post) => (
-            <div key={post.id} className="post mt-8 rounded bg-[#CBE4DE] ">
-              <Post post={post} />
-            </div>
-          ))}
-
-          {/* Pagination controls */}
-          {totalPages > 1 && (
-            <div className="mt-4 flex justify-center">
-              {Array.from({ length: totalPages }, (_, i) => (
-                <button
-                  key={i}
-                  className={`${
-                    i + 1 === currentPage
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-300 text-gray-600"
-                  } mx-1 rounded px-4 py-2`}
-                  onClick={() => setCurrentPage(i + 1)}
-                >
-                  {i + 1}
-                </button>
-              ))}
-            </div>
-          )}
-        </main>
-
-        {/* Aside for top liked posts */}
-        <aside className="mt-8 flex-1">
+      <div className="gap-x-6">
+        {/* Top Like Posts */}
+        <section className="flex flex-col flex-wrap items-center gap-4">
           <h2 className="mb-4 text-xl font-bold">Top Liked Posts</h2>
-          <div className="rounded bg-pal2 p-2">
+          <div className="inline-flex w-full flex-wrap items-center justify-center gap-x-2 rounded bg-sky-950 p-2">
             {topLikedPosts.map((post) => {
+              const avatarImage = post?.author?.image || undefined;
+
               const authorName = post.author
                 ? post.author.name
                 : "Unknown author";
               return (
-                <div key={post.id} className="mb-4 rounded bg-pal3">
-                  <h2>{post.title}</h2>
-                  <h5 className="text-xs">By {authorName}</h5>
-                  <div className="mt-4 flex items-center">
+                <div
+                  key={post.id}
+                  className="mb-4 w-[32%] rounded bg-stone-400 p-2"
+                >
+                  <h2 className="font-display text-base font-medium">
+                    {post.title}
+                  </h2>
+                  <div className="my-2 flex flex-row gap-x-2">
+                    <Avatar className="h-5 w-5">
+                      <AvatarImage
+                        src={avatarImage}
+                        alt={authorName ?? undefined}
+                      />
+                      <AvatarFallback className="">{authorName}</AvatarFallback>
+                    </Avatar>
+                    <p className="font-noto text-sm">{authorName}</p>
+                  </div>
+                  <div className="flex items-center gap-x-4">
                     <Like post={post} />
-                    <div className="flex flex-row text-sm">
-                      <MessageSquare />
-                      <span className="ml-2">{post.commentCount}</span>
+                    <div className="flex flex-row items-center text-sm">
+                      <MessageSquare size={16} className="fill-none" />
+                      <span className="">{post.commentCount}</span>
                     </div>
                   </div>
                 </div>
               );
             })}
           </div>
-        </aside>
+        </section>
+        <div className="flex flex-row">
+          <main className="flex-[4]">
+            <h1 className="text-2xl font-bold">Public Feed</h1>
+            {/* Show the "Show Feed" button */}
+            {selectedTag && (
+              <div className="mt-4 flex justify-center">
+                <button
+                  className="rounded bg-blue-500 px-4 py-2 text-white"
+                  onClick={handleShowFeed}
+                >
+                  Show All
+                </button>
+              </div>
+            )}
+            {/* Pagination (need to test!) */}
+            {paginatedPosts.map((post) => (
+              <div key={post.id} className="post mt-8 rounded bg-[#CBE4DE] ">
+                <Post post={post} />
+              </div>
+            ))}
+            {/* Pagination controls */}
+            {totalPages > 1 && (
+              <div className="mt-4 flex justify-center">
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i}
+                    className={`${
+                      i + 1 === currentPage
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-300 text-gray-600"
+                    } mx-1 rounded px-4 py-2`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+            )}
+          </main>
+          {/* Aside for all 12 tags */}
+          <aside className="mt-8 w-full flex-1">
+            {tagsArray.map((tag, i) => (
+              <div
+                key={i}
+                className="inline-flex h-fit w-fit bg-transparent px-1 py-0.5 "
+              >
+                <Badge
+                  variant="outline"
+                  className={`${tagColourMap[tag]} border-gray-400/30 font-display tracking-wide text-gray-700 shadow-md `}
+                  onClick={() => setSelectedTag(tag)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {tag}
+                </Badge>
+              </div>
+            ))}
+          </aside>
+        </div>
       </div>
     </Layout>
   );

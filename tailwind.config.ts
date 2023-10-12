@@ -17,6 +17,10 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        display: ["Noto Sans Display", "sans-serif"],
+        noto: ["Noto Serif", "serif"],
+      },
       colors: {
         palBg: "#2C3333",
         pal1: "#321E1E",
