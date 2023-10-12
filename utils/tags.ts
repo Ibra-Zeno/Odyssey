@@ -1,6 +1,6 @@
 export const tagsArray: string[] = [
   "Technology",
-  "Fitness",
+  "History",
   "Travel",
   "Fashion",
   "Health",
@@ -15,7 +15,7 @@ export const tagsArray: string[] = [
 
 export const tagColourMap: { [tagName: string]: string } = {
   Technology: "bg-red-400",
-  Fitness: "bg-orange-400",
+  History: "bg-orange-400",
   Travel: "bg-indigo-400",
   Fashion: "bg-teal-600",
   Health: "bg-rose-300",
