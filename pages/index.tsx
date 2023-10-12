@@ -2,9 +2,10 @@ import prisma from "../lib/prisma";
 import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
+import Router from "next/router";
 import Like from "../components/Like";
 import { Badge } from "@/components/ui/badge";
-import { MessageSquare } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { tagsArray, tagColourMap } from "../utils/tags";
 import { PostProps, BlogProps } from "../utils/types";
@@ -79,6 +80,7 @@ const Blog: React.FC<BlogProps> = ({
   const handleShowFeed = () => {
     setSelectedTag(null); // Reset selectedTag to null to show the feed
   };
+
   // Calculate the range of posts to display based on the current page
   const startIndex = (currentPage - 1) * postsPerPage;
   const endIndex = startIndex + postsPerPage;
@@ -96,38 +98,47 @@ const Blog: React.FC<BlogProps> = ({
     <Layout>
       <div className="gap-x-6">
         {/* Top Like Posts */}
-        <section className="flex flex-col flex-wrap items-center gap-4">
-          <h2 className="mb-4 text-xl font-bold">Top Liked Posts</h2>
-          <div className="inline-flex w-full flex-wrap items-center justify-center gap-x-2 rounded bg-sky-950 p-2">
+        <section className="flex flex-col flex-wrap gap-4">
+          <h2 className="mb-4 text-left text-xl font-bold">Top Liked Posts</h2>
+          <div className="inline-flex w-full flex-wrap items-center justify-center gap-x-2 rounded bg-sky-950 p-4 pb-2">
             {topLikedPosts.map((post) => {
               const avatarImage = post?.author?.image || undefined;
-
+              const handlePostClick = () => {
+                Router.push("/p/[id]", `/p/${post.id}`);
+              };
               const authorName = post.author
                 ? post.author.name
                 : "Unknown author";
               return (
                 <div
                   key={post.id}
-                  className="mb-4 w-[32%] rounded bg-stone-400 p-2"
+                  className="mb-4 w-[32%] rounded bg-stone-400 p-2 shadow-lg"
                 >
-                  <h2 className="font-display text-base font-medium">
+                  <h2
+                    className="w-fit cursor-pointer font-display text-base font-medium"
+                    onClick={handlePostClick}
+                  >
                     {post.title}
                   </h2>
-                  <div className="my-2 flex flex-row gap-x-2">
-                    <Avatar className="h-5 w-5">
-                      <AvatarImage
-                        src={avatarImage}
-                        alt={authorName ?? undefined}
-                      />
-                      <AvatarFallback className="">{authorName}</AvatarFallback>
-                    </Avatar>
-                    <p className="font-noto text-sm">{authorName}</p>
-                  </div>
-                  <div className="flex items-center gap-x-4">
-                    <Like post={post} />
-                    <div className="flex flex-row items-center text-sm">
-                      <MessageSquare size={16} className="fill-none" />
-                      <span className="">{post.commentCount}</span>
+                  <div className="flex w-full flex-row justify-between">
+                    <div className="ml-2 mt-4 flex flex-row gap-x-2">
+                      <Avatar className="h-5 w-5">
+                        <AvatarImage
+                          src={avatarImage}
+                          alt={authorName ?? undefined}
+                        />
+                        <AvatarFallback className="">
+                          {authorName}
+                        </AvatarFallback>
+                      </Avatar>
+                      <p className="font-noto text-xs">{authorName}</p>
+                    </div>
+                    <div className="flex w-fit items-end gap-x-4">
+                      <Like post={post} />
+                      <div className="flex flex-row items-center text-sm">
+                        <MessageCircle size={16} className="fill-none" />
+                        <span className="ml-1">{post.commentCount}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -138,20 +149,13 @@ const Blog: React.FC<BlogProps> = ({
         <div className="flex flex-row">
           <main className="flex-[4]">
             <h1 className="text-2xl font-bold">Public Feed</h1>
-            {/* Show the "Show Feed" button */}
-            {selectedTag && (
-              <div className="mt-4 flex justify-center">
-                <button
-                  className="rounded bg-blue-500 px-4 py-2 text-white"
-                  onClick={handleShowFeed}
-                >
-                  Show All
-                </button>
-              </div>
-            )}
+
             {/* Pagination (need to test!) */}
             {paginatedPosts.map((post) => (
-              <div key={post.id} className="post mt-8 rounded bg-[#CBE4DE] ">
+              <div
+                key={post.id}
+                className="post mt-8 rounded bg-transparent text-white "
+              >
                 <Post post={post} />
               </div>
             ))}
@@ -191,6 +195,17 @@ const Blog: React.FC<BlogProps> = ({
                 </Badge>
               </div>
             ))}
+            {/* Show the "Show Feed" button */}
+            {selectedTag && (
+              <div className="mt-4 flex justify-center">
+                <button
+                  className="rounded bg-blue-500 px-4 py-2 text-white"
+                  onClick={handleShowFeed}
+                >
+                  Show All
+                </button>
+              </div>
+            )}
           </aside>
         </div>
       </div>

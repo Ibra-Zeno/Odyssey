@@ -21,6 +21,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       include: {
         posts: {
           include: {
+            Comment: { select: { id: true } },
+            Like: { select: { id: true } },
             author: {
               select: { name: true, email: true },
             },
@@ -33,6 +35,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           include: {
             post: {
               include: {
+                Comment: { select: { id: true } },
+                Like: { select: { id: true } },
                 author: {
                   select: { name: true, email: true },
                 },

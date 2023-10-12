@@ -63,9 +63,7 @@ const Like: React.FC<{ post: PostProps }> = ({ post }) => {
           size={16}
         />
       </button>
-      <p className="text-sm">
-        {likesCount} {likesCount === 1 ? "like" : "likes"}
-      </p>
+      <p className="text-sm">{likesCount}</p>
     </div>
   );
 };

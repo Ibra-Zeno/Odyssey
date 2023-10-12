@@ -1,37 +1,44 @@
 import Router from "next/router";
 import Like from "./Like";
 import Link from "next/link";
-import { MessageSquare } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { MessageCircle } from "lucide-react";
 import { PostProps } from "../utils/types";
 import { Badge } from "@/components/ui/badge";
 import { tagColourMap } from "../utils/tags";
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
+  const avatarImage = post?.author?.image || undefined;
 
   const handlePostClick = () => {
     Router.push("/p/[id]", `/p/${post.id}`);
   };
 
   return (
-    <div className="rounded p-8 text-black">
+    <div className="rounded p-8">
       <h2
         className="font-display text-xl font-semibold"
         onClick={handlePostClick}
       >
         {post.title}
       </h2>
-      <Link
-        href={
-          authorName !== "Unknown author"
-            ? `/profile/${post.author?.email}`
-            : ""
-        }
-      >
-        <small className="text-gray-800 hover:text-red-500">
-          By {authorName}
-        </small>
-      </Link>
+      <div className="mt-4 flex flex-row gap-x-2">
+        <Link
+          className="flex flex-row gap-x-2"
+          href={
+            authorName !== "Unknown author"
+              ? `/profile/${post.author?.email}`
+              : ""
+          }
+        >
+          <Avatar className="h-5 w-5">
+            <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
+            <AvatarFallback className="">{authorName}</AvatarFallback>
+          </Avatar>
+          <p className="font-noto text-xs">{authorName}</p>
+        </Link>
+      </div>
       <div className="mt-4 flex items-center">
         <div className="flex items-center space-x-2">
           {post.tags.length > 0 && (
@@ -52,17 +59,17 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </div>
       </div>
       <div
-        className="max-h-16 overflow-y-hidden"
+        className="max-h-16 overflow-y-hidden font-noto text-sm"
         dangerouslySetInnerHTML={{ __html: post.content || "" }}
         onClick={handlePostClick}
       />
       {post.published && (
         <>
-          <div className="mt-4 flex items-center">
+          <div className="mt-4 flex items-end">
             <Like post={post} />
-            <div className="flex flex-row text-sm">
-              <MessageSquare />
-              <span className="ml-2">{post.Comment.length}</span>
+            <div className="flex flex-row items-end text-sm">
+              <MessageCircle size={16} className="fill-none" />
+              <span className="ml-1">{post.Comment.length}</span>
             </div>
           </div>
         </>
