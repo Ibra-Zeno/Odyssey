@@ -30,7 +30,6 @@ export const options = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt" as SessionStrategy,
-    maxAge: 24 * 60 * 60, // 1 day
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
