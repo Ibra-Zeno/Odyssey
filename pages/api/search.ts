@@ -27,8 +27,9 @@ export default async function handle(
           { title: { contains: sanitizedQuery, mode: "insensitive" } },
           { content: { contains: sanitizedQuery, mode: "insensitive" } },
         ],
+        AND: [{ published: true }],
       },
-      take: 10, // Limit the number of results per page
+      // take: 10, // Limit the number of results per page
     });
 
     res.status(200).json(searchResults);
