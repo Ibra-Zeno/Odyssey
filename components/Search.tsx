@@ -1,6 +1,7 @@
-import { Search } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
+import { Separator } from "./ui/separator";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -96,7 +97,7 @@ const SearchBar: React.FC = () => {
     <div className="relative">
       <Input
         {...form.register("query")}
-        className="rounded-md border-2 border-gray-400 border-opacity-25 bg-slate-600 py-2 pl-3 text-slate-300 placeholder-slate-400 focus:ring-red-400 xl:w-64"
+        className="rounded-md border-2 border-gray-400 border-opacity-25 bg-stone-200 py-2 pl-3 text-stone-700 placeholder-blue-700 focus:ring focus:ring-red-400 lg:w-72 xl:w-96"
         type="text"
         placeholder="Search..."
         autoComplete="off"
@@ -106,20 +107,34 @@ const SearchBar: React.FC = () => {
         className="pointer absolute right-0 top-0 flex h-full border-spacing-40 cursor-pointer items-center justify-center rounded-md p-2"
         onClick={handleIconClick}
       >
-        <Search size={20} className="pointer flex items-center" />
+        <Search
+          size={20}
+          className="pointer flex items-center text-stone-700"
+        />
       </div>
       {showDropdown && (
         <div
           ref={dropdownRef}
-          className="absolute left-0 top-11 max-h-64 w-full overflow-y-auto rounded-lg border-l-2 border-r-2 border-gray-400 border-opacity-25 bg-slate-600 shadow-md"
+          className="absolute left-0 top-10 z-50 max-h-64 w-full overflow-y-auto rounded-lg border-x-2 border-x-gray-400 border-opacity-25 bg-stone-200 shadow-md"
         >
-          {searchResults.map((result, index) => (
-            <Link key={result.id} href={`/p/${result.id}`}>
-              <div className="cursor-pointer border-t-2 border-slate-300  border-opacity-5 px-2 py-4 hover:bg-slate-700">
-                {result.title}
-              </div>
-            </Link>
-          ))}
+          {isLoading ? (
+            <div className="flex justify-center border-t-2 border-slate-300  border-opacity-5 px-2 py-4 ">
+              <Loader2 className="animate-spin text-stone-700" />
+            </div>
+          ) : searchResults.length === 0 ? (
+            <div className="py-4 text-center font-semibold text-stone-700">
+              No results found.
+            </div>
+          ) : (
+            searchResults.map((result, index) => (
+              <Link key={result.id} href={`/p/${result.id}`}>
+                <div className="cursor-pointer border-t-2 border-slate-300 border-opacity-5 px-2 py-5  font-noto text-sm font-semibold hover:bg-stone-300">
+                  {result.title}
+                </div>
+                <Separator className="mx-auto w-[90%] bg-stone-500/50" />
+              </Link>
+            ))
+          )}
         </div>
       )}
     </div>
