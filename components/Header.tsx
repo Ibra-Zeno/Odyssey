@@ -30,7 +30,7 @@ const Header: React.FC = () => {
   const avatarImage = session?.user?.image || undefined;
 
   return (
-    <nav className="relative mx-auto flex w-full max-w-7xl items-center justify-between space-x-0 rounded-sm bg-palBg p-3 px-4 text-pal3">
+    <nav className="relative mx-auto flex w-full max-w-7xl items-center justify-between space-x-0 rounded-sm bg-palBg p-3 px-4 text-pal3 xl:px-8">
       <div className="flex items-center space-x-4">
         <SearchBar />
       </div>
