@@ -31,6 +31,9 @@ const Header: React.FC = () => {
 
   return (
     <nav className="relative mx-auto flex w-full max-w-7xl items-center justify-between space-x-0 rounded-sm bg-palBg p-3 px-4 text-pal3">
+      <div className="flex items-center space-x-4">
+        <SearchBar />
+      </div>
       <div className="flex space-x-4">
         <TooltipProvider>
           <Tooltip delayDuration={100}>
@@ -95,11 +98,6 @@ const Header: React.FC = () => {
             </TooltipProvider>
           </>
         )}
-      </div>
-      <div className="flex items-center space-x-4">
-        <SearchBar />
-      </div>
-      <div className="ml-auto flex space-x-4 text-pal3">
         {status === "loading" && (
           <Skeleton className="h-10 w-10 rounded-full" />
         )}
@@ -127,7 +125,6 @@ const Header: React.FC = () => {
         )}
         {session && (
           <>
-            <LogOut onClick={() => signOut()} />
             <TooltipProvider>
               <Tooltip delayDuration={100}>
                 <TooltipTrigger>
