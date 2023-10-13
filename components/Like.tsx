@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PostProps } from "@/utils/types";
-import { useSession, getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Heart } from "lucide-react";
 
 // get serverSideProps for likes before render to show red or nah
@@ -33,21 +33,40 @@ const Like: React.FC<{ post: PostProps }> = ({ post }) => {
   }, [post.Like, session]);
 
   const toggleLike = async () => {
-    if (!session || isUpdating || liked) return; // Do nothing if user is not authenticated, update is in progress, or already liked
+    if (!session || isUpdating) return;
+    setIsUpdating(true);
 
-    setIsUpdating(true); // Start the update process
+    if (liked) {
+      // Unlike the post
+      try {
+        const response = await fetch(`/api/like/delete/${postId}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          setLiked(false);
+          setLikesCount((prevCount: number) => prevCount - 1);
+        } else {
+          console.error("Error unliking the post.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    } else {
+      // Like the post
+      try {
+        await fetch(`/api/like/create`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ postId }),
+        });
+        setLiked(true);
+        setLikesCount((prevCount: number) => prevCount + 1);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
 
-    setLiked(true); // Immediately update UI
-    setLikesCount((prevCount: number) => prevCount + 1); // Update likes count
-
-    // Like the post
-    await fetch(`/api/like/create`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ postId }),
-    });
-
-    setIsUpdating(false); // Finished updating
+    setIsUpdating(false);
   };
 
   return (
