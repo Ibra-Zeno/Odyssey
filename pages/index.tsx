@@ -1,8 +1,9 @@
 import prisma from "../lib/prisma";
-import { GetStaticProps } from "next";
+import { GetServerSidePropsContext } from "next";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
 import Router from "next/router";
+import { Separator } from "@/components/ui/separator";
 import Like from "../components/Like";
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle } from "lucide-react";
@@ -13,7 +14,9 @@ import { useState, useEffect } from "react";
 
 const postsPerPage = 10;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext,
+) => {
   const feed = await prisma.post.findMany({
     where: { published: true },
     include: {
@@ -56,7 +59,6 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   return {
     props: { feed, tagPosts, topLikedPostsResponse }, // Pass tagPosts as a prop here
-    revalidate: 10,
   };
 };
 
@@ -152,11 +154,11 @@ const Blog: React.FC<BlogProps> = ({
 
             {/* Pagination (need to test!) */}
             {paginatedPosts.map((post) => (
-              <div
-                key={post.id}
-                className="post mt-8 rounded bg-transparent text-white "
-              >
-                <Post post={post} />
+              <div key={post.id}>
+                <div className="rounded bg-transparent text-white ">
+                  <Post post={post} />
+                </div>
+                <Separator className="mx-auto w-[95%] opacity-40" />
               </div>
             ))}
             {/* Pagination controls */}
@@ -179,7 +181,7 @@ const Blog: React.FC<BlogProps> = ({
             )}
           </main>
           {/* Aside for all 12 tags */}
-          <aside className="mt-8 w-full flex-1">
+          <aside className="sticky top-8 mt-8 h-fit w-full flex-1">
             {tagsArray.map((tag, i) => (
               <div
                 key={i}
