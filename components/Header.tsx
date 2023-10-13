@@ -30,51 +30,65 @@ const Header: React.FC = () => {
   const avatarImage = session?.user?.image || undefined;
 
   return (
-    <nav className="relative flex w-full items-center justify-between space-x-0 rounded-sm bg-slate-800 p-3 px-4 text-gray-300">
+    <nav className="relative mx-auto flex w-full max-w-7xl items-center justify-between space-x-0 rounded-sm bg-palBg p-3 px-4 text-pal3">
       <div className="flex space-x-4">
         <TooltipProvider>
-          <Tooltip>
+          <Tooltip delayDuration={100}>
             <TooltipTrigger>
               <Link
                 href="/"
-                className="pointer animate flex rounded-md border-gray-400 border-opacity-30 bg-transparent p-2 duration-300 ease-in-out hover:bg-slate-900 hover:shadow-2xl hover:shadow-gray-400"
+                className="flex rounded-md bg-transparent p-2 text-pal3 duration-300 ease-in-out hover:bg-pal2 hover:text-stone-50 hover:shadow-lg hover:shadow-gray-400"
               >
                 <Newspaper />
               </Link>
             </TooltipTrigger>
-            <TooltipContent className="-translate-x-2">Feed</TooltipContent>
+            <TooltipContent
+              side="bottom"
+              align="center"
+              className="font-display font-semibold tracking-wide"
+            >
+              Feed
+            </TooltipContent>
           </Tooltip>
         </TooltipProvider>
         {session && (
           <>
             <TooltipProvider>
-              <Tooltip>
+              <Tooltip delayDuration={100}>
                 <TooltipTrigger>
                   <Link
                     href="/drafts"
-                    className="pointer animate flex rounded-md border-gray-400 border-opacity-30 bg-transparent p-2 duration-300 ease-in-out hover:bg-slate-900 hover:shadow-2xl hover:shadow-gray-400"
+                    className="flex rounded-md bg-transparent p-2 text-pal3 duration-300 ease-in-out hover:bg-pal2 hover:text-stone-50 hover:shadow-lg hover:shadow-gray-400"
                   >
                     <PenSquare />
                   </Link>
                 </TooltipTrigger>
 
-                <TooltipContent className="-translate-x-4">
+                <TooltipContent
+                  side="bottom"
+                  align="center"
+                  className="font-display font-semibold tracking-wide"
+                >
                   Drafts
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
             <TooltipProvider>
-              <Tooltip>
+              <Tooltip delayDuration={100}>
                 <TooltipTrigger>
                   <Link
                     href="/create"
-                    className="pointer animate flex rounded-md border-gray-400 border-opacity-30 bg-transparent p-2 duration-300 ease-in-out hover:bg-slate-900 hover:shadow-2xl hover:shadow-gray-400"
+                    className="flex rounded-md bg-transparent p-2 text-pal3 duration-300 ease-in-out hover:bg-pal2 hover:text-stone-50 hover:shadow-lg hover:shadow-gray-400"
                   >
                     <FilePlus />
                   </Link>
                 </TooltipTrigger>
 
-                <TooltipContent className="-translate-x-4">
+                <TooltipContent
+                  side="bottom"
+                  align="center"
+                  className="font-display font-semibold tracking-wide"
+                >
                   Create
                 </TooltipContent>
               </Tooltip>
@@ -85,23 +99,29 @@ const Header: React.FC = () => {
       <div className="flex items-center space-x-4">
         <SearchBar />
       </div>
-      <div className="ml-auto flex space-x-4">
+      <div className="ml-auto flex space-x-4 text-pal3">
         {status === "loading" && (
           <Skeleton className="h-10 w-10 rounded-full" />
         )}
         {status === "unauthenticated" && (
           <TooltipProvider>
-            <Tooltip>
+            <Tooltip delayDuration={100}>
               <TooltipTrigger>
                 <Link
                   href="/api/auth/signin"
-                  className="pointer animate flex rounded-md border-gray-400 border-opacity-30 bg-transparent p-2 duration-300 ease-in-out hover:bg-slate-900 hover:shadow-2xl hover:shadow-gray-400"
+                  className="flex rounded-md bg-transparent p-2 text-pal3 duration-300 ease-in-out hover:bg-pal2 hover:text-stone-50 hover:shadow-lg hover:shadow-gray-400"
                 >
                   <LogIn />
                 </Link>
               </TooltipTrigger>
 
-              <TooltipContent className="-translate-x-6">Log in</TooltipContent>
+              <TooltipContent
+                side="bottom"
+                align="center"
+                className="font-display font-semibold tracking-wide"
+              >
+                Log in
+              </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         )}
@@ -109,7 +129,7 @@ const Header: React.FC = () => {
           <>
             <LogOut onClick={() => signOut()} />
             <TooltipProvider>
-              <Tooltip>
+              <Tooltip delayDuration={100}>
                 <TooltipTrigger>
                   <Link href={`/profile/${session.user?.email}`}>
                     <Avatar>
@@ -125,7 +145,11 @@ const Header: React.FC = () => {
                   </Link>
                 </TooltipTrigger>
 
-                <TooltipContent className="-translate-x-6">
+                <TooltipContent
+                  side="bottom"
+                  align="center"
+                  className="font-display font-semibold tracking-wide"
+                >
                   Profile
                 </TooltipContent>
               </Tooltip>
