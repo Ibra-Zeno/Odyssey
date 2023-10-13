@@ -1,20 +1,40 @@
 import Image from "next/image";
-import map from "../public/images/map.svg";
+import map from "../public/images/heroDemo.jpg";
+import { Button } from "./ui/button";
 
 const Hero: React.FC = () => {
   return (
-    <div
-      className="relative flex h-[90vh] w-full flex-col-reverse bg-palBg"
-      style={{
-        backgroundImage: `url(${map.src})`, // Set the image as background
-        backgroundSize: "cover", // Adjust the background size as needed
-        backgroundPosition: "center", // Center the background image
-      }}
-    >
-      <div className="absolute left-0 top-0 h-full w-full bg-slate-500 mix-blend-multiply"></div>
-      <div className="relative flex h-full w-full flex-col items-center justify-center text-center">
-        <h1 className="text-4xl font-bold text-white">Welcome to the Blog</h1>
-        <p className="text-white">A place to share knowledge</p>
+    <div className="relative h-full min-h-screen w-full ">
+      <div className="bg-moon relative mx-auto mt-4 flex aspect-[16/8] max-w-[85rem] justify-center rounded-lg bg-stone-400/40  px-4 pt-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="block font-display text-3xl font-bold text-pal3 sm:text-4xl md:text-5xl">
+            Leave Your Mark on the World
+          </h1>
+          <p className="mt-6 text-lg text-gray-400">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum
+            velit possimus temporibus ut totam
+          </p>
+          <div className="mt-8 sm:mt-8 sm:flex sm:justify-center lg:justify-center">
+            <div className="rounded-md shadow">
+              <Button
+                size="lg"
+                className="bg-pal1 text-base font-bold text-stone-50 shadow-lg"
+              >
+                Get started
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute -bottom-20 z-30 mx-auto mt-20 flex h-auto max-w-4xl justify-center">
+          <Image
+            src={map}
+            alt="hero"
+            width={896}
+            height={384}
+            className="mx-auto flex min-h-[24rem] w-auto justify-center rounded-xl object-cover object-center"
+          ></Image>
+        </div>
       </div>
     </div>
   );
