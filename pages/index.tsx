@@ -2,6 +2,7 @@ import prisma from "../lib/prisma";
 import { GetServerSidePropsContext } from "next";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
+import Carousel from "@/components/Carousel";
 import Router from "next/router";
 import Hero from "../components/Hero";
 import { Separator } from "@/components/ui/separator";
@@ -102,11 +103,11 @@ const Blog: React.FC<BlogProps> = ({
   return (
     <Layout>
       <Hero />
-      <div className="gap-x-6">
+      <div className="mt-44 gap-x-6">
         {/* Top Like Posts */}
         <section className="isolate z-30 flex flex-col flex-wrap gap-4 overflow-y-visible">
-          <div className="grid grid-cols-3 gap-x-2 rounded bg-sky-950 p-4 pb-2">
-            {topLikedPosts.map((post) => {
+          {/* <div className="grid grid-cols-3 gap-x-2 rounded bg-sky-950 p-4 pb-2"> */}
+          {/* {topLikedPosts.map((post) => {
               const avatarImage = post?.author?.image || undefined;
               const handlePostClick = () => {
                 Router.push("/p/[id]", `/p/${post.id}`);
@@ -117,7 +118,7 @@ const Blog: React.FC<BlogProps> = ({
               return (
                 <div
                   key={post.id}
-                  className="mb-4 flex w-full flex-col items-baseline justify-between rounded bg-stone-50 p-2 shadow-lg"
+                  className="mr-4 flex w-[300px] flex-shrink-0 flex-col items-baseline justify-between rounded bg-stone-50 p-2 shadow-lg"
                 >
                   <h2
                     className="w-fit cursor-pointer font-display text-sm font-medium tracking-wide"
@@ -148,8 +149,8 @@ const Blog: React.FC<BlogProps> = ({
                   </div>
                 </div>
               );
-            })}
-          </div>
+            })} */}
+          <Carousel topLikedPosts={topLikedPosts} />
         </section>
         <div className="flex flex-row">
           <main className="flex-[4]">
