@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
 import Router from "next/router";
+import Hero from "../components/Hero";
 import { Separator } from "@/components/ui/separator";
 import Like from "../components/Like";
 import { Badge } from "@/components/ui/badge";
@@ -40,12 +41,12 @@ export const getServerSideProps = async (
     take: 6, // Get the top 5 liked posts
   });
   const tagPosts = await prisma.tag.findMany({
-    where: { name: { in: tagsArray } },
     include: {
       posts: {
         include: {
           post: {
             include: {
+              author: true,
               Like: { select: { id: true } },
               Comment: { select: { id: true } },
               tags: {
@@ -54,6 +55,7 @@ export const getServerSideProps = async (
             },
           },
         },
+        where: { post: { published: true } },
       },
     },
   });
@@ -89,7 +91,8 @@ const Blog: React.FC<BlogProps> = ({
   const paginatedPosts = selectedTag
     ? tagPosts
         .find((tagPost) => tagPost.name === selectedTag)
-        ?.posts.map((post) => post.post) || []
+        ?.posts.filter((postRelation) => postRelation.post.published) // Filter only published posts.
+        .map((postRelation) => postRelation.post) || []
     : feed.slice(startIndex, endIndex);
 
   const totalPages = Math.ceil(
@@ -98,11 +101,11 @@ const Blog: React.FC<BlogProps> = ({
 
   return (
     <Layout>
+      <Hero />
       <div className="gap-x-6">
         {/* Top Like Posts */}
-        <section className="flex flex-col flex-wrap gap-4">
-          <h2 className="mb-4 text-left text-xl font-bold">Top Liked Posts</h2>
-          <div className="inline-flex w-full flex-wrap items-center justify-center gap-x-2 rounded bg-sky-950 p-4 pb-2">
+        <section className="isolate z-30 flex flex-col flex-wrap gap-4 overflow-y-visible">
+          <div className="grid grid-cols-3 gap-x-2 rounded bg-sky-950 p-4 pb-2">
             {topLikedPosts.map((post) => {
               const avatarImage = post?.author?.image || undefined;
               const handlePostClick = () => {
@@ -114,10 +117,10 @@ const Blog: React.FC<BlogProps> = ({
               return (
                 <div
                   key={post.id}
-                  className="mb-4 w-[32%] rounded bg-stone-400 p-2 shadow-lg"
+                  className="mb-4 flex w-full flex-col items-baseline justify-between rounded bg-stone-50 p-2 shadow-lg"
                 >
                   <h2
-                    className="w-fit cursor-pointer font-display text-base font-medium"
+                    className="w-fit cursor-pointer font-display text-sm font-medium tracking-wide"
                     onClick={handlePostClick}
                   >
                     {post.title}
