@@ -21,9 +21,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       published: false,
     },
     include: {
-      author: {
-        select: { name: true },
-      },
+      author: true,
       tags: {
         include: { tag: true },
       },
