@@ -3,3 +3,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-image {
+  background-image: url("/images/sun-tornado.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+.bg-moon {
+  background-image: url("/images/wasHereBg.svg");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+}
