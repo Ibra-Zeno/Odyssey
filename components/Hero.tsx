@@ -4,7 +4,7 @@ import map from "../public/images/map.svg";
 const Hero: React.FC = () => {
   return (
     <div
-      className="relative mx-12 flex h-[90vh] w-full flex-col-reverse bg-palBg"
+      className="relative flex h-[90vh] w-full flex-col-reverse bg-palBg"
       style={{
         backgroundImage: `url(${map.src})`, // Set the image as background
         backgroundSize: "cover", // Adjust the background size as needed
