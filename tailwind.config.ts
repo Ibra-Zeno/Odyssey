@@ -22,11 +22,13 @@ module.exports = {
         noto: ["Noto Serif", "serif"],
       },
       colors: {
-        palBg: "#2C3333",
-        pal1: "#321E1E",
-        pal2: "#4E3636",
-        pal3: "#008170",
-        pal4: "",
+        palBg: "#FFF4E0",
+        pal2: "#FFBF9B",
+        pal1: "#B46060",
+        pal3: "#4D4D4D",
+        pal4: "#ef9492",
+        pal5: "",
+        pal6: "",
       },
       keyframes: {
         "accordion-down": {
@@ -46,3 +48,9 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
+/* palBg: "#222831",
+        pal1: "#30475E",
+        pal2: "#F05454",
+        pal3: "#E8E8E8",
+        pal4: "", */
