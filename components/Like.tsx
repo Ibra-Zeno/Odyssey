@@ -78,11 +78,11 @@ const Like: React.FC<{ post: PostProps }> = ({ post }) => {
         }`}
       >
         <Heart
-          className={`${liked ? "fill-red-600" : "fill-none"}`}
+          className={`${liked ? "fill-red-600" : "fill-none"} text-pal3`}
           size={16}
         />
       </button>
-      <p className="text-sm">{likesCount}</p>
+      <p className="text-sm text-pal3">{likesCount}</p>
     </div>
   );
 };
