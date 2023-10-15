@@ -18,8 +18,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        display: ["Noto Sans Display", "sans-serif"],
-        noto: ["Noto Serif", "serif"],
+        display: ["Raleway", "sans-serif"],
+        noto: ["'Source Serif 4'", "serif"],
       },
       colors: {
         palBg: "#FFF4E0",
