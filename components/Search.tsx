@@ -51,7 +51,9 @@ const SearchBar: React.FC = () => {
   };
 
   const handleIconClick = () => {
-    handleSearchSubmit(form.getValues());
+    if (form.getValues()) {
+      handleSearchSubmit(form.getValues());
+    }
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
