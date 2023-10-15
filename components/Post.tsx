@@ -16,16 +16,16 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   };
 
   return (
-    <div className="rounded p-8 pt-2">
+    <div className="rounded px-8 py-8">
       <div className="mb-2 mt-4 flex items-center">
         <div className="flex items-center space-x-2">
           {post.tags.length > 0 && (
-            <div className="flex items-center space-x-2">
+            <div className="-mt-4 flex items-center space-x-2 pb-4">
               {post.tags.map((postTag) => (
                 <Badge
                   variant="outline"
                   key={postTag.tag.id}
-                  className={`font-noto text-[11px] tracking-wider text-gray-800 shadow-md ${
+                  className={`font-display text-[11px] font-semibold tracking-wider text-gray-800 shadow-md ${
                     tagColourMap[postTag.tag.name] || "bg-gray-300"
                   } border-gray-300/30`}
                 >
@@ -37,7 +37,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </div>
       </div>
       <h2
-        className="font-display text-xl font-semibold"
+        className="font-display text-xl font-semibold text-pal3"
         onClick={handlePostClick}
       >
         {post.title}
@@ -55,11 +55,11 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
             <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
             <AvatarFallback className="">{authorName}</AvatarFallback>
           </Avatar>
-          <p className="font-noto text-xs">{authorName}</p>
+          <p className="font-noto text-xs italic text-pal3">{authorName}</p>
         </Link>
       </div>
       <div
-        className=" mt-4 max-h-16 overflow-y-hidden font-noto text-sm"
+        className=" mt-4 max-h-16 overflow-y-hidden font-noto text-sm text-pal3"
         dangerouslySetInnerHTML={{ __html: post.content || "" }}
         onClick={handlePostClick}
       />
@@ -68,8 +68,8 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
           <div className="mt-4 flex items-end gap-x-4">
             <Like post={post} />
             <div className="flex flex-row items-end text-sm">
-              <MessageCircle size={16} className="fill-none" />
-              <span className="ml-1">{post.Comment.length}</span>
+              <MessageCircle size={16} className="fill-none text-pal3" />
+              <span className="ml-1 text-pal3">{post.Comment.length}</span>
             </div>
           </div>
         </>
