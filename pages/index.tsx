@@ -2,7 +2,6 @@ import prisma from "../lib/prisma";
 import { GetServerSidePropsContext } from "next";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
-import Carousel from "@/components/Carousel";
 import Router from "next/router";
 import Hero from "../components/Hero";
 import { Separator } from "@/components/ui/separator";
@@ -149,7 +148,6 @@ const Blog: React.FC<BlogProps> = ({
               );
             })}
           </div>
-          {/* <Carousel topLikedPosts={topLikedPosts} /> */}
         </section>
         <div className="flex flex-row">
           <main className="flex-[4]">
