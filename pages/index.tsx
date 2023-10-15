@@ -105,9 +105,9 @@ const Blog: React.FC<BlogProps> = ({
       <Hero />
       <div className="mt-44 gap-x-6">
         {/* Top Like Posts */}
-        <section className="isolate z-30 flex flex-col flex-wrap gap-4 overflow-y-visible">
-          {/* <div className="grid grid-cols-3 gap-x-2 rounded bg-sky-950 p-4 pb-2"> */}
-          {/* {topLikedPosts.map((post) => {
+        <section className="isolate z-30 flex flex-col flex-wrap overflow-y-visible">
+          <div className="grid grid-cols-3 gap-x-0.5 gap-y-0.5 rounded bg-palBg p-4 py-10">
+            {topLikedPosts.map((post) => {
               const avatarImage = post?.author?.image || undefined;
               const handlePostClick = () => {
                 Router.push("/p/[id]", `/p/${post.id}`);
@@ -118,27 +118,25 @@ const Blog: React.FC<BlogProps> = ({
               return (
                 <div
                   key={post.id}
-                  className="mr-4 flex w-[300px] flex-shrink-0 flex-col items-baseline justify-between rounded bg-stone-50 p-2 shadow-lg"
+                  className="flex max-w-sm flex-shrink-0 flex-col items-baseline justify-between rounded bg-transparent p-4"
                 >
+                  <div className="mb-3 ml-2 flex flex-row gap-x-2">
+                    <Avatar className="h-5 w-5">
+                      <AvatarImage
+                        src={avatarImage}
+                        alt={authorName ?? undefined}
+                      />
+                      <AvatarFallback className="">{authorName}</AvatarFallback>
+                    </Avatar>
+                    <p className="font-noto text-xs">{authorName}</p>
+                  </div>
                   <h2
-                    className="w-fit cursor-pointer font-display text-sm font-medium tracking-wide"
+                    className="mb-4 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide"
                     onClick={handlePostClick}
                   >
                     {post.title}
                   </h2>
                   <div className="flex w-full flex-row justify-between">
-                    <div className="ml-2 mt-4 flex flex-row gap-x-2">
-                      <Avatar className="h-5 w-5">
-                        <AvatarImage
-                          src={avatarImage}
-                          alt={authorName ?? undefined}
-                        />
-                        <AvatarFallback className="">
-                          {authorName}
-                        </AvatarFallback>
-                      </Avatar>
-                      <p className="font-noto text-xs">{authorName}</p>
-                    </div>
                     <div className="flex w-fit items-end gap-x-4">
                       <Like post={post} />
                       <div className="flex flex-row items-center text-sm">
@@ -149,8 +147,9 @@ const Blog: React.FC<BlogProps> = ({
                   </div>
                 </div>
               );
-            })} */}
-          <Carousel topLikedPosts={topLikedPosts} />
+            })}
+          </div>
+          {/* <Carousel topLikedPosts={topLikedPosts} /> */}
         </section>
         <div className="flex flex-row">
           <main className="flex-[4]">
@@ -162,7 +161,7 @@ const Blog: React.FC<BlogProps> = ({
                 <div className="rounded bg-transparent text-white ">
                   <Post post={post} />
                 </div>
-                <Separator className="mx-auto w-[95%] opacity-40" />
+                <Separator className="mx-auto w-[98%] bg-pal2 opacity-100" />
               </div>
             ))}
             {/* Pagination controls */}
