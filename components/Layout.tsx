@@ -7,10 +7,10 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="relative flex h-full w-screen flex-col items-center justify-center  bg-palBg">
+    <div className="background-bamboo relative flex h-full w-screen flex-col items-center justify-center ">
       <div className="z-10 w-full">
         <Header />
-        <div className="container mx-auto p-8">{children}</div>
+        <div className=" container mx-auto p-8">{children}</div>
       </div>
     </div>
   );
