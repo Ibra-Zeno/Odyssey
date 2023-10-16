@@ -19,6 +19,7 @@ export const sanitizeContent = (dirtyHtml: string): string => {
       "h4",
       "h5",
       "h6",
+      "u",
       "blockquote",
       "pre",
       "code",
@@ -27,6 +28,7 @@ export const sanitizeContent = (dirtyHtml: string): string => {
       "a",
     ],
     allowedAttributes: {
+      a: ["href", "target", "rel"],
       pre: ["class"],
       span: ["style"],
     },
