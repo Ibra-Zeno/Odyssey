@@ -50,15 +50,6 @@ export default async function handle(
       return res.status(404).json({ error: "Post not found." });
     }
 
-    const currentTagId = currentPost.tags.map((t) => t.tag.id);
-
-    const tagsToDisconnect = currentTagId.filter(
-      (tagName) => !tags.includes(tagName),
-    );
-    const tagsToConnect = tags.filter(
-      (tagName: string) => !currentTagId.includes(tagName),
-    );
-
     // Update post
     await prisma.post.update({
       where: { id: String(id) },
