@@ -159,19 +159,19 @@ const Blog: React.FC<BlogProps> = ({
                 <div className="rounded bg-transparent text-white ">
                   <Post post={post} />
                 </div>
-                <Separator className="mx-auto w-[98%] bg-pal2 opacity-100" />
+                <Separator className="mx-auto w-[98%] bg-pal5 opacity-40" />
               </div>
             ))}
             {/* Pagination controls */}
             {totalPages > 1 && (
-              <div className="mt-4 flex justify-center">
+              <div className="mt-8 flex justify-center">
                 {Array.from({ length: totalPages }, (_, i) => (
                   <button
                     key={i}
                     className={`${
                       i + 1 === currentPage
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-300 text-gray-600"
+                        ? "bg-pal5 text-white"
+                        : "bg-pal1 text-gray-600 transition-all duration-300 ease-in-out hover:bg-pal5 hover:text-white"
                     } mx-1 rounded px-4 py-2`}
                     onClick={() => setCurrentPage(i + 1)}
                   >
