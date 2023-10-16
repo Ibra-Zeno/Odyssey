@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
+import { Button } from "../../components/ui/button";
 import Layout from "../../components/Layout";
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
@@ -87,10 +88,24 @@ const Post: React.FC<PostProps> = (props) => {
   return (
     <Layout>
       <div className="page mx-auto max-w-3xl">
-        <h2 className="mb-4 text-2xl font-bold">{title}</h2>
-        <div className="mt-4 flex flex-row gap-x-2">
+        <h2 className="mb-6 font-display text-3xl font-bold">{title}</h2>
+        <div className="mb-6 flex flex-row justify-between">
+          {props.tags && (
+            <div className="flex items-center space-x-2">
+              {props.tags.map((postTag) => (
+                <span
+                  key={postTag.tag.id}
+                  className={`font-display font-semibold tracking-wider text-gray-800 shadow-md ${
+                    tagColourMap[postTag.tag.name] || "bg-gray-300"
+                  } rounded-md px-2 py-1 text-xs`}
+                >
+                  {postTag.tag.name}
+                </span>
+              ))}
+            </div>
+          )}
           <Link
-            className="flex flex-row gap-x-2"
+            className="flex flex-row items-center gap-x-2"
             href={
               authorName !== "Unknown author"
                 ? `/profile/${props.author?.email}`
@@ -104,8 +119,9 @@ const Post: React.FC<PostProps> = (props) => {
             <p className="font-noto text-xs italic text-pal3">{authorName}</p>
           </Link>
         </div>
+
         {props.published && (
-          <div className="mb-4 flex flex-row items-center gap-x-4 border-y border-y-pal3/40 py-3">
+          <div className="mb-4 flex flex-row items-center gap-x-4 border-y border-y-pal3/25 py-3">
             <Like post={props} />
             <div className="flex flex-row items-end text-sm">
               <MessageCircle size={16} className="fill-none text-pal3" />
@@ -113,53 +129,47 @@ const Post: React.FC<PostProps> = (props) => {
             </div>
           </div>
         )}
-        {props.tags && (
-          <div className="mb-6 flex items-center space-x-2">
-            {props.tags.map((postTag) => (
-              <span
-                key={postTag.tag.id}
-                className={`font-display font-semibold tracking-wider text-gray-800 shadow-md ${
-                  tagColourMap[postTag.tag.name] || "bg-gray-300"
-                } rounded-md px-2 py-1 text-xs`}
-              >
-                {postTag.tag.name}
-              </span>
-            ))}
-          </div>
-        )}
+
         <div
           className="blog-content font-noto text-[20px] leading-[32px]"
           dangerouslySetInnerHTML={{ __html: props.content ?? "" }}
         />
-        {!props.published && userHasValidSession && postBelongsToUser && (
-          <button
-            onClick={() => publishPost(props.id)}
-            className="mt-4 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-600"
-          >
-            Publish
-          </button>
-        )}
-        {userHasValidSession && postBelongsToUser && (
-          <>
-            <button
-              onClick={() => editPost(props.id)}
-              className="mt-4 rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-600"
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => deletePost(props.id)}
-              className="ml-4 mt-4 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600"
-            >
-              Delete
-            </button>
-          </>
-        )}
-        {props.published && (
-          <>
-            <Comment postId={props.id} />
-          </>
-        )}
+        <div className="flex justify-between gap-x-4">
+          {userHasValidSession && postBelongsToUser && (
+            <>
+              <div className="flex gap-x-4">
+                {!props.published ? (
+                  <Button
+                    variant={"default"}
+                    onClick={() => publishPost(props.id)}
+                    className="bg-pal2 font-display font-medium tracking-wider text-palBg hover:bg-pal4"
+                  >
+                    Publish
+                  </Button>
+                ) : (
+                  ""
+                )}
+                <Button
+                  onClick={() => editPost(props.id)}
+                  className="border-2 border-[#3d607b]/90 font-display font-medium tracking-wider text-pal3 hover:bg-[#3d607b] hover:text-palBg"
+                  variant={"ghost"}
+                >
+                  Edit
+                </Button>
+              </div>
+              <div>
+                <Button
+                  onClick={() => deletePost(props.id)}
+                  className="bg-[#B46060] font-display font-medium tracking-wider"
+                  variant={"destructive"}
+                >
+                  Delete
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+        {props.published && <Comment postId={props.id} />}
       </div>
     </Layout>
   );
