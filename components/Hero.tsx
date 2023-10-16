@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
             <div className="rounded-md shadow">
               <Button
                 size="lg"
-                className="bg-pal1 text-base font-bold text-stone-50 shadow-lg hover:bg-pal4"
+                className="bg-pal2 text-base font-bold text-stone-50 shadow-lg hover:bg-pal4"
               >
                 Get started
               </Button>

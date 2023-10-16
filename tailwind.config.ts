@@ -22,13 +22,13 @@ module.exports = {
         noto: ["'Source Serif 4'", "serif"],
       },
       colors: {
-        palBg: "#FFF4E0",
-        pal2: "#FFBF9B",
-        pal1: "#B46060",
-        pal3: "#4D4D4D",
-        pal4: "#ef9492",
-        pal5: "",
-        pal6: "",
+        palBg: "#F7F7F7",
+        pal1: "#F2E7D5",
+        pal2: "#6D9886",
+        pal3: "#393E46",
+        pal4: "#51908a",
+        pal5: "#3d607b",
+        pal6: "B46060",
       },
       keyframes: {
         "accordion-down": {
