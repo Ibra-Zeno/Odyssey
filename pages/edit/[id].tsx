@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Layout from "../../components/Layout";
 import { tagsArray } from "../../utils/tags";
+import Select from "react-select";
 
 const QuillEditor = dynamic(() => import("../../components/QuillEditor"), {
   ssr: false, // This will load the component on the client side only
@@ -20,9 +21,19 @@ const EditPost: React.FC = () => {
     const fetchData = async () => {
       const response = await fetch(`/api/post/${router.query.id}`);
       const postData = await response.json();
-      setTitle(postData.title);
-      setSelectedTags(postData.tags);
-      setContent(postData.content);
+      // Use optional chaining to ensure that properties exist
+      setTitle(postData?.title || "");
+      setContent(postData?.content || "");
+
+      const deduplicatedTags = Array.from(
+        new Set(
+          postData?.tags?.map(
+            (obj: { tag: { name: string } }) => obj.tag.name,
+          ) || [],
+        ),
+      );
+
+      setSelectedTags(deduplicatedTags as string[]);
     };
 
     fetchData();
@@ -32,16 +43,25 @@ const EditPost: React.FC = () => {
     e.preventDefault();
     const body = { title, content, tags: selectedTags };
 
-    await fetch(`/api/edit/${router.query.id}`, {
+    const response = await fetch(`/api/edit/${router.query.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
       credentials: "include",
     });
 
-    router.push("/drafts");
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Update Error:", errorData.error);
+    } else {
+      router.push("/drafts");
+    }
   };
 
+  const options = tagsArray.map((tag) => ({
+    value: tag,
+    label: tag,
+  }));
   return (
     <Layout>
       <div className="flex items-center justify-center bg-gray-100 p-12">
@@ -54,26 +74,14 @@ const EditPost: React.FC = () => {
             type="text"
             className="mb-4 rounded-md border p-2"
           />
-          <label htmlFor="tags" className="mb-1 block">
-            Select Tags
-          </label>
-          <select
-            id="tags"
-            className="mb-4 rounded-md border p-2"
-            value={selectedTags}
-            multiple
-            onChange={(e) =>
-              setSelectedTags(
-                Array.from(e.target.selectedOptions, (item) => item.value),
-              )
+          <Select
+            options={options}
+            isMulti
+            onChange={(selected) =>
+              setSelectedTags(selected.map((tag) => tag.value))
             }
-          >
-            {tagsArray.map((tag) => (
-              <option key={tag} value={tag}>
-                {tag}
-              </option>
-            ))}
-          </select>
+            value={selectedTags.map((obj) => ({ value: obj, label: obj }))}
+          />
           <QuillEditor content={content} setContent={setContent} />
           <button
             type="submit"

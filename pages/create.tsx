@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Layout from "../components/Layout";
 import { tagsArray } from "../utils/tags";
+import Select from "react-select";
 
 // Dynamically import the QuillEditor component
 const QuillEditor = dynamic(() => import("../components/QuillEditor"), {
@@ -40,6 +41,11 @@ const Draft: React.FC = () => {
     }
   };
 
+  const options = tagsArray.map((tag) => ({
+    value: tag,
+    label: tag,
+  }));
+
   return (
     <Layout>
       <div className="flex items-center justify-center bg-gray-100 p-12">
@@ -56,23 +62,14 @@ const Draft: React.FC = () => {
           <label htmlFor="tags" className="mb-1 block">
             Select Tags
           </label>
-          <select
-            id="tags"
-            className="mb-4 rounded-md border p-2"
-            value={selectedTags}
-            multiple
-            onChange={(e) =>
-              setSelectedTags(
-                Array.from(e.target.selectedOptions, (item) => item.value),
-              )
+          <Select
+            options={options}
+            isMulti
+            onChange={(selected) =>
+              setSelectedTags(selected.map((tag) => tag.value))
             }
-          >
-            {tagsArray.map((tag) => (
-              <option key={tag} value={tag}>
-                {tag}
-              </option>
-            ))}
-          </select>
+            value={selectedTags.map((tag) => ({ value: tag, label: tag }))}
+          />
           <QuillEditor content={content} setContent={setContent} />
           <button
             type="submit"
