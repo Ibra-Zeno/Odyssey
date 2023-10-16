@@ -128,7 +128,7 @@ const Post: React.FC<PostProps> = (props) => {
           </div>
         )}
         <div
-          className="font-noto text-[20px] leading-[32px]"
+          className="blog-content font-noto text-[20px] leading-[32px]"
           dangerouslySetInnerHTML={{ __html: props.content ?? "" }}
         />
         {!props.published && userHasValidSession && postBelongsToUser && (
