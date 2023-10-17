@@ -20,6 +20,7 @@ module.exports = {
       fontFamily: {
         display: ["Raleway", "sans-serif"],
         noto: ["'Source Serif 4'", "serif"],
+        code: ["'Source Code Pro'", "monospace"],
       },
       colors: {
         palBg: "#F7F7F7",
@@ -28,7 +29,7 @@ module.exports = {
         pal3: "#393E46",
         pal4: "#51908a",
         pal5: "#3d607b",
-        pal6: "B46060",
+        pal6: "#B46060",
       },
       keyframes: {
         "accordion-down": {
