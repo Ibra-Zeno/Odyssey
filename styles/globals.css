@@ -101,3 +101,29 @@
   letter-spacing: -0.02em;
   margin-bottom: 0.7rem;
 }
+
+.blog-content a {
+  color: #6d9886;
+  text-decoration: underline;
+}
+
+.blog-content a:hover {
+  color: #87baa5;
+  text-decoration: none;
+}
+
+.blog-content-post h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  display: block;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 0.1rem;
+}
+.blog-content-post p {
+  display: block;
+  margin-bottom: 0.1rem;
+}
