@@ -16,7 +16,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   };
 
   return (
-    <div className="rounded px-8 py-8">
+    <div className="rounded px-8 py-6">
       <div className="mb-2 mt-4 flex items-center">
         <div className="flex items-center space-x-2"></div>
       </div>
@@ -28,12 +28,12 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       </h2>
       <div className="mb-3 flex flex-row justify-between">
         {post.tags.length > 0 && (
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1">
             {post.tags.map((postTag) => (
               <Badge
                 variant="outline"
                 key={postTag.tag.id}
-                className={`font-display text-[11px] font-semibold tracking-wider text-gray-800 shadow-md ${
+                className={`font-display text-[11px] font-semibold tracking-wider text-sky-950 shadow-sm ${
                   tagColourMap[postTag.tag.name] || "bg-gray-300"
                 } border-gray-300/30`}
               >
@@ -60,7 +60,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </div>
       </div>
       <div
-        className=" mt-4 max-h-16 overflow-y-hidden font-noto text-sm text-pal3"
+        className=" blog-content-post mt-4 max-h-16 overflow-y-hidden font-noto text-sm text-pal3"
         dangerouslySetInnerHTML={{ __html: post.content || "" }}
         onClick={handlePostClick}
       />
