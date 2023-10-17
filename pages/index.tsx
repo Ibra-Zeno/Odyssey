@@ -105,7 +105,7 @@ const Blog: React.FC<BlogProps> = ({
       <div className="mt-44 gap-x-6">
         {/* Top Like Posts */}
         <section className="isolate z-30 flex flex-col flex-wrap overflow-y-visible">
-          <div className="grid grid-cols-3 gap-x-0.5 gap-y-0.5 rounded bg-palBg p-4 py-10">
+          <div className="grid grid-cols-3 gap-x-0.5 gap-y-6 rounded bg-palBg p-4 shadow-xl">
             {topLikedPosts.map((post) => {
               const avatarImage = post?.author?.image || undefined;
               const handlePostClick = () => {
@@ -119,23 +119,25 @@ const Blog: React.FC<BlogProps> = ({
                   key={post.id}
                   className="flex max-w-sm flex-shrink-0 flex-col items-baseline justify-between rounded bg-transparent p-4"
                 >
-                  <div className="mb-3 ml-2 flex flex-row gap-x-2">
-                    <Avatar className="h-5 w-5">
-                      <AvatarImage
-                        src={avatarImage}
-                        alt={authorName ?? undefined}
-                      />
-                      <AvatarFallback className="">{authorName}</AvatarFallback>
-                    </Avatar>
-                    <p className="font-noto text-xs">{authorName}</p>
-                  </div>
                   <h2
-                    className="mb-4 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide"
+                    className="mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide"
                     onClick={handlePostClick}
                   >
                     {post.title}
                   </h2>
-                  <div className="flex w-full flex-row justify-between">
+                  <div className="flex w-full flex-row items-center justify-between">
+                    <div className="flex flex-row items-center gap-x-2">
+                      <Avatar className="h-5 w-5">
+                        <AvatarImage
+                          src={avatarImage}
+                          alt={authorName ?? undefined}
+                        />
+                        <AvatarFallback className="">
+                          {authorName}
+                        </AvatarFallback>
+                      </Avatar>
+                      <p className="font-noto text-xs">{authorName}</p>
+                    </div>
                     <div className="flex w-fit items-end gap-x-4">
                       <Like post={post} />
                       <div className="flex flex-row items-center text-sm">
