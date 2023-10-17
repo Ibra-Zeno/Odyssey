@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
+import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import Layout from "../../components/Layout";
 import Link from "next/link";
@@ -91,16 +92,16 @@ const Post: React.FC<PostProps> = (props) => {
         <h2 className="mb-6 font-display text-3xl font-bold">{title}</h2>
         <div className="mb-6 flex flex-row justify-between">
           {props.tags && (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1">
               {props.tags.map((postTag) => (
-                <span
+                <Badge
                   key={postTag.tag.id}
-                  className={`font-display font-semibold tracking-wider text-gray-800 shadow-md ${
+                  className={`font-display font-semibold tracking-wider text-sky-950 shadow-sm ${
                     tagColourMap[postTag.tag.name] || "bg-gray-300"
-                  } rounded-md px-2 py-1 text-xs`}
+                  } text-xs`}
                 >
                   {postTag.tag.name}
-                </span>
+                </Badge>
               ))}
             </div>
           )}
