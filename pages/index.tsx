@@ -7,7 +7,7 @@ import Hero from "../components/Hero";
 import { Separator } from "@/components/ui/separator";
 import Like from "../components/Like";
 import { Badge } from "@/components/ui/badge";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, MapPin } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { tagsArray, tagColourMap } from "../utils/tags";
 import { PostProps, BlogProps } from "../utils/types";
@@ -104,8 +104,8 @@ const Blog: React.FC<BlogProps> = ({
       <Hero />
       <div className="mt-44 gap-x-6">
         {/* Top Like Posts */}
-        <section className="isolate z-30 flex flex-col flex-wrap overflow-y-visible">
-          <div className="grid grid-cols-3 gap-x-0.5 gap-y-6 rounded bg-palBg p-4 shadow-xl">
+        <section className="isolate z-30 mx-auto flex max-w-7xl flex-col flex-wrap overflow-y-visible">
+          <ul className="grid grid-cols-3 gap-x-8 gap-y-6 rounded bg-palBg p-4 shadow-xl">
             {topLikedPosts.map((post) => {
               const avatarImage = post?.author?.image || undefined;
               const handlePostClick = () => {
@@ -115,46 +115,54 @@ const Blog: React.FC<BlogProps> = ({
                 ? post.author.name
                 : "Unknown author";
               return (
-                <div
+                <li
                   key={post.id}
-                  className="flex max-w-sm flex-shrink-0 flex-col items-baseline justify-between rounded bg-transparent p-4"
+                  className="flex flex-row gap-x-4 rounded bg-gray-100 p-6"
                 >
-                  <h2
-                    className="mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide"
-                    onClick={handlePostClick}
-                  >
-                    {post.title}
-                  </h2>
-                  <div className="flex w-full flex-row items-center justify-between">
-                    <div className="flex flex-row items-center gap-x-2">
-                      <Avatar className="h-5 w-5">
-                        <AvatarImage
-                          src={avatarImage}
-                          alt={authorName ?? undefined}
-                        />
-                        <AvatarFallback className="">
-                          {authorName}
-                        </AvatarFallback>
-                      </Avatar>
-                      <p className="font-noto text-xs">{authorName}</p>
-                    </div>
-                    <div className="flex w-fit items-end gap-x-4">
-                      <Like post={post} />
-                      <div className="flex flex-row items-center text-sm">
-                        <MessageCircle size={16} className="fill-none" />
-                        <span className="ml-1">{post.commentCount}</span>
+                  {/* flex max-w-sm flex-shrink-0 flex-col items-baseline justify-between rounded bg-transparent p-4 */}
+                  <div>
+                    <MapPin
+                      opacity={0.6}
+                      size={30}
+                      className="text-pal rounded border-2  border-pal2/30 p-[3px] text-pal2"
+                    />
+                  </div>
+                  <div className="flex h-full w-full flex-col justify-between">
+                    <h2
+                      className="mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide"
+                      onClick={handlePostClick}
+                    >
+                      {post.title}
+                    </h2>
+                    <div className="flex w-full flex-row items-center justify-between">
+                      <div className="flex flex-row items-center gap-x-2">
+                        <Avatar className="h-5 w-5">
+                          <AvatarImage
+                            src={avatarImage}
+                            alt={authorName ?? undefined}
+                          />
+                          <AvatarFallback className="">
+                            {authorName}
+                          </AvatarFallback>
+                        </Avatar>
+                        <p className="font-noto text-xs">{authorName}</p>
+                      </div>
+                      <div className="flex w-fit items-end gap-x-4">
+                        <Like post={post} />
+                        <div className="flex flex-row items-center text-sm">
+                          <MessageCircle size={16} className="fill-none" />
+                          <span className="ml-1">{post.commentCount}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
         </section>
         <div className="flex flex-row">
           <main className="flex-[4]">
-            <h1 className="text-2xl font-bold">Public Feed</h1>
-
             {/* Pagination (need to test!) */}
             {paginatedPosts.map((post) => (
               <div key={post.id}>
