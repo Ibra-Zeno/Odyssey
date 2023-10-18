@@ -106,12 +106,12 @@ const Blog: React.FC<BlogProps> = ({
       <div className="-mt-52 gap-x-6">
         {/* Top Like Posts */}
         <section className="isolate z-30 mx-auto flex w-full flex-col flex-wrap overflow-y-visible rounded border-4 border-pal2/10 bg-slate-600/40 p-4 shadow-xl backdrop-blur-lg">
-          <div className="mb-2 flex flex-row items-center gap-x-2">
+          <div className="mb-4 flex flex-row items-end justify-center gap-x-2">
             <Flame
               className="rounded-full fill-amber-700 p-[2px] text-red-500"
               strokeWidth={1.8}
             />
-            <h4 className="text-palText font-display text-sm font-semibold">
+            <h4 className="font-display text-sm font-semibold text-palText">
               Hot Posts
             </h4>
           </div>
@@ -139,7 +139,7 @@ const Blog: React.FC<BlogProps> = ({
                   </div>
                   <div className="flex h-full w-full flex-col justify-between">
                     <h2
-                      className="text-palText mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide"
+                      className="mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide text-palText"
                       onClick={handlePostClick}
                     >
                       {post.title}
@@ -155,7 +155,7 @@ const Blog: React.FC<BlogProps> = ({
                             {authorName}
                           </AvatarFallback>
                         </Avatar>
-                        <p className="text-palText font-noto text-xs">
+                        <p className="font-noto text-xs text-palText">
                           {authorName}
                         </p>
                       </div>
@@ -164,9 +164,9 @@ const Blog: React.FC<BlogProps> = ({
                         <div className="flex flex-row items-center text-sm">
                           <MessageCircle
                             size={16}
-                            className="text-palText fill-none"
+                            className="fill-none text-palText"
                           />
-                          <span className="text-palText ml-1">
+                          <span className="ml-1 text-palText">
                             {post.commentCount}
                           </span>
                         </div>
@@ -179,16 +179,18 @@ const Blog: React.FC<BlogProps> = ({
           </ul>
         </section>
         <div className="flex flex-row">
-          <main className="flex-[3]">
+          <main className="mt-8 flex-[3]">
             {/* Pagination (need to test!) */}
-            {paginatedPosts.map((post) => (
-              <div key={post.id}>
-                <div className="rounded bg-transparent text-white ">
-                  <Post post={post} />
+            <div className="mr-4 flex flex-col gap-y-4">
+              {paginatedPosts.map((post) => (
+                <div key={post.id}>
+                  <div className="rounded bg-transparent text-white ">
+                    <Post post={post} />
+                  </div>
+                  <Separator className="mx-auto h-[2px] w-[98%] rounded-full bg-pal2/30" />
                 </div>
-                <Separator className="mx-auto h-[2px] w-[98%] rounded-full bg-pal2/30" />
-              </div>
-            ))}
+              ))}
+            </div>
             {/* Pagination controls */}
             {totalPages > 1 && (
               <div className="mt-8 flex justify-center">
