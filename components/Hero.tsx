@@ -1,11 +1,20 @@
 import Image from "next/image";
-import map from "../public/images/heroDemo.jpg";
+import map from "../public/images/wasHereBg.svg";
 import { Button } from "./ui/button";
 
 const Hero: React.FC = () => {
   return (
-    <div className="absolute inset-0 h-full min-h-[60rem] w-full px-8 ">
-      <div className="bg-moon  mx-auto mt-4 flex w-full justify-center rounded-lg pt-16 ">
+    <div className="h-full min-h-[34rem] w-full px-8 ">
+      <div className="absolute inset-0 -z-10 w-full">
+        <Image
+          src={map}
+          alt="hero"
+          width={896}
+          height={384}
+          className="flex max-h-[40rem] w-full justify-center rounded-xl object-cover object-center"
+        ></Image>
+      </div>
+      <div className="relative mx-auto mt-4 flex justify-center rounded-lg pt-16 ">
         <div className="mx-auto flex max-w-3xl flex-col justify-center text-center">
           <h1 className="block font-display text-3xl font-bold text-pal3 sm:text-4xl md:text-5xl">
             Leave Your Mark on the World
@@ -18,22 +27,12 @@ const Hero: React.FC = () => {
             <div className="rounded-md shadow">
               <Button
                 size="lg"
-                className="bg-pal2 text-base font-bold text-stone-50 shadow-lg hover:bg-pal4"
+                className="bg-pal2 text-base font-bold text-pal3 shadow-lg hover:bg-pal4"
               >
                 Get started
               </Button>
             </div>
           </div>
-        </div>
-
-        <div className="absolute -bottom-32 z-30 mx-auto mt-20 flex h-auto max-w-4xl justify-center">
-          {/* <Image
-            src={map}
-            alt="hero"
-            width={896}
-            height={384}
-            className="mx-auto flex min-h-[24rem] w-auto justify-center rounded-xl object-cover object-center"
-          ></Image> */}
         </div>
       </div>
     </div>
