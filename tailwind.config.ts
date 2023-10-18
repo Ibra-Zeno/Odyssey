@@ -23,10 +23,10 @@ module.exports = {
         code: ["'Source Code Pro'", "monospace"],
       },
       colors: {
-        palBg: "#F7F7F7",
+        palBg: "#9ab0a6",
         pal1: "#F2E7D5",
         pal2: "#6D9886",
-        pal3: "#393E46",
+        pal3: "#e7e7e7",
         pal4: "#51908a",
         pal5: "#3d607b",
         pal6: "#B46060",
