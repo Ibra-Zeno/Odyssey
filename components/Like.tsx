@@ -27,7 +27,10 @@ const Like: React.FC<{ post: PostProps }> = ({ post }) => {
         console.error("Error fetching likes:", error);
       }
     };
+
+    // Call getLikes to set the initial liked state
     getLikes();
+
     setLikesCount(post.Like.length);
   }, [postId, post.Like, session]);
 
