@@ -115,13 +115,17 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
     <Layout>
       <div>
         <div className=" flex flex-col items-center justify-center gap-x-2">
-          <Avatar className="h-28 w-28">
-            <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
+          <Avatar className="shadow-palText/10 h-28 w-28 shadow-xl">
+            <AvatarImage
+              src={avatarImage}
+              className=""
+              alt={authorName ?? undefined}
+            />
             <AvatarFallback className="">{authorName}</AvatarFallback>
           </Avatar>
           <div className="mt-3 flex flex-col gap-y-1 text-center font-display ">
-            <p className="text-lg font-semibold">{authorName}</p>
-            <p className="font-noto text-sm font-light italic tracking-wide">
+            <p className="text-palText text-lg font-bold">{authorName}</p>
+            <p className="text-palText font-noto text-sm font-light italic tracking-wide">
               {user.email}
             </p>
           </div>
@@ -176,7 +180,7 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
                 </div>
               ) : (
                 <>
-                  <div className="mb-4 block rounded  bg-transparent p-3 text-center font-noto text-base text-slate-800">
+                  <div className="text-palText mb-4 block  rounded bg-transparent p-3 text-center font-noto text-base">
                     {user.bio}
                   </div>
                   {isUser && (
@@ -191,21 +195,28 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
         </div>
         <Tabs
           defaultValue="posts"
-          className="mx-auto max-w-6xl rounded bg-palBg"
+          className="mx-auto max-w-6xl rounded bg-gradient-to-b from-slate-900 to-slate-800"
         >
-          <TabsList className="grid w-full grid-cols-2 font-display text-lg font-semibold">
-            <TabsTrigger value="posts">Posts</TabsTrigger>
-            <TabsTrigger value="likes">Likes</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 bg-transparent font-display text-lg font-semibold ">
+            <TabsTrigger
+              value="posts"
+              className="  font-bold focus:bg-green-300"
+            >
+              Posts
+            </TabsTrigger>
+            <TabsTrigger className="font-bold" value="likes">
+              Likes
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="posts">
-            <div className="flex flex-col gap-y-8">
+            <div className="flex flex-col gap-y-8 px-8">
               {user.posts.map((post) => (
                 <Post key={post.id} post={post} />
               ))}
             </div>
           </TabsContent>
           <TabsContent value="likes">
-            <div className="flex flex-col gap-y-8">
+            <div className="flex flex-col gap-y-8 px-8">
               {user.Like &&
                 user.Like.map((like) => (
                   <Post key={like.id} post={like.post} />
