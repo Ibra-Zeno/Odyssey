@@ -16,12 +16,12 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   };
 
   return (
-    <div className="rounded px-8 py-6">
+    <div className="rounded py-6 pr-8">
       <div className="mb-2 mt-4 flex items-center">
         <div className="flex items-center space-x-2"></div>
       </div>
       <h2
-        className="mb-4 font-display text-xl font-semibold text-pal3"
+        className="text-palText mb-4 cursor-pointer font-display text-xl font-semibold"
         onClick={handlePostClick}
       >
         {post.title}
@@ -44,7 +44,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         )}
         <div className="flex flex-row gap-x-2">
           <Link
-            className="flex flex-row gap-x-2"
+            className="flex cursor-pointer flex-row items-center gap-x-2"
             href={
               authorName !== "Unknown author"
                 ? `/profile/${post.author?.email}`
@@ -60,7 +60,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </div>
       </div>
       <div
-        className=" blog-content-post mt-4 max-h-16 overflow-y-hidden font-noto text-sm text-pal3"
+        className=" blog-content-post text-palText mt-4 max-h-16 cursor-pointer overflow-y-hidden font-noto text-sm "
         dangerouslySetInnerHTML={{ __html: post.content || "" }}
         onClick={handlePostClick}
       />
