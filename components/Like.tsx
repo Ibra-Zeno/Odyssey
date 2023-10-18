@@ -3,13 +3,11 @@ import { PostProps } from "@/utils/types";
 import { useSession } from "next-auth/react";
 import { Heart } from "lucide-react";
 
-// get serverSideProps for likes before render to show red or nah
-
 const Like: React.FC<{ post: PostProps }> = ({ post }) => {
   const { data: session } = useSession();
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
-  const [isUpdating, setIsUpdating] = useState(false); // Track whether a like/unlike action is in progress
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const postId = post.id;
 
@@ -29,41 +27,49 @@ const Like: React.FC<{ post: PostProps }> = ({ post }) => {
         console.error("Error fetching likes:", error);
       }
     };
+    getLikes();
     setLikesCount(post.Like.length);
-  }, [post.Like, session]);
+  }, [postId, post.Like, session]);
 
   const toggleLike = async () => {
     if (!session || isUpdating) return;
-    setIsUpdating(true);
 
-    if (liked) {
-      // Unlike the post
-      try {
+    // Optimistically update the UI
+    setIsUpdating(true);
+    setLiked(!liked); // Toggle the like state
+    setLikesCount((prevCount: number) =>
+      liked ? prevCount - 1 : prevCount + 1,
+    );
+
+    try {
+      // Make the API call
+      if (liked) {
+        // Unlike the post
         const response = await fetch(`/api/like/delete/${postId}`, {
           method: "DELETE",
         });
-        if (response.ok) {
-          setLiked(false);
-          setLikesCount((prevCount: number) => prevCount - 1);
-        } else {
+        if (!response.ok) {
           console.error("Error unliking the post.");
+          // Revert the UI state if there's an error
+          setLiked(true);
+          setLikesCount((prevCount: number) => prevCount - 1);
         }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    } else {
-      // Like the post
-      try {
+      } else {
+        // Like the post
         await fetch(`/api/like/create`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ postId }),
         });
-        setLiked(true);
-        setLikesCount((prevCount: number) => prevCount + 1);
-      } catch (error) {
-        console.error("Error:", error);
+        // No need to revert UI state on success
       }
+    } catch (error) {
+      console.error("Error:", error);
+      // Revert the UI state if there's an error
+      setLiked(!liked);
+      setLikesCount((prevCount: number) =>
+        liked ? prevCount - 1 : prevCount + 1,
+      );
     }
 
     setIsUpdating(false);
@@ -73,12 +79,13 @@ const Like: React.FC<{ post: PostProps }> = ({ post }) => {
     <div className="flex items-center text-inherit">
       <button
         onClick={toggleLike}
+        disabled={isUpdating}
         className={`mr-2 ${liked ? "text-red-500" : "text-gray-500"} ${
           session ? "cursor-pointer" : "cursor-not-allowed"
         }`}
       >
         <Heart
-          className={`${liked ? "fill-red-600" : "fill-none"} text-pal3`}
+          className={`fill-${liked ? "red-600" : "none"} text-pal3`}
           size={16}
         />
       </button>
