@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { tagsArray, tagColourMap } from "../utils/tags";
 import { PostProps, BlogProps } from "../utils/types";
 import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 const postsPerPage = 10;
 
@@ -162,14 +163,14 @@ const Blog: React.FC<BlogProps> = ({
           </ul>
         </section>
         <div className="flex flex-row">
-          <main className="flex-[4]">
+          <main className="flex-[3]">
             {/* Pagination (need to test!) */}
             {paginatedPosts.map((post) => (
               <div key={post.id}>
                 <div className="rounded bg-transparent text-white ">
                   <Post post={post} />
                 </div>
-                <Separator className="mx-auto w-[98%] bg-pal5 opacity-40" />
+                <Separator className="mx-auto w-[98%] bg-sky-900/60" />
               </div>
             ))}
             {/* Pagination controls */}
@@ -192,31 +193,33 @@ const Blog: React.FC<BlogProps> = ({
             )}
           </main>
           {/* Aside for all 12 tags */}
-          <aside className="sticky top-8 mt-8 h-fit w-full flex-1">
-            {tagsArray.map((tag, i) => (
-              <div
-                key={i}
-                className="inline-flex h-fit w-fit bg-transparent px-1 py-0.5 "
-              >
-                <Badge
-                  variant="outline"
-                  className={`${tagColourMap[tag]} border-gray-400/30 font-display tracking-wide text-gray-700 shadow-md `}
-                  onClick={() => setSelectedTag(tag)}
-                  style={{ cursor: "pointer" }}
+          <aside className="sticky top-12 mt-8 h-fit w-full flex-1">
+            <div className="flex w-full flex-row flex-wrap items-center justify-between">
+              {tagsArray.map((tag, i) => (
+                <div
+                  key={i}
+                  className="h-fit w-fit bg-transparent px-1 py-0.5 "
                 >
-                  {tag}
-                </Badge>
-              </div>
-            ))}
+                  <Badge
+                    variant="outline"
+                    className={`${tagColourMap[tag]} border-gray-400/30 px-4 py-2 font-display text-sm tracking-wide text-gray-700 shadow-md `}
+                    onClick={() => setSelectedTag(tag)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {tag}
+                  </Badge>
+                </div>
+              ))}
+            </div>
             {/* Show the "Show Feed" button */}
             {selectedTag && (
               <div className="mt-4 flex justify-center">
-                <button
-                  className="rounded bg-blue-500 px-4 py-2 text-white"
+                <Button
+                  className="rounded px-4 py-2 text-white"
                   onClick={handleShowFeed}
                 >
                   Show All
-                </button>
+                </Button>
               </div>
             )}
           </aside>
