@@ -16,12 +16,12 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   };
 
   return (
-    <div className="rounded py-6 pr-8">
+    <div className="rounded bg-[#bea5aa] p-8">
       <div className="mb-2 mt-4 flex items-center">
         <div className="flex items-center space-x-2"></div>
       </div>
       <h2
-        className="text-palText mb-4 cursor-pointer font-display text-xl font-semibold"
+        className="mb-4 cursor-pointer font-display text-xl font-semibold text-slate-800"
         onClick={handlePostClick}
       >
         {post.title}
@@ -55,12 +55,14 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
               <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
               <AvatarFallback className="">{authorName}</AvatarFallback>
             </Avatar>
-            <p className="font-noto text-xs italic text-pal3">{authorName}</p>
+            <p className="italic#bea5aat-pal3 font-noto text-xs">
+              {authorName}
+            </p>
           </Link>
         </div>
       </div>
       <div
-        className=" blog-content-post text-palText mt-4 max-h-16 cursor-pointer overflow-y-hidden font-noto text-sm "
+        className=" blog-content-post mt-4 max-h-16 cursor-pointer overflow-y-hidden font-noto text-sm text-slate-800 "
         dangerouslySetInnerHTML={{ __html: post.content || "" }}
         onClick={handlePostClick}
       />
