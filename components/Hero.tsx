@@ -9,8 +9,8 @@ const Hero: React.FC = () => {
         <Image
           src={map}
           alt="hero"
-          width={896}
-          height={384}
+          width={100}
+          height={50}
           className="flex max-h-[40rem] w-full justify-center rounded-xl object-cover object-center"
         ></Image>
       </div>
