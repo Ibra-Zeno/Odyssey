@@ -1,7 +1,11 @@
 import prisma from "../../lib/prisma";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSession } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Layout from "../../components/Layout";
 import Post from "../../components/Post"; // Import your Post component here
 import { UserProps } from "../../utils/types"; // Import your User type here
@@ -23,9 +27,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           include: {
             Comment: { select: { id: true } },
             Like: { select: { id: true } },
-            author: {
-              select: { name: true, email: true },
-            },
+            author: true,
             tags: {
               include: { tag: true },
             },
@@ -37,9 +39,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
               include: {
                 Comment: { select: { id: true } },
                 Like: { select: { id: true } },
-                author: {
-                  select: { name: true, email: true },
-                },
+                author: true,
                 tags: {
                   include: { tag: true },
                 },
@@ -87,7 +87,7 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
     setEditedBio(user.bio || "");
   };
 
-  const handleBioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBioChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditedBio(event.target.value);
   };
   // Update the user's bio
@@ -108,69 +108,111 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
     }
   };
 
+  const authorName = user.name ? user.name : "Unknown author";
+  const avatarImage = user.image || undefined;
+
   return (
     <Layout>
       <div>
-        <h2>{user.name}</h2>
-        <p>
-          <strong>Bio:</strong>{" "}
-          {/* Allow user to edit if it is their profile */}
-          {isUser && isEditingBio ? (
-            <>
-              <input type="text" value={editedBio} onChange={handleBioChange} />
-              <button onClick={handleBioUpdate}>Save</button>
-            </>
-          ) : (
-            <>
-              {user.bio}
-              {isUser && <button onClick={handleEditClick}>Edit</button>}
-            </>
+        <div className=" flex flex-col items-center justify-center gap-x-2">
+          <Avatar className="h-28 w-28">
+            <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
+            <AvatarFallback className="">{authorName}</AvatarFallback>
+          </Avatar>
+          <div className="mt-3 flex flex-col gap-y-1 text-center font-display ">
+            <p className="text-lg font-semibold">{authorName}</p>
+            <p className="font-noto text-sm font-light italic tracking-wide">
+              {user.email}
+            </p>
+          </div>
+        </div>
+        {/* Creating bio */}
+        <div className="pb-8 pt-3">
+          {!user.bio && isUser && (
+            <div className="mb-8 flex justify-center">
+              {!isEditingBio && (
+                <Button
+                  onClick={handleEditClick}
+                  className=""
+                  hidden={isEditingBio}
+                >
+                  Create Bio
+                </Button>
+              )}
+              {isUser && isEditingBio && (
+                <>
+                  <div className="relative flex w-full max-w-4xl flex-col gap-y-3">
+                    <div>
+                      <Textarea
+                        className="w-full"
+                        typeof="text"
+                        onChange={(e) => handleBioChange(e)}
+                      />
+                    </div>
+                    <div className="flex flex-row justify-center gap-x-4">
+                      <Button onClick={handleBioUpdate}>Save</Button>
+                      <Button onClick={() => setIsEditingBio(false)}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           )}
-        </p>
-        <div>
-          <button
-            onClick={() => handleTabChange("posts")}
-            className={`${
-              activeTab === "posts"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-300 text-gray-700"
-            } rounded-md px-4 py-2 transition duration-300 ease-in-out`}
-          >
-            Posts
-          </button>
-          <button
-            onClick={() => handleTabChange("likes")}
-            className={`${
-              activeTab === "likes"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-300 text-gray-700"
-            } rounded-md px-4 py-2 transition duration-300 ease-in-out`}
-          >
-            Likes
-          </button>
-          {activeTab === "posts" && (
-            <>
-              <h3>Posts by {user.name}</h3>
-              {/* Mapping out posts by user */}
+          {/* Editing Bio */}
+          {user.bio && (
+            <div className="mx-auto flex w-full max-w-6xl flex-col justify-center">
+              {/* Allow user to edit if it is their profile */}
+              {isUser && isEditingBio ? (
+                <div className="mb-8">
+                  <Textarea
+                    typeof="text"
+                    onChange={(e) => handleBioChange(e)}
+                    placeholder={user.bio}
+                  />
+                  <Button onClick={handleBioUpdate}>Save</Button>
+                  <Button onClick={() => setIsEditingBio(false)}>Cancel</Button>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-4 block rounded  bg-transparent p-3 text-center font-noto text-base text-slate-800">
+                    {user.bio}
+                  </div>
+                  {isUser && (
+                    <Button className="mx-auto w-fit" onClick={handleEditClick}>
+                      Edit
+                    </Button>
+                  )}
+                </>
+              )}
+            </div>
+          )}
+        </div>
+        <Tabs
+          defaultValue="posts"
+          className="mx-auto max-w-6xl rounded bg-palBg"
+        >
+          <TabsList className="grid w-full grid-cols-2 font-display text-lg font-semibold">
+            <TabsTrigger value="posts">Posts</TabsTrigger>
+            <TabsTrigger value="likes">Likes</TabsTrigger>
+          </TabsList>
+          <TabsContent value="posts">
+            <div className="flex flex-col gap-y-8">
               {user.posts.map((post) => (
                 <Post key={post.id} post={post} />
               ))}
-            </>
-          )}
-          {activeTab === "likes" && (
-            <>
-              <h3>Likes by {user.name}</h3>
+            </div>
+          </TabsContent>
+          <TabsContent value="likes">
+            <div className="flex flex-col gap-y-8">
               {user.Like &&
                 user.Like.map((like) => (
                   <Post key={like.id} post={like.post} />
                 ))}
-            </>
-          )}
-
-          {/* 
-          // Mapping out the user's likes
-           */}
-        </div>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </Layout>
   );
