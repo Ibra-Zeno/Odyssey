@@ -7,7 +7,7 @@ import Hero from "../components/Hero";
 import { Separator } from "@/components/ui/separator";
 import Like from "../components/Like";
 import { Badge } from "@/components/ui/badge";
-import { MessageCircle, MapPin } from "lucide-react";
+import { MessageCircle, MapPin, Flame } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { tagsArray, tagColourMap } from "../utils/tags";
 import { PostProps, BlogProps } from "../utils/types";
@@ -103,10 +103,19 @@ const Blog: React.FC<BlogProps> = ({
   return (
     <Layout>
       <Hero />
-      <div className="mt-44 gap-x-6">
+      <div className="-mt-52 gap-x-6">
         {/* Top Like Posts */}
-        <section className="isolate z-30 mx-auto flex max-w-7xl flex-col flex-wrap overflow-y-visible">
-          <ul className="grid grid-cols-3 gap-x-8 gap-y-6 rounded bg-palBg p-4 shadow-xl">
+        <section className="isolate z-30 mx-auto flex w-full flex-col flex-wrap overflow-y-visible rounded border-4 border-pal2/10 bg-slate-600/40 p-4 shadow-xl backdrop-blur-lg">
+          <div className="mb-2 flex flex-row items-center gap-x-2">
+            <Flame
+              className="rounded-full fill-amber-700 p-[2px] text-red-500"
+              strokeWidth={1.8}
+            />
+            <h4 className="text-palText font-display text-sm font-semibold">
+              Hot Posts
+            </h4>
+          </div>
+          <ul className="grid grid-cols-3 gap-x-3 gap-y-2 ">
             {topLikedPosts.map((post) => {
               const avatarImage = post?.author?.image || undefined;
               const handlePostClick = () => {
@@ -118,19 +127,19 @@ const Blog: React.FC<BlogProps> = ({
               return (
                 <li
                   key={post.id}
-                  className="flex flex-row gap-x-4 rounded bg-gray-100 p-6"
+                  className="flex flex-row gap-x-4 rounded bg-slate-700 p-6"
                 >
                   {/* flex max-w-sm flex-shrink-0 flex-col items-baseline justify-between rounded bg-transparent p-4 */}
                   <div>
                     <MapPin
                       opacity={0.6}
-                      size={30}
-                      className="text-pal rounded border-2  border-pal2/30 p-[3px] text-pal2"
+                      size={44}
+                      className="text-pal rounded text-zinc-600/75"
                     />
                   </div>
                   <div className="flex h-full w-full flex-col justify-between">
                     <h2
-                      className="mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide"
+                      className="text-palText mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide"
                       onClick={handlePostClick}
                     >
                       {post.title}
@@ -146,13 +155,20 @@ const Blog: React.FC<BlogProps> = ({
                             {authorName}
                           </AvatarFallback>
                         </Avatar>
-                        <p className="font-noto text-xs">{authorName}</p>
+                        <p className="text-palText font-noto text-xs">
+                          {authorName}
+                        </p>
                       </div>
                       <div className="flex w-fit items-end gap-x-4">
                         <Like post={post} />
                         <div className="flex flex-row items-center text-sm">
-                          <MessageCircle size={16} className="fill-none" />
-                          <span className="ml-1">{post.commentCount}</span>
+                          <MessageCircle
+                            size={16}
+                            className="text-palText fill-none"
+                          />
+                          <span className="text-palText ml-1">
+                            {post.commentCount}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -170,7 +186,7 @@ const Blog: React.FC<BlogProps> = ({
                 <div className="rounded bg-transparent text-white ">
                   <Post post={post} />
                 </div>
-                <Separator className="mx-auto w-[98%] bg-sky-900/60" />
+                <Separator className="mx-auto h-[2px] w-[98%] rounded-full bg-pal2/30" />
               </div>
             ))}
             {/* Pagination controls */}
@@ -202,7 +218,7 @@ const Blog: React.FC<BlogProps> = ({
                 >
                   <Badge
                     variant="outline"
-                    className={`${tagColourMap[tag]} border-gray-400/30 px-4 py-2 font-display text-sm tracking-wide text-gray-700 shadow-md `}
+                    className={`border-gray-400/30 bg-slate-300 px-3 py-0.5 font-sans text-base tracking-wide text-gray-800 shadow-md `}
                     onClick={() => setSelectedTag(tag)}
                     style={{ cursor: "pointer" }}
                   >
