@@ -89,7 +89,9 @@ const Post: React.FC<PostProps> = (props) => {
   return (
     <Layout>
       <div className="page mx-auto max-w-3xl">
-        <h2 className="mb-6 font-display text-3xl font-bold">{title}</h2>
+        <h2 className="text-palText mb-6 font-display text-3xl font-bold">
+          {title}
+        </h2>
         <div className="mb-6 flex flex-row justify-between">
           {props.tags && (
             <div className="flex items-center space-x-1">
@@ -117,7 +119,9 @@ const Post: React.FC<PostProps> = (props) => {
               <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
               <AvatarFallback className="">{authorName}</AvatarFallback>
             </Avatar>
-            <p className="font-noto text-xs italic text-pal3">{authorName}</p>
+            <p className="text-palText font-noto text-xs italic">
+              {authorName}
+            </p>
           </Link>
         </div>
 
@@ -132,7 +136,7 @@ const Post: React.FC<PostProps> = (props) => {
         )}
 
         <div
-          className="blog-content font-noto text-[20px] leading-[32px]"
+          className="blog-content text-palText font-noto text-[20px] leading-[32px]"
           dangerouslySetInnerHTML={{ __html: props.content ?? "" }}
         />
         <div className="flex justify-between gap-x-4">
