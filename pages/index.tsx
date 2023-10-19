@@ -105,7 +105,7 @@ const Blog: React.FC<BlogProps> = ({
       <Hero />
       <div className="-mt-52 gap-x-6">
         {/* Top Like Posts */}
-        <section className="isolate z-30 mx-auto flex w-full flex-col flex-wrap overflow-y-visible rounded border-4 border-pal2/10 bg-slate-600/40 p-4 shadow-xl backdrop-blur-lg">
+        <section className="isolate z-30 mx-auto flex w-full flex-col flex-wrap overflow-y-visible rounded border-4 border-pal2/10 bg-[#697987]/40 p-4 shadow-xl backdrop-blur-lg">
           <div className="mb-4 flex flex-row items-end justify-center gap-x-2">
             <Flame
               className="rounded-full fill-amber-700 p-[2px] text-red-500"
@@ -127,13 +127,13 @@ const Blog: React.FC<BlogProps> = ({
               return (
                 <li
                   key={post.id}
-                  className="flex flex-row gap-x-4 rounded bg-slate-700 p-6"
+                  className="flex flex-row gap-x-4 rounded bg-[#0f3951]/80 p-6"
                 >
                   {/* flex max-w-sm flex-shrink-0 flex-col items-baseline justify-between rounded bg-transparent p-4 */}
                   <div>
                     <MapPin
                       opacity={0.6}
-                      size={44}
+                      size={42}
                       className="text-pal rounded text-zinc-600/75"
                     />
                   </div>
