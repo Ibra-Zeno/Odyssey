@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
+import Image from "next/image";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import Layout from "../../components/Layout";
@@ -88,55 +89,86 @@ const Post: React.FC<PostProps> = (props) => {
 
   return (
     <Layout>
-      <div className="page mx-auto max-w-3xl">
-        <h2 className="text-palText mb-6 font-display text-3xl font-bold">
+      <div className="pointer-events-none absolute inset-0 -z-0">
+        <Image
+          src="/images/Moon.svg"
+          alt="Hero"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+        ></Image>
+      </div>
+      <div className="isolate mx-auto max-w-4xl rounded-md bg-pal3 p-8">
+        <h2 className="mb-2 text-left font-display text-3xl font-bold text-slate-800">
           {title}
         </h2>
-        <div className="mb-6 flex flex-row justify-between">
-          {props.tags && (
-            <div className="flex items-center space-x-1">
-              {props.tags.map((postTag) => (
-                <Badge
-                  key={postTag.tag.id}
-                  className={`font-display font-semibold tracking-wider text-sky-950 shadow-sm ${
-                    tagColourMap[postTag.tag.name] || "bg-gray-300"
-                  } text-xs`}
-                >
-                  {postTag.tag.name}
-                </Badge>
-              ))}
-            </div>
-          )}
-          <Link
-            className="flex flex-row items-center gap-x-2"
-            href={
-              authorName !== "Unknown author"
-                ? `/profile/${props.author?.email}`
-                : ""
-            }
-          >
-            <Avatar className="h-8 w-8">
-              <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
-              <AvatarFallback className="">{authorName}</AvatarFallback>
-            </Avatar>
-            <p className="text-palText font-noto text-xs italic">
-              {authorName}
+        {props.tags.length !== 0 ? (
+          <div className="mb-6 flex flex-row justify-between">
+            {props.tags && (
+              <div className="flex items-center space-x-1">
+                {props.tags.map((postTag) => (
+                  <Badge
+                    key={postTag.tag.id}
+                    className={`font-display font-semibold tracking-wider text-sky-950 shadow-sm ${
+                      tagColourMap[postTag.tag.name] || "bg-gray-300"
+                    } text-xs`}
+                  >
+                    {postTag.tag.name}
+                  </Badge>
+                ))}
+              </div>
+            )}
+            <Link
+              className="flex flex-row items-center gap-x-2"
+              href={
+                authorName !== "Unknown author"
+                  ? `/profile/${props.author?.email}`
+                  : ""
+              }
+            >
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
+                <AvatarFallback className="">{authorName}</AvatarFallback>
+              </Avatar>
+              <p className="font-noto text-xs italic text-slate-800">
+                {authorName}
+              </p>
+            </Link>
+          </div>
+        ) : (
+          <div className="mb-6 flex w-full flex-row">
+            <p className="mr-0.5 text-right font-noto text-xs italic text-slate-800">
+              Authored by
             </p>
-          </Link>
-        </div>
+            <Link
+              className=""
+              href={
+                authorName !== "Unknown author"
+                  ? `/profile/${props.author?.email}`
+                  : ""
+              }
+            >
+              <p className="font-noto text-xs italic text-slate-800 underline underline-offset-2 hover:text-pal6">
+                {authorName}
+              </p>
+            </Link>
+          </div>
+        )}
 
         {props.published && (
-          <div className="mb-4 flex flex-row items-center gap-x-4 border-y border-y-pal3/25 py-3">
+          <div className="mb-4 flex flex-row items-center gap-x-4 border-y border-y-pal5 py-3">
             <Like post={props} />
             <div className="flex flex-row items-end text-sm">
-              <MessageCircle size={16} className="fill-none text-pal3" />
-              <span className="ml-1 text-pal3">{props.Comment.length}</span>
+              <MessageCircle size={16} className="fill-none text-stone-800" />
+              <span className="ml-1 text-stone-800">
+                {props.Comment.length}
+              </span>
             </div>
           </div>
         )}
 
         <div
-          className="blog-content text-palText font-noto text-[20px] leading-[32px]"
+          className="blog-content font-noto text-[20px] leading-[32px] text-slate-800"
           dangerouslySetInnerHTML={{ __html: props.content ?? "" }}
         />
         <div className="flex justify-between gap-x-4">
@@ -156,7 +188,7 @@ const Post: React.FC<PostProps> = (props) => {
                 )}
                 <Button
                   onClick={() => editPost(props.id)}
-                  className="border-2 border-[#3d607b]/90 font-display font-medium tracking-wider text-pal3 hover:bg-[#3d607b] hover:text-palBg"
+                  className="border-2 border-[#3d607b]/90 font-display font-medium tracking-wider text-stone-800 hover:bg-[#3d607b] hover:text-stone-200"
                   variant={"ghost"}
                 >
                   Edit
