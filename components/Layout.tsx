@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import Header from "./Header";
+import { Toaster } from "@/components/ui/toaster";
 
 interface LayoutProps {
   children: ReactNode;
@@ -16,6 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <div className="relative z-10 h-full w-full">
         <Header />
         <div className="container mx-auto min-h-screen p-8">{children}</div>
+        <Toaster />
       </div>
     </div>
   );
