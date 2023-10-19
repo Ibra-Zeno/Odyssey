@@ -115,7 +115,7 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
     <Layout>
       <div>
         <div className=" flex flex-col items-center justify-center gap-x-2">
-          <Avatar className="shadow-palText/10 h-28 w-28 shadow-xl">
+          <Avatar className="h-28 w-28 shadow-xl shadow-palText/10">
             <AvatarImage
               src={avatarImage}
               className=""
@@ -124,8 +124,8 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
             <AvatarFallback className="">{authorName}</AvatarFallback>
           </Avatar>
           <div className="mt-3 flex flex-col gap-y-1 text-center font-display ">
-            <p className="text-palText text-lg font-bold">{authorName}</p>
-            <p className="text-palText font-noto text-sm font-light italic tracking-wide">
+            <p className="text-lg font-bold text-palText">{authorName}</p>
+            <p className="font-noto text-sm font-light italic tracking-wide text-palText">
               {user.email}
             </p>
           </div>
@@ -180,7 +180,7 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
                 </div>
               ) : (
                 <>
-                  <div className="text-palText mb-4 block  rounded bg-transparent p-3 text-center font-noto text-base">
+                  <div className="mb-4 block rounded  bg-transparent p-3 text-center font-noto text-base text-palText">
                     {user.bio}
                   </div>
                   {isUser && (
@@ -195,16 +195,16 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
         </div>
         <Tabs
           defaultValue="posts"
-          className="mx-auto max-w-6xl rounded bg-gradient-to-b from-slate-900 to-slate-800"
+          className="mx-auto max-w-6xl rounded bg-pal3"
         >
           <TabsList className="grid w-full grid-cols-2 bg-transparent font-display text-lg font-semibold ">
             <TabsTrigger
               value="posts"
-              className="  font-bold focus:bg-green-300"
+              className="my-4 font-bold"
             >
               Posts
             </TabsTrigger>
-            <TabsTrigger className="font-bold" value="likes">
+            <TabsTrigger className="my-4 font-bold" value="likes">
               Likes
             </TabsTrigger>
           </TabsList>
