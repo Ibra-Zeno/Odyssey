@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { options } from "../pages/api/auth/[...nextauth]";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
+import Image from "next/image";
 import prisma from "../lib/prisma";
 import { DraftsProps } from "../utils/types";
 import { GetServerSidePropsContext } from "next";
@@ -47,14 +48,25 @@ const Drafts: React.FC<DraftsProps> = ({ drafts }) => {
 
   return (
     <Layout>
-      <div className="page">
+      <div className="pointer-events-none absolute inset-0 -z-0">
+        <Image
+          src="/images/Moon.svg"
+          alt="Hero"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+        ></Image>
+      </div>
+      <div className="isolate mx-auto max-w-7xl">
         <h1 className="mb-4 text-2xl font-bold">My Drafts</h1>
         <main>
-          {drafts.map((post: any) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))}
+          <section className="mx-auto flex  flex-col gap-y-4">
+            {drafts.map((post: any) => (
+              <div key={post.id} className="post">
+                <Post post={post} />
+              </div>
+            ))}
+          </section>
         </main>
       </div>
     </Layout>
