@@ -13,6 +13,7 @@ import { PostProps } from "../../utils/types";
 import Comment from "../../components/Comments";
 import Like from "../../components/Like";
 import { tagColourMap } from "../../utils/tags";
+import { Separator } from "@/components/ui/separator";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params || typeof params.id !== "string") {
@@ -103,7 +104,7 @@ const Post: React.FC<PostProps> = (props) => {
           {title}
         </h2>
         {props.tags.length !== 0 ? (
-          <div className="mb-6 flex flex-row justify-between">
+          <div className="mb-6 mt-2 flex flex-row justify-between">
             {props.tags && (
               <div className="flex items-center space-x-1">
                 {props.tags.map((postTag) => (
@@ -137,7 +138,7 @@ const Post: React.FC<PostProps> = (props) => {
           </div>
         ) : (
           <div className="mb-6 flex w-full flex-row">
-            <p className="mr-0.5 text-right font-noto text-xs italic text-slate-800">
+            <p className="mb-4 mr-0.5 text-right font-noto text-xs italic text-slate-800">
               Authored by
             </p>
             <Link
@@ -155,9 +156,9 @@ const Post: React.FC<PostProps> = (props) => {
           </div>
         )}
 
-        {props.published && (
+        {props.published ? (
           <div className="mb-4 flex flex-row items-center gap-x-4 border-y border-y-pal5 py-3">
-            <Like post={props} />
+            <Like post={props} colorMode="dark" />
             <div className="flex flex-row items-end text-sm">
               <MessageCircle size={16} className="fill-none text-stone-800" />
               <span className="ml-1 text-stone-800">
@@ -165,6 +166,8 @@ const Post: React.FC<PostProps> = (props) => {
               </span>
             </div>
           </div>
+        ) : (
+          <Separator className="mx-auto mb-5 w-[90%] bg-stone-500/50" />
         )}
 
         <div
@@ -179,7 +182,7 @@ const Post: React.FC<PostProps> = (props) => {
                   <Button
                     variant={"default"}
                     onClick={() => publishPost(props.id)}
-                    className="bg-pal2 font-display font-medium tracking-wider text-palBg hover:bg-pal4"
+                    className="bg-pal2 font-display font-medium tracking-wider text-white hover:bg-pal6"
                   >
                     Publish
                   </Button>
