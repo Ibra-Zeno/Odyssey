@@ -50,12 +50,6 @@ const SearchBar: React.FC = () => {
     handleSearch(data.query);
   };
 
-  const handleIconClick = () => {
-    if (form.getValues()) {
-      handleSearchSubmit(form.getValues());
-    }
-  };
-
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -105,10 +99,7 @@ const SearchBar: React.FC = () => {
         autoComplete="off"
         onKeyDown={handleKeyPress}
       />
-      <div
-        className="pointer absolute right-0 top-0 flex h-full border-spacing-40 cursor-pointer items-center justify-center rounded-md p-2"
-        onClick={handleIconClick}
-      >
+      <div className="pointer absolute right-0 top-0 flex h-full border-spacing-40 cursor-pointer items-center justify-center rounded-md p-2">
         <Search
           size={20}
           className="pointer flex items-center text-stone-700"
@@ -130,7 +121,7 @@ const SearchBar: React.FC = () => {
           ) : (
             searchResults.map((result, index) => (
               <Link key={result.id} href={`/p/${result.id}`}>
-                <div className="cursor-pointer border-t-2 border-slate-300 border-opacity-5 px-2 py-5  font-noto text-sm font-semibold hover:bg-stone-300">
+                <div className="cursor-pointer border-t-2 border-slate-300 border-opacity-5 px-2 py-5 font-noto  text-sm font-semibold text-stone-700 hover:bg-stone-300">
                   {result.title}
                 </div>
                 <Separator className="mx-auto w-[90%] bg-stone-500/50" />
