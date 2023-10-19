@@ -3,7 +3,10 @@ import { PostProps } from "@/utils/types";
 import { useSession } from "next-auth/react";
 import { Heart } from "lucide-react";
 
-const Like: React.FC<{ post: PostProps }> = ({ post }) => {
+const Like: React.FC<{ post: PostProps; colorMode: "light" | "dark" }> = ({
+  post,
+  colorMode,
+}) => {
   const { data: session } = useSession();
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
@@ -79,22 +82,30 @@ const Like: React.FC<{ post: PostProps }> = ({ post }) => {
     <div className="flex items-center text-inherit">
       <button
         onClick={toggleLike}
-        disabled={isUpdating} // Disable the button only when an action is in progress
-        className={`mr-2 ${liked ? "text-red-500" : "text-gray-500"} ${
+        disabled={isUpdating}
+        className={`mr-1.5 ${
           session ? "cursor-pointer" : "cursor-not-allowed"
         }`}
       >
         {liked ? (
-          <Heart className="fill-red-700 text-pal3" size={16} />
+          <Heart className="text-none fill-red-700" stroke="none" size={16} />
         ) : (
-          <Heart className="fill-none text-pal3" size={16} />
+          <Heart
+            className={`fill-none text-gray-500 text-${
+              colorMode === "dark" ? "stone-800" : "stone-200"
+            }`}
+            stroke={colorMode === "dark" ? "#27272a" : "#e7e5e4"}
+            size={16}
+          />
         )}
-        {/* <Heart
-          className={`fill-${liked ? "red-600" : "none"} text-pal3`}
-          size={16}
-        /> */}
       </button>
-      <p className="text-sm text-pal3">{likesCount}</p>
+      <p
+        className={`text-sm text-${
+          colorMode === "light" ? "palText" : "stone-800"
+        }`}
+      >
+        {likesCount}
+      </p>
     </div>
   );
 };
