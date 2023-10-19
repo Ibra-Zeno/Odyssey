@@ -14,7 +14,7 @@ export default async function handle(
 
     const likes = await prisma.like.findMany({
       where: {
-        postId: postId.toString(),
+        postId: postId as string,
       },
       include: {
         author: true,
