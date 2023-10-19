@@ -30,7 +30,7 @@ const Header: React.FC = () => {
   const avatarImage = session?.user?.image || undefined;
 
   return (
-    <nav className="relative mx-auto flex w-full max-w-7xl items-center justify-between space-x-0 rounded-sm bg-transparent p-3 px-4 text-pal3 xl:px-8">
+    <nav className="relative z-30 mx-auto flex w-full max-w-7xl items-center justify-between space-x-0 rounded-sm bg-transparent p-3 px-4 text-pal3 xl:px-8">
       <div className="flex items-center space-x-4">
         <SearchBar />
       </div>
@@ -93,6 +93,26 @@ const Header: React.FC = () => {
                   className="font-display font-semibold tracking-wide"
                 >
                   Create
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip delayDuration={100}>
+                <TooltipTrigger>
+                  <button
+                    onClick={() => signOut()}
+                    className="flex rounded-md bg-transparent p-2 text-pal3 duration-300 ease-in-out hover:bg-pal2 hover:text-stone-50 hover:shadow-lg hover:shadow-gray-400"
+                  >
+                    <LogOut />
+                  </button>
+                </TooltipTrigger>
+
+                <TooltipContent
+                  side="bottom"
+                  align="center"
+                  className="font-display font-semibold tracking-wide"
+                >
+                  Log out
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
