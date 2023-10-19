@@ -15,7 +15,7 @@ export const options = {
       id: "demo",
       name: "Demo",
       credentials: {
-        demoLogin: { label: "Demo Login", type: "hidden" },
+        demoLogin: { label: "", type: "hidden" },
       },
       authorize: async (credentials) => {
         const user = await prisma.user.findFirst({
