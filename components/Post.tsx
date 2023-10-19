@@ -16,7 +16,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   };
 
   return (
-    <div className="rounded bg-[#ffe3ef] p-8">
+    <div className="rounded bg-pal3 p-8">
       {post.tags.length !== 0 ? (
         <div>
           <h2
