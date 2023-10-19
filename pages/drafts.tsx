@@ -40,8 +40,12 @@ const Drafts: React.FC<DraftsProps> = ({ drafts }) => {
   if (!session) {
     return (
       <Layout>
-        <h1 className="mb-4 text-2xl font-bold">My Drafts</h1>
-        <div>Have you signed in?</div>
+        <section className="flex h-full w-full flex-col items-center justify-center">
+          <h1 className="mb-4 font-display text-2xl font-bold text-stone-300">
+            My Drafts
+          </h1>
+          <div className="font-noto">Have you signed in?</div>
+        </section>
       </Layout>
     );
   }
@@ -58,7 +62,9 @@ const Drafts: React.FC<DraftsProps> = ({ drafts }) => {
         ></Image>
       </div>
       <div className="isolate mx-auto max-w-7xl">
-        <h1 className="mb-4 text-2xl font-bold">My Drafts</h1>
+        <h1 className="mb-4 font-display text-2xl font-bold text-stone-200">
+          My Drafts
+        </h1>
         <main>
           <section className="mx-auto flex  flex-col gap-y-4">
             {drafts.map((post: any) => (
