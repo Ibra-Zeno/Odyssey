@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
+import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import { Loader2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
 import Layout from "../../components/Layout";
 import { tagsArray } from "../../utils/tags";
@@ -7,14 +12,19 @@ import Select from "react-select";
 
 const QuillEditor = dynamic(() => import("../../components/QuillEditor"), {
   ssr: false, // This will load the component on the client side only
-  loading: () => <p>Loading editor...</p>, // Optional loading component
+  loading: () => (
+    <div className="flex justify-center border-t-2 border-slate-300  border-opacity-5 px-2 py-4 ">
+      <Loader2 className="animate-spin text-stone-700" />
+    </div>
+  ),
 });
 
 const EditPost: React.FC = () => {
-  const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     // Fetch the post to be edited
@@ -54,7 +64,7 @@ const EditPost: React.FC = () => {
       const errorData = await response.json();
       console.error("Update Error:", errorData.error);
     } else {
-      router.push("/drafts");
+      router.push("/");
     }
   };
 
@@ -64,37 +74,60 @@ const EditPost: React.FC = () => {
   }));
   return (
     <Layout>
-      <div className="flex items-center justify-center bg-gray-100 p-12">
-        <form onSubmit={updatePost} className="flex flex-col">
-          <h1 className="mb-4 text-xl">Edit Post</h1>
-          <input
+      <div className="pointer-events-none absolute inset-0 -z-0">
+        <Image
+          src="/images/Moon.svg"
+          alt="Hero"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+        ></Image>
+      </div>
+      <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
+        <form onSubmit={updatePost} className="flex w-full max-w-3xl flex-col">
+          <h1 className="mb-4 font-display text-2xl font-bold">Edit Post</h1>
+          <Input
+            autoFocus
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
             type="text"
-            className="mb-4 rounded-md border p-2"
+            className="mb-4 rounded-md border bg-stone-50 p-2"
           />
           <Select
             options={options}
+            className="rounded-md bg-stone-50 font-noto text-sm"
+            placeholder="Select tags"
             isMulti
             onChange={(selected) =>
               setSelectedTags(selected.map((tag) => tag.value))
             }
             value={selectedTags.map((obj) => ({ value: obj, label: obj }))}
           />
-          <QuillEditor content={content} setContent={setContent} />
-          <button
-            type="submit"
-            className="mb-4 rounded-md bg-gray-300 px-6 py-2"
-          >
-            Save Changes
-          </button>
-          <a
-            className="ml-4 cursor-pointer text-blue-500 hover:underline"
-            onClick={() => router.push(`/p/${router.query.id}`)}
-          >
-            or Cancel
-          </a>
+          <div className="mt-6 rounded-lg bg-stone-50 font-noto">
+            <QuillEditor content={content} setContent={setContent} />
+          </div>
+          <div className="mx-auto mt-6 flex flex-row gap-x-6">
+            <Button
+              type="submit"
+              disabled={!content && !title}
+              onClick={() => {
+                toast({
+                  title: "Post Edited 🎉",
+                });
+              }}
+              className="mb-4 rounded-md px-6 py-2"
+            >
+              Save Changes
+            </Button>
+            <Button
+              className="ml-4 cursor-pointer"
+              variant={"destructive"}
+              onClick={() => router.push(`/p/${router.query.id}`)}
+            >
+              Cancel
+            </Button>
+          </div>
         </form>
       </div>
     </Layout>
