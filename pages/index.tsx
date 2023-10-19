@@ -160,7 +160,7 @@ const Blog: React.FC<BlogProps> = ({
                         </p>
                       </div>
                       <div className="flex w-fit items-end gap-x-4">
-                        <Like post={post} />
+                        <Like post={post} colorMode="light" />
                         <div className="flex flex-row items-center text-sm">
                           <MessageCircle
                             size={16}
