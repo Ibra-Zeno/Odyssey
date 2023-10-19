@@ -27,10 +27,7 @@ const Like: React.FC<{ post: PostProps }> = ({ post }) => {
         console.error("Error fetching likes:", error);
       }
     };
-
-    // Call getLikes to set the initial liked state
     getLikes();
-
     setLikesCount(post.Like.length);
   }, [postId, post.Like, session]);
 
@@ -82,15 +79,20 @@ const Like: React.FC<{ post: PostProps }> = ({ post }) => {
     <div className="flex items-center text-inherit">
       <button
         onClick={toggleLike}
-        disabled={isUpdating}
+        disabled={isUpdating} // Disable the button only when an action is in progress
         className={`mr-2 ${liked ? "text-red-500" : "text-gray-500"} ${
           session ? "cursor-pointer" : "cursor-not-allowed"
         }`}
       >
-        <Heart
+        {liked ? (
+          <Heart className="fill-red-700 text-pal3" size={16} />
+        ) : (
+          <Heart className="fill-none text-pal3" size={16} />
+        )}
+        {/* <Heart
           className={`fill-${liked ? "red-600" : "none"} text-pal3`}
           size={16}
-        />
+        /> */}
       </button>
       <p className="text-sm text-pal3">{likesCount}</p>
     </div>
