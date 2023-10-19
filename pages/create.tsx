@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useToast } from "@/components/ui/use-toast";
 import Layout from "../components/Layout";
 import { tagsArray } from "../utils/tags";
+import { Loader2 } from "lucide-react";
 import Select from "react-select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,11 @@ import { Button } from "@/components/ui/button";
 // Dynamically import the QuillEditor component
 const QuillEditor = dynamic(() => import("../components/QuillEditor"), {
   ssr: false, // This will load the component on the client side only
-  loading: () => <p>Loading editor...</p>, // Optional loading component
+  loading: () => (
+    <div className="flex justify-center border-t-2 border-slate-300  border-opacity-5 px-2 py-4 ">
+      <Loader2 className="animate-spin text-stone-700" />
+    </div>
+  ), // Optional loading component
 });
 
 const Draft: React.FC = () => {
@@ -62,7 +67,7 @@ const Draft: React.FC = () => {
           objectPosition="center"
         ></Image>
       </div>
-      <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-[#ffe5ca]/75 p-12 shadow-lg">
+      <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
         <form onSubmit={submitData} className="flex w-full max-w-3xl flex-col">
           <h1 className="mb-4 font-display text-2xl font-bold">New Draft</h1>
           <Input
@@ -71,19 +76,19 @@ const Draft: React.FC = () => {
             placeholder="Title"
             type="text"
             value={title}
-            className="mb-4 rounded-md border p-2"
+            className="mb-4 rounded-md border bg-stone-50 p-2"
           />
           <Select
             options={options}
             isMulti
             placeholder="Select tags"
-            className="rounded-md font-noto text-sm selection:ring selection:ring-pal2 focus:ring focus:ring-pal2"
+            className="rounded-md bg-stone-50 font-noto text-sm"
             onChange={(selected) =>
               setSelectedTags(selected.map((tag) => tag.value))
             }
             value={selectedTags.map((tag) => ({ value: tag, label: tag }))}
           />
-          <div className="mt-6 min-h-[300px] rounded-lg bg-white font-noto">
+          <div className="mt-6 rounded-lg bg-stone-50 font-noto">
             <QuillEditor content={content} setContent={setContent} />
           </div>
           <div className="mx-auto mt-6 flex flex-row gap-x-6">
