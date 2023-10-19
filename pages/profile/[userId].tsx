@@ -195,28 +195,28 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
         </div>
         <Tabs
           defaultValue="posts"
-          className="mx-auto max-w-6xl rounded bg-pal3"
+          className="mx-auto max-w-6xl rounded bg-[#474554] pb-4"
         >
-          <TabsList className="grid w-full grid-cols-2 bg-transparent font-display text-lg font-semibold ">
+          <TabsList className="grid w-full grid-cols-2 bg-[#4e5a6e] bg-transparent font-display text-lg font-semibold text-stone-50">
             <TabsTrigger
               value="posts"
-              className="my-4 font-bold"
+              className=" py-3 font-bold selection:bg-[#4e5a6e]"
             >
               Posts
             </TabsTrigger>
-            <TabsTrigger className="my-4 font-bold" value="likes">
+            <TabsTrigger className=" py-3 font-bold" value="likes">
               Likes
             </TabsTrigger>
           </TabsList>
           <TabsContent value="posts">
-            <div className="flex flex-col gap-y-8 px-8">
+            <div className="my-12 flex flex-col gap-y-8 px-8">
               {user.posts.map((post) => (
                 <Post key={post.id} post={post} />
               ))}
             </div>
           </TabsContent>
           <TabsContent value="likes">
-            <div className="flex flex-col gap-y-8 px-8">
+            <div className="my-12 flex flex-col gap-y-8 px-8">
               {user.Like &&
                 user.Like.map((like) => (
                   <Post key={like.id} post={like.post} />
