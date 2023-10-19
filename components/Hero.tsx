@@ -1,6 +1,7 @@
 import Image from "next/image";
 import map from "../public/images/wasHereBg.svg";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 const Hero: React.FC = () => {
   return (
@@ -25,12 +26,14 @@ const Hero: React.FC = () => {
           </p>
           <div className="mt-8 sm:mt-8 sm:flex sm:justify-center lg:justify-center">
             <div className="rounded-md shadow">
-              <Button
-                size="lg"
-                className="bg-pal2 text-base font-bold text-pal3 shadow-lg hover:bg-pal4"
-              >
-                Get started
-              </Button>
+              <Link href="/api/auth/signin">
+                <Button
+                  size="lg"
+                  className="bg-pal2 text-base font-bold text-pal3 shadow-lg hover:bg-pal4"
+                >
+                  Get started
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
