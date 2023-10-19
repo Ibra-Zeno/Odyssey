@@ -16,12 +16,9 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   };
 
   return (
-    <div className="rounded bg-[#bea5aa] p-8">
-      <div className="mb-2 mt-4 flex items-center">
-        <div className="flex items-center space-x-2"></div>
-      </div>
+    <div className="rounded bg-[#ffe3ef] p-8">
       <h2
-        className="mb-4 cursor-pointer font-display text-xl font-semibold text-slate-800"
+        className="mb-4 cursor-pointer font-display text-xl font-bold text-slate-800"
         onClick={handlePostClick}
       >
         {post.title}
@@ -55,7 +52,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
               <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
               <AvatarFallback className="">{authorName}</AvatarFallback>
             </Avatar>
-            <p className="italic#bea5aat-pal3 font-noto text-xs">
+            <p className="font-noto text-xs italic text-slate-800">
               {authorName}
             </p>
           </Link>
