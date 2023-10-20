@@ -22,7 +22,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
 
   return (
     <div
-      className="cursor-pointer rounded bg-pal3 p-8 transition-all duration-300 ease-in-out hover:bg-[#ffe3f0] hover:shadow-2xl"
+      className="cursor-pointer rounded bg-pal3/80 p-8 transition-all duration-300 ease-in-out hover:bg-[#ffe3f0] hover:shadow-2xl"
       onClick={handlePostClick}
     >
       {post.tags.length !== 0 ? (
