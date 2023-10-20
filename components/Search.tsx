@@ -35,10 +35,10 @@ const SearchBar: React.FC = () => {
   const handleSearch = async (query: string) => {
     try {
       setIsLoading(true);
+      setShowDropdown(true);
       const response = await fetch(`/api/search?q=${query}`);
       const results: SearchResult[] = await response.json();
       setSearchResults(results);
-      setShowDropdown(true);
     } catch (error) {
       console.error("Error searching:", error);
     } finally {
@@ -90,10 +90,10 @@ const SearchBar: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="pointer-events-auto relative">
       <Input
         {...form.register("query")}
-        className="rounded-md border-2 border-gray-400 border-opacity-25 bg-stone-200 py-2 pl-3 text-stone-700 placeholder-blue-700 focus:ring focus:ring-red-400 lg:w-72 xl:w-96"
+        className="mx-8 w-screen rounded-md border-2 border-gray-400 border-opacity-25 bg-stone-200 py-2 pl-3 text-stone-700 placeholder-blue-700 focus:ring focus:ring-red-400 sm:mx-0 lg:w-72 xl:w-96"
         type="text"
         placeholder="Search..."
         autoComplete="off"
