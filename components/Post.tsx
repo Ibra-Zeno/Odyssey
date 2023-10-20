@@ -14,15 +14,20 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const handlePostClick = () => {
     Router.push("/p/[id]", `/p/${post.id}`);
   };
+  const handleAuthorClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) => {
+    e.stopPropagation(); // Prevent the click event from propagating to the parent container
+  };
 
   return (
-    <div className="rounded bg-pal3 p-8">
+    <div
+      className="cursor-pointer rounded bg-pal3 p-8 transition-all duration-300 ease-in-out hover:bg-[#ffe3f0] hover:shadow-2xl"
+      onClick={handlePostClick}
+    >
       {post.tags.length !== 0 ? (
         <div>
-          <h2
-            className="mb-4 cursor-pointer font-display text-xl font-bold text-slate-800"
-            onClick={handlePostClick}
-          >
+          <h2 className="mb-4 cursor-pointer font-display text-xl font-bold text-slate-800">
             {post.title}
           </h2>
           <div className="mb-3 flex flex-row justify-between">
@@ -49,6 +54,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
                     ? `/profile/${post.author?.email}`
                     : ""
                 }
+                onClick={handleAuthorClick}
               >
                 <Avatar className="h-5 w-5">
                   <AvatarImage
@@ -57,7 +63,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
                   />
                   <AvatarFallback className="">{authorName}</AvatarFallback>
                 </Avatar>
-                <p className="font-noto text-xs italic text-slate-800">
+                <p className="font-noto text-xs italic text-slate-800 transition-colors duration-200 ease-in-out hover:text-[#c84575]">
                   {authorName}
                 </p>
               </Link>
@@ -66,10 +72,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </div>
       ) : (
         <div className="flex flex-row items-center justify-between">
-          <h2
-            className="cursor-pointer font-display text-xl font-bold text-slate-800"
-            onClick={handlePostClick}
-          >
+          <h2 className="cursor-pointer font-display text-xl font-bold text-slate-800">
             {post.title}
           </h2>
           <div className="flex min-w-fit flex-row gap-x-2">
@@ -85,7 +88,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
                 <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
                 <AvatarFallback className="">{authorName}</AvatarFallback>
               </Avatar>
-              <p className="font-noto text-xs italic text-slate-800">
+              <p className="font-noto text-xs italic text-slate-800 transition-colors duration-150 ease-in-out hover:text-white">
                 {authorName}
               </p>
             </Link>
@@ -93,9 +96,8 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </div>
       )}
       <div
-        className=" blog-content-post mt-4 max-h-16 cursor-pointer overflow-y-hidden font-noto text-sm text-slate-800 "
+        className=" blog-content-post mt-4 max-h-16 cursor-pointer overflow-y-hidden font-noto text-sm text-slate-800"
         dangerouslySetInnerHTML={{ __html: post.content || "" }}
-        onClick={handlePostClick}
       />
       {post.published && (
         <>
