@@ -104,7 +104,7 @@ const Post: React.FC<PostProps> = (props) => {
           {title}
         </h2>
         {props.tags.length !== 0 ? (
-          <div className="mb-6 mt-2 flex flex-row justify-between">
+          <div className="mb-6 mt-4 flex flex-row justify-between">
             {props.tags && (
               <div className="flex items-center space-x-1">
                 {props.tags.map((postTag) => (
@@ -137,7 +137,7 @@ const Post: React.FC<PostProps> = (props) => {
             </Link>
           </div>
         ) : (
-          <div className="mb-6 flex w-full flex-row">
+          <div className="mb-4 mt-4 flex w-full flex-row">
             <p className="mb-4 mr-0.5 text-right font-noto text-xs italic text-slate-800">
               Authored by
             </p>
@@ -182,7 +182,7 @@ const Post: React.FC<PostProps> = (props) => {
                   <Button
                     variant={"default"}
                     onClick={() => publishPost(props.id)}
-                    className="bg-pal2 font-display font-medium tracking-wider text-white hover:bg-pal6"
+                    className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
                   >
                     Publish
                   </Button>
@@ -191,7 +191,7 @@ const Post: React.FC<PostProps> = (props) => {
                 )}
                 <Button
                   onClick={() => editPost(props.id)}
-                  className="border-2 border-[#3d607b]/90 font-display font-medium tracking-wider text-stone-800 hover:bg-[#3d607b] hover:text-stone-200"
+                  className="bg-pal5 px-5 font-display font-medium tracking-wider text-stone-50 hover:bg-pal5/90 hover:text-stone-200"
                   variant={"ghost"}
                 >
                   Edit
@@ -200,7 +200,7 @@ const Post: React.FC<PostProps> = (props) => {
               <div>
                 <Button
                   onClick={() => deletePost(props.id)}
-                  className="bg-[#B46060] font-display font-medium tracking-wider"
+                  className="ml-4 cursor-pointer font-display text-base font-bold tracking-wide shadow-lg"
                   variant={"destructive"}
                 >
                   Delete
