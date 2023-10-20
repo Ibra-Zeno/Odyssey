@@ -137,7 +137,6 @@ const Blog: React.FC<BlogProps> = ({
                   className="flex cursor-pointer flex-row gap-x-4 rounded bg-[#0f3951]/80 p-6 transition-all duration-300 ease-in-out hover:bg-[#0f3951]/95"
                   onClick={handlePostClick}
                 >
-                  {/* flex max-w-sm flex-shrink-0 flex-col items-baseline justify-between rounded bg-transparent p-4 */}
                   <div>
                     <MapPin
                       opacity={0.6}
@@ -194,7 +193,7 @@ const Blog: React.FC<BlogProps> = ({
           </ul>
         </section>
         <div className="flex flex-row">
-          <main className="mt-8 flex-[3]">
+          <main className="mt-16 flex-[3]">
             {/* Pagination (need to test!) */}
             <div className="mr-4 flex flex-col gap-y-4">
               {paginatedPosts.map((post) => (
@@ -214,8 +213,8 @@ const Blog: React.FC<BlogProps> = ({
                     key={i}
                     className={`${
                       i + 1 === currentPage
-                        ? "bg-pal5 text-white"
-                        : "bg-pal1 text-gray-600 transition-all duration-300 ease-in-out hover:bg-pal5 hover:text-white"
+                        ? "bg-pal4 text-white"
+                        : "bg-pal1 text-gray-600 transition-all duration-300 ease-in-out hover:bg-pal4 hover:text-white"
                     } mx-1 rounded px-4 py-2`}
                     onClick={() => setCurrentPage(i + 1)}
                   >
@@ -226,7 +225,19 @@ const Blog: React.FC<BlogProps> = ({
             )}
           </main>
           {/* Aside for all 12 tags */}
-          <aside className="sticky top-12 mt-8 h-fit w-full flex-1">
+          <aside className="sticky top-12 mt-16 h-fit w-full flex-1">
+            {/* Show the "Show Feed" button */}
+            {selectedTag && (
+              <div className="mb-4 flex justify-center">
+                <Badge
+                  className="cursor-pointer bg-pal4 px-4 py-1 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                  onClick={handleShowFeed}
+                >
+                  Show All
+                </Badge>
+              </div>
+            )}
+            {/* All 12 tags */}
             <div className="flex w-full flex-row flex-wrap items-center justify-center">
               {tagsArray.map((tag, i) => (
                 <div
@@ -244,17 +255,6 @@ const Blog: React.FC<BlogProps> = ({
                 </div>
               ))}
             </div>
-            {/* Show the "Show Feed" button */}
-            {selectedTag && (
-              <div className="mt-4 flex justify-center">
-                <Button
-                  className="rounded px-4 py-2 text-white"
-                  onClick={handleShowFeed}
-                >
-                  Show All
-                </Button>
-              </div>
-            )}
           </aside>
         </div>
       </div>
