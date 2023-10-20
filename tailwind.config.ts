@@ -27,9 +27,9 @@ module.exports = {
         pal1: "#F2E7D5",
         pal2: "#9f5871",
         pal3: "#e7e7e7",
-        pal4: "#51908a",
+        pal4: "#d38878",
         pal5: "#3d607b",
-        pal6: "#B46060",
+        pal6: "#b16c6c",
         palText: "#f5f5f5 ",
       },
       keyframes: {
