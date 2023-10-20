@@ -18,7 +18,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        display: ["Raleway", "sans-serif"],
+        display: ["Roboto", "sans-serif"],
         noto: ["'Source Serif 4'", "serif"],
         code: ["'Source Code Pro'", "monospace"],
       },
