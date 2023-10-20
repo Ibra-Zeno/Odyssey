@@ -101,12 +101,12 @@ const Draft: React.FC = () => {
                   description: "Your post has been saved to drafts.",
                 });
               }}
-              className="mb-4 rounded-md px-6 py-2"
+              className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
             >
-              Create
+              Save
             </Button>
             <Button
-              className="ml-4 cursor-pointer"
+              className="ml-4 cursor-pointer font-display text-base font-bold tracking-wide shadow-lg"
               variant={"destructive"}
               onClick={() => router.push("/")}
             >
