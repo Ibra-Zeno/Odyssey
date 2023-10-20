@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
 import Router from "next/router";
+import Link from "next/link";
 import Hero from "../components/Hero";
 import { Separator } from "@/components/ui/separator";
 import Like from "../components/Like";
@@ -100,6 +101,12 @@ const Blog: React.FC<BlogProps> = ({
     (selectedTag ? paginatedPosts.length : feed.length) / postsPerPage,
   );
 
+  const handleAuthorClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) => {
+    e.stopPropagation(); // Prevent the click event from propagating to the parent container
+  };
+
   return (
     <Layout>
       <Hero />
@@ -127,7 +134,8 @@ const Blog: React.FC<BlogProps> = ({
               return (
                 <li
                   key={post.id}
-                  className="flex flex-row gap-x-4 rounded bg-[#0f3951]/80 p-6"
+                  className="flex cursor-pointer flex-row gap-x-4 rounded bg-[#0f3951]/80 p-6 transition-all duration-300 ease-in-out hover:bg-[#0f3951]/95"
+                  onClick={handlePostClick}
                 >
                   {/* flex max-w-sm flex-shrink-0 flex-col items-baseline justify-between rounded bg-transparent p-4 */}
                   <div>
@@ -138,26 +146,33 @@ const Blog: React.FC<BlogProps> = ({
                     />
                   </div>
                   <div className="flex h-full w-full flex-col justify-between">
-                    <h2
-                      className="mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide text-palText"
-                      onClick={handlePostClick}
-                    >
+                    <h2 className="mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide text-palText">
                       {post.title}
                     </h2>
                     <div className="flex w-full flex-row items-center justify-between">
                       <div className="flex flex-row items-center gap-x-2">
-                        <Avatar className="h-5 w-5">
-                          <AvatarImage
-                            src={avatarImage}
-                            alt={authorName ?? undefined}
-                          />
-                          <AvatarFallback className="">
+                        <Link
+                          className="flex cursor-pointer flex-row items-center gap-x-2"
+                          href={
+                            authorName !== "Unknown author"
+                              ? `/profile/${post.author?.email}`
+                              : ""
+                          }
+                          onClick={handleAuthorClick}
+                        >
+                          <Avatar className="h-5 w-5">
+                            <AvatarImage
+                              src={avatarImage}
+                              alt={authorName ?? undefined}
+                            />
+                            <AvatarFallback className="">
+                              {authorName}
+                            </AvatarFallback>
+                          </Avatar>
+                          <p className="font-noto text-xs text-palText transition-colors duration-200 ease-in-out hover:text-[#c84575]/80">
                             {authorName}
-                          </AvatarFallback>
-                        </Avatar>
-                        <p className="font-noto text-xs text-palText">
-                          {authorName}
-                        </p>
+                          </p>
+                        </Link>
                       </div>
                       <div className="flex w-fit items-end gap-x-4">
                         <Like post={post} colorMode="light" />
