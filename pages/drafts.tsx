@@ -44,7 +44,7 @@ const Drafts: React.FC<DraftsProps> = ({ drafts }) => {
           <h1 className="mb-4 font-display text-2xl font-bold text-stone-300">
             My Drafts
           </h1>
-          <div className="font-noto">Have you signed in?</div>
+          <div className="font-noto text-base">Have you signed in?</div>
         </section>
       </Layout>
     );
@@ -66,7 +66,7 @@ const Drafts: React.FC<DraftsProps> = ({ drafts }) => {
           My Drafts
         </h1>
         <main>
-          <section className="mx-auto flex  flex-col gap-y-4">
+          <section className="mx-auto flex flex-col gap-y-4">
             {drafts.map((post: any) => (
               <div key={post.id} className="post">
                 <Post post={post} />
