@@ -114,84 +114,111 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
   return (
     <Layout>
       <div>
-        <div className=" flex flex-col items-center justify-center gap-x-2">
-          <Avatar className="h-28 w-28 shadow-xl shadow-palText/10">
-            <AvatarImage
-              src={avatarImage}
-              className=""
-              alt={authorName ?? undefined}
-            />
-            <AvatarFallback className="">{authorName}</AvatarFallback>
-          </Avatar>
-          <div className="mt-3 flex flex-col gap-y-1 text-center font-display ">
-            <p className="text-lg font-bold text-palText">{authorName}</p>
-            <p className="font-noto text-sm font-light italic tracking-wide text-palText">
-              {user.email}
-            </p>
+        <div className="mx-auto mb-10 max-w-4xl">
+          <div className=" flex flex-col items-center justify-center gap-x-2">
+            <Avatar className="h-28 w-28 shadow-xl shadow-palText/10">
+              <AvatarImage
+                src={avatarImage}
+                className=""
+                alt={authorName ?? undefined}
+              />
+              <AvatarFallback className="">{authorName}</AvatarFallback>
+            </Avatar>
+            <div className="mt-3 flex flex-col gap-y-1 text-center font-display ">
+              <p className="text-lg font-bold text-palText">{authorName}</p>
+              <p className="font-noto text-sm font-light italic tracking-wide text-palText">
+                {user.email}
+              </p>
+            </div>
           </div>
-        </div>
-        {/* Creating bio */}
-        <div className="pb-8 pt-3">
-          {!user.bio && isUser && (
-            <div className="mb-8 flex justify-center">
-              {!isEditingBio && (
-                <Button
-                  onClick={handleEditClick}
-                  className=""
-                  hidden={isEditingBio}
-                >
-                  Create Bio
-                </Button>
-              )}
-              {isUser && isEditingBio && (
-                <>
-                  <div className="relative flex w-full max-w-4xl flex-col gap-y-3">
-                    <div>
-                      <Textarea
-                        className="w-full"
-                        typeof="text"
-                        onChange={(e) => handleBioChange(e)}
-                      />
+          {/* Creating bio */}
+          <div className="pb-8 pt-3">
+            {!user.bio && isUser && (
+              <div className="mb-8 flex justify-center">
+                {!isEditingBio && (
+                  <Button
+                    onClick={handleEditClick}
+                    className="mt-6 bg-pal4 px-5 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                    hidden={isEditingBio}
+                  >
+                    Create Bio
+                  </Button>
+                )}
+                {isUser && isEditingBio && (
+                  <>
+                    <div className="relative mt-6 flex w-full max-w-4xl flex-col gap-y-3">
+                      <div>
+                        <Textarea
+                          className="w-full"
+                          typeof="text"
+                          onChange={(e) => handleBioChange(e)}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-row justify-center gap-x-4">
+                        <Button
+                          className="bg-pal4 px-6 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                          onClick={handleBioUpdate}
+                        >
+                          Save
+                        </Button>
+                        <Button
+                          variant={"destructive"}
+                          className="ml-4 cursor-pointer font-display text-sm font-bold tracking-wide shadow-lg"
+                          onClick={() => setIsEditingBio(false)}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex flex-row justify-center gap-x-4">
-                      <Button onClick={handleBioUpdate}>Save</Button>
-                      <Button onClick={() => setIsEditingBio(false)}>
+                  </>
+                )}
+              </div>
+            )}
+            {/* Editing Bio */}
+            {user.bio && (
+              <div className="mx-auto flex w-full max-w-6xl flex-col justify-center">
+                {/* Allow user to edit if it is their profile */}
+                {isUser && isEditingBio ? (
+                  <div className="mb-8 mt-6">
+                    <Textarea
+                      typeof="text"
+                      onChange={(e) => handleBioChange(e)}
+                      placeholder={user.bio}
+                    />
+                    <div className="mt-4 flex w-full justify-center">
+                      <Button
+                        className="bg-pal4 px-6 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                        onClick={handleBioUpdate}
+                      >
+                        Save
+                      </Button>
+                      <Button
+                        className="ml-4 cursor-pointer font-display text-sm font-bold tracking-wide shadow-lg"
+                        onClick={() => setIsEditingBio(false)}
+                        variant={"destructive"}
+                      >
                         Cancel
                       </Button>
                     </div>
                   </div>
-                </>
-              )}
-            </div>
-          )}
-          {/* Editing Bio */}
-          {user.bio && (
-            <div className="mx-auto flex w-full max-w-6xl flex-col justify-center">
-              {/* Allow user to edit if it is their profile */}
-              {isUser && isEditingBio ? (
-                <div className="mb-8">
-                  <Textarea
-                    typeof="text"
-                    onChange={(e) => handleBioChange(e)}
-                    placeholder={user.bio}
-                  />
-                  <Button onClick={handleBioUpdate}>Save</Button>
-                  <Button onClick={() => setIsEditingBio(false)}>Cancel</Button>
-                </div>
-              ) : (
-                <>
-                  <div className="mb-4 block rounded  bg-transparent p-3 text-center font-noto text-base text-palText">
-                    {user.bio}
-                  </div>
-                  {isUser && (
-                    <Button className="mx-auto w-fit" onClick={handleEditClick}>
-                      Edit
-                    </Button>
-                  )}
-                </>
-              )}
-            </div>
-          )}
+                ) : (
+                  <>
+                    <div className="mb-3 block rounded  bg-transparent p-3 text-center font-noto text-base text-palText">
+                      {user.bio}
+                    </div>
+                    {isUser && (
+                      <Button
+                        className="mx-auto w-fit bg-pal4 px-6 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                        onClick={handleEditClick}
+                      >
+                        Edit Bio
+                      </Button>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </div>
         <Tabs
           defaultValue="posts"
