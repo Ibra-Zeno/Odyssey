@@ -33,7 +33,7 @@ const Hero: React.FC = () => {
                 <Link href="/api/auth/signin">
                   <Button
                     size="lg"
-                    className="bg-pal2 text-base font-bold text-pal3 shadow-lg hover:bg-pal6"
+                    className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
                   >
                     Get started
                   </Button>
@@ -45,7 +45,7 @@ const Hero: React.FC = () => {
               <Link href="/create">
                 <Button
                   size="lg"
-                  className="bg-pal2 text-base font-bold text-pal3 shadow-lg hover:bg-pal6"
+                  className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
                 >
                   New Post
                 </Button>
@@ -54,7 +54,7 @@ const Hero: React.FC = () => {
                 <Button
                   size="lg"
                   variant={"outline"}
-                  className="bg-transparent text-base font-bold text-pal3 shadow-lg backdrop-blur-sm hover:border-pal5 hover:bg-pal5 hover:text-pal3"
+                  className="bg-transparent font-display text-base font-bold tracking-wide text-pal3 shadow-lg backdrop-blur-sm hover:border-pal5 hover:bg-pal5 hover:text-pal3"
                 >
                   View Drafts
                 </Button>
