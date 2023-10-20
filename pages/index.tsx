@@ -227,7 +227,7 @@ const Blog: React.FC<BlogProps> = ({
           </main>
           {/* Aside for all 12 tags */}
           <aside className="sticky top-12 mt-8 h-fit w-full flex-1">
-            <div className="flex w-full flex-row flex-wrap items-center justify-between">
+            <div className="flex w-full flex-row flex-wrap items-center justify-center">
               {tagsArray.map((tag, i) => (
                 <div
                   key={i}
@@ -235,7 +235,7 @@ const Blog: React.FC<BlogProps> = ({
                 >
                   <Badge
                     variant="outline"
-                    className={`border-gray-400/30 bg-slate-300 px-3 py-0.5 font-sans text-base tracking-wide text-gray-800 shadow-md `}
+                    className="border border-[#988085] bg-[#bea5aa] px-2.5 font-sans text-sm text-stone-900 shadow-md hover:bg-[#b4848f]"
                     onClick={() => setSelectedTag(tag)}
                     style={{ cursor: "pointer" }}
                   >
