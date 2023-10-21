@@ -38,9 +38,12 @@ const Header: React.FC = () => {
 
   return (
     <nav className="relative z-30 mx-auto flex w-full max-w-7xl items-center justify-between space-x-0 rounded-sm bg-transparent p-3 px-4 text-pal3 xl:px-8">
-      <div>
-        <Orbit className="animate-spin-slow h-10 w-10" />
-      </div>
+      <Link href="/" about="Home">
+        <Orbit
+          className="h-14 w-14 animate-spin-slow cursor-pointer text-[#f0ddeb] transition-colors hover:text-[#bea5ab]"
+          strokeWidth={1.5}
+        />
+      </Link>
       <div className="pointer-events-none absolute inset-0 -z-0 mx-auto flex items-center justify-center">
         <SearchBar />
       </div>
