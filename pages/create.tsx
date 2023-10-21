@@ -69,7 +69,9 @@ const Draft: React.FC = () => {
       </div>
       <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
         <form onSubmit={submitData} className="flex w-full max-w-3xl flex-col">
-          <h1 className="mb-4 font-display text-2xl font-bold">New Draft</h1>
+          <h1 className="mb-4 font-display text-2xl font-bold text-[#350013]">
+            New Draft
+          </h1>
           <Input
             autoFocus
             onChange={(e) => setTitle(e.target.value)}
