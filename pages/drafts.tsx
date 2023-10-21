@@ -4,6 +4,8 @@ import { options } from "../pages/api/auth/[...nextauth]";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
 import Image from "next/image";
+import { Button } from "../components/ui/button";
+import Router from "next/router";
 import prisma from "../lib/prisma";
 import { DraftsProps } from "../utils/types";
 import { GetServerSidePropsContext } from "next";
@@ -36,15 +38,19 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 const Drafts: React.FC<DraftsProps> = ({ drafts }) => {
   const { data: session } = useSession();
+  const router = Router;
 
   if (!session) {
     return (
       <Layout>
         <section className="flex h-full w-full flex-col items-center justify-center">
-          <h1 className="mb-4 font-display text-2xl font-bold text-stone-300">
-            My Drafts
-          </h1>
-          <div className="font-noto text-base">Have you signed in?</div>
+          <h3 className="font-noto text-base">Have you signed in?</h3>
+          <Button
+            className="mt-8 bg-pal4 font-display text-base font-bold tracking-wide hover:bg-pal6"
+            onClick={() => router.push("/api/auth/signin")}
+          >
+            Sign in
+          </Button>
         </section>
       </Layout>
     );
@@ -62,9 +68,9 @@ const Drafts: React.FC<DraftsProps> = ({ drafts }) => {
         ></Image>
       </div>
       <div className="isolate mx-auto max-w-7xl">
-        <h1 className="mb-4 font-display text-2xl font-bold text-stone-200">
+        <h3 className="mb-4 font-display text-2xl font-bold text-stone-200">
           My Drafts
-        </h1>
+        </h3>
         <main>
           <section className="mx-auto flex flex-col gap-y-4">
             {drafts.map((post: any) => (

@@ -6,6 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import Layout from "../components/Layout";
 import { tagsArray } from "../utils/tags";
 import { Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Select from "react-select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -25,7 +26,26 @@ const Draft: React.FC = () => {
   const [content, setContent] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const router = useRouter();
+  const { data: session } = useSession();
   const { toast } = useToast();
+
+  if (!session) {
+    return (
+      <Layout>
+        <section className="flex h-full w-full flex-col items-center justify-center">
+          <h3 className="mb-4 mt-24 font-display text-5xl font-bold text-stone-300">
+            You need to be signed in to create a post.
+          </h3>
+          <Button
+            className="mt-8 bg-pal4 font-display text-base font-bold tracking-wide hover:bg-pal6"
+            onClick={() => router.push("/api/auth/signin")}
+          >
+            Sign in
+          </Button>
+        </section>
+      </Layout>
+    );
+  }
 
   // Send a POST request to the API to create a new draft
   const submitData = async (e: React.SyntheticEvent) => {
@@ -73,9 +93,9 @@ const Draft: React.FC = () => {
       </div>
       <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
         <form onSubmit={submitData} className="flex w-full max-w-3xl flex-col">
-          <h1 className="mb-4 font-display text-2xl font-bold text-[#350013]">
+          <h3 className="mb-4 font-display text-2xl font-bold text-[#350013]">
             New Draft
-          </h1>
+          </h3>
           <Input
             autoFocus
             onChange={(e) => setTitle(e.target.value)}
