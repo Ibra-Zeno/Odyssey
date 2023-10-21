@@ -127,14 +127,18 @@ const Header: React.FC = () => {
                   <TooltipTrigger>
                     {/* Add the AlertDialogTrigger around the "Log out" button */}
                     <AlertDialogTrigger asChild>
-                      <button
-                        onClick={() => {} /* Leave this empty for now */}
-                        className="flex rounded-md bg-transparent p-2 text-pal3 duration-300 ease-in-out hover:bg-pal2 hover:text-stone-50 hover:shadow-lg hover:shadow-gray-400"
-                      >
+                      <button className="flex rounded-md bg-transparent p-2 text-pal3 duration-300 ease-in-out hover:bg-pal2 hover:text-stone-50 hover:shadow-lg hover:shadow-gray-400">
                         <LogOut />
                       </button>
                     </AlertDialogTrigger>
                   </TooltipTrigger>
+                  <TooltipContent
+                    side="bottom"
+                    align="center"
+                    className="font-display font-semibold tracking-wide"
+                  >
+                    Log Out
+                  </TooltipContent>
 
                   {/* Add the AlertDialogContent */}
                   <AlertDialogContent className="border-none bg-pal5 text-white shadow-none">
