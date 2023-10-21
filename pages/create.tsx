@@ -42,6 +42,10 @@ const Draft: React.FC = () => {
 
       // Assuming the response indicates success (e.g., a status code 201)
       if (response.status === 201) {
+        toast({
+          title: "Post created 🎉",
+          description: "Your post has been saved to drafts.",
+        });
         await router.push("/drafts");
       } else {
         console.error("Failed to create post:", response.statusText);
@@ -97,12 +101,6 @@ const Draft: React.FC = () => {
             <Button
               type="submit"
               disabled={!content && !title}
-              onClick={() => {
-                toast({
-                  title: "Post created 🎉",
-                  description: "Your post has been saved to drafts.",
-                });
-              }}
               className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
             >
               Save
