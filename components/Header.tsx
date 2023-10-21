@@ -17,6 +17,18 @@ import {
   LogOut,
   Orbit,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import SearchBar from "./Search";
 
 const Header: React.FC = () => {
@@ -111,22 +123,42 @@ const Header: React.FC = () => {
             </TooltipProvider>
             <TooltipProvider>
               <Tooltip delayDuration={100}>
-                <TooltipTrigger>
-                  <button
-                    onClick={() => signOut()}
-                    className="flex rounded-md bg-transparent p-2 text-pal3 duration-300 ease-in-out hover:bg-pal2 hover:text-stone-50 hover:shadow-lg hover:shadow-gray-400"
-                  >
-                    <LogOut />
-                  </button>
-                </TooltipTrigger>
+                <AlertDialog>
+                  <TooltipTrigger>
+                    {/* Add the AlertDialogTrigger around the "Log out" button */}
+                    <AlertDialogTrigger asChild>
+                      <button
+                        onClick={() => {} /* Leave this empty for now */}
+                        className="flex rounded-md bg-transparent p-2 text-pal3 duration-300 ease-in-out hover:bg-pal2 hover:text-stone-50 hover:shadow-lg hover:shadow-gray-400"
+                      >
+                        <LogOut />
+                      </button>
+                    </AlertDialogTrigger>
+                  </TooltipTrigger>
 
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="font-display font-semibold tracking-wide"
-                >
-                  Log out
-                </TooltipContent>
+                  {/* Add the AlertDialogContent */}
+                  <AlertDialogContent className="border-none bg-pal5 text-white shadow-none">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to log out?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="text-stone-200">
+                        This action will log you out of your account.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="border-none bg-pal1 font-display text-stone-800 hover:bg-pal3 hover:text-stone-800">
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => signOut()}
+                        className="bg-red-500 font-display hover:bg-red-600 hover:text-stone-50"
+                      >
+                        Log Out
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </Tooltip>
             </TooltipProvider>
           </>
