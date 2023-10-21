@@ -99,7 +99,7 @@ const Post: React.FC<PostProps> = (props) => {
       method: "DELETE",
     });
     toast({
-      title: "Post deleted successfully 💀",
+      title: "Post deleted 💀",
       description: "Your post has been successfully eradicated.",
     });
     router.push("/");
