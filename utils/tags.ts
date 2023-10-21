@@ -17,7 +17,7 @@ export const tagColourMap: { [tagName: string]: string } = {
   Technology: "bg-sky-300",
   History: "bg-violet-300",
   Travel: "bg-orange-300",
-  Fashion: "bg-stone-300",
+  Fashion: "bg-fuchsia-300",
   Health: "bg-red-300",
   "Tips & Tricks": "bg-blue-300",
   Finance: "bg-green-300",
