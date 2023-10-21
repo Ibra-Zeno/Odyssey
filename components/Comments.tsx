@@ -75,7 +75,7 @@ const Comment: React.FC<{ postId: string }> = ({ postId }) => {
           Please sign in to leave a comment.
         </p>
       )}
-      <div className="mt-8">
+      <div className="mt-4">
         <h3 className="mb-3  pl-0.5 font-display text-base font-bold text-stone-700">
           Comments
         </h3>
@@ -130,7 +130,7 @@ const Comment: React.FC<{ postId: string }> = ({ postId }) => {
             ))
           ) : (
             <p className="font-display text-sm font-medium text-stone-700">
-              Be the first to comment!
+              No comments yet.
             </p>
           )}
         </section>
