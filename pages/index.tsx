@@ -246,7 +246,7 @@ const Blog: React.FC<BlogProps> = ({
                 >
                   <Badge
                     variant="outline"
-                    className="border border-[#988085] bg-[#bea5aa] px-2.5 font-sans text-sm text-stone-900 shadow-md hover:bg-[#b4848f]"
+                    className="border border-[#988085] bg-[#bea5aa] px-2.5 font-sans text-sm text-stone-900 shadow-md hover:border-stone-500/40 hover:bg-pal4 hover:text-stone-50"
                     onClick={() => setSelectedTag(tag)}
                     style={{ cursor: "pointer" }}
                   >
