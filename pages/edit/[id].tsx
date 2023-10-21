@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
 import Layout from "../../components/Layout";
+import { useSession } from "next-auth/react";
 import { tagsArray } from "../../utils/tags";
 import Select from "react-select";
 
@@ -22,9 +23,11 @@ const QuillEditor = dynamic(() => import("../../components/QuillEditor"), {
 const EditPost: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [postAuthor, setPostAuthor] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const router = useRouter();
   const { toast } = useToast();
+  const { data: session } = useSession();
 
   useEffect(() => {
     // Fetch the post to be edited
@@ -34,6 +37,7 @@ const EditPost: React.FC = () => {
       // Use optional chaining to ensure that properties exist
       setTitle(postData?.title || "");
       setContent(postData?.content || "");
+      setPostAuthor(postData?.author?.email || "");
 
       const deduplicatedTags = Array.from(
         new Set(
@@ -48,6 +52,36 @@ const EditPost: React.FC = () => {
 
     fetchData();
   }, [router.query.id]);
+
+  if (!session) {
+    return (
+      <Layout>
+        <section className="flex h-full w-full flex-col items-center justify-center">
+          <h3 className="mb-4 mt-24 font-display text-5xl font-bold text-stone-300">
+            Have you signed in?
+          </h3>
+          <Button
+            className="mt-8 bg-pal4 font-display text-base font-bold tracking-wide hover:bg-pal6"
+            onClick={() => router.push("/api/auth/signin")}
+          >
+            Sign in
+          </Button>
+        </section>
+      </Layout>
+    );
+  }
+
+  if (session?.user?.email !== postAuthor) {
+    return (
+      <Layout>
+        <section className="flex h-full w-full flex-col items-center justify-center">
+          <h3 className="mb-4 mt-24 font-display text-5xl font-bold text-stone-300">
+            You are not the author of this post.
+          </h3>
+        </section>
+      </Layout>
+    );
+  }
 
   const updatePost = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -89,7 +123,7 @@ const EditPost: React.FC = () => {
       </div>
       <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
         <form onSubmit={updatePost} className="flex w-full max-w-3xl flex-col">
-          <h1 className="mb-4 font-display text-2xl font-bold">Edit Post</h1>
+          <h3 className="mb-4 font-display text-2xl font-bold">Edit Post</h3>
           <Input
             autoFocus
             value={title}
