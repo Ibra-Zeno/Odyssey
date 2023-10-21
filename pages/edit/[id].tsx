@@ -64,6 +64,10 @@ const EditPost: React.FC = () => {
       const errorData = await response.json();
       console.error("Update Error:", errorData.error);
     } else {
+      toast({
+        title: "Post Edited 🎉",
+        description: "Your post has been updated.",
+      });
       router.push("/");
     }
   };
@@ -111,11 +115,6 @@ const EditPost: React.FC = () => {
             <Button
               type="submit"
               disabled={!content && !title}
-              onClick={() => {
-                toast({
-                  title: "Post Edited 🎉",
-                });
-              }}
               className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
             >
               Save Changes
