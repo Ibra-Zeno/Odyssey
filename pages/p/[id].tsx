@@ -5,9 +5,21 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import { Badge } from "../../components/ui/badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "../../components/ui/button";
 import Layout from "../../components/Layout";
 import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
 import { MessageCircle } from "lucide-react";
 import { PostProps } from "../../utils/types";
 import Comment from "../../components/Comments";
@@ -58,6 +70,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 const Post: React.FC<PostProps> = (props) => {
   const { data: session, status } = useSession();
+  const { toast } = useToast();
   const router = useRouter();
 
   if (status === "loading") {
@@ -74,12 +87,20 @@ const Post: React.FC<PostProps> = (props) => {
     await fetch(`/api/publish/${id}`, {
       method: "PUT",
     });
+    toast({
+      title: "Post published 🎉",
+      description: "Your post has successfully been published.",
+    });
     await router.push("/");
   };
 
   async function deletePost(id: string): Promise<void> {
     await fetch(`/api/post/${id}`, {
       method: "DELETE",
+    });
+    toast({
+      title: "Post deleted successfully 💀",
+      description: "Your post has been successfully eradicated.",
     });
     router.push("/");
   }
@@ -198,13 +219,34 @@ const Post: React.FC<PostProps> = (props) => {
                 </Button>
               </div>
               <div>
-                <Button
-                  onClick={() => deletePost(props.id)}
-                  className="ml-4 cursor-pointer font-display text-base font-bold tracking-wide shadow-lg"
-                  variant={"destructive"}
-                >
-                  Delete
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className="bg-red-400 px-5 font-display font-medium tracking-wider text-stone-50 hover:bg-red-600 hover:text-stone-200">
+                      Delete
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="border-none bg-pal5 text-white shadow-none">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to delete this post?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="text-stone-200">
+                        This action will delete your post permanently.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="border-none bg-pal1 font-display text-stone-800 hover:bg-pal3 hover:text-stone-800">
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => deletePost(props.id)}
+                        className="bg-red-500 font-display hover:bg-red-600 hover:text-stone-50"
+                      >
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </>
           )}
