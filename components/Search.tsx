@@ -90,10 +90,10 @@ const SearchBar: React.FC = () => {
   }, []);
 
   return (
-    <div className="pointer-events-auto relative">
+    <div className="pointer-events-auto relative max-w-xs md:max-w-none">
       <Input
         {...form.register("query")}
-        className="mx-8 w-screen rounded-md border-2 border-gray-400 border-opacity-25 bg-stone-200 py-2 pl-3 text-stone-700 placeholder-blue-700 focus:ring focus:ring-red-400 sm:mx-0 lg:w-72 xl:w-96"
+        className="mx-auto w-72 rounded-md border-2 border-gray-400 border-opacity-25 bg-stone-200 py-2 pl-3 text-stone-700 placeholder-blue-700 focus:ring focus:ring-red-400 md:w-80 lg:w-96"
         type="text"
         placeholder="Search..."
         autoComplete="off"
