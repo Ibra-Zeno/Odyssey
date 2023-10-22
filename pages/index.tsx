@@ -1,5 +1,6 @@
 import prisma from "../lib/prisma";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
 import Router from "next/router";
@@ -108,157 +109,173 @@ const Blog: React.FC<BlogProps> = ({
   };
 
   return (
-    <Layout>
-      <Hero />
-      <div className="-mt-52 gap-x-6">
-        {/* Top Like Posts */}
-        <section className="isolate z-30 mx-auto flex w-full flex-col flex-wrap overflow-y-visible rounded border-4 border-pal2/10 bg-[#697987]/40 p-4 shadow-xl backdrop-blur-lg">
-          <div className="mb-4 flex flex-row items-end justify-center gap-x-2">
-            <Flame
-              className="rounded-full fill-amber-700 p-[2px] text-red-500"
-              strokeWidth={1.8}
-            />
-            <h4 className="font-display text-sm font-semibold text-palText">
-              Hot Posts
-            </h4>
-          </div>
-          <ul className="grid grid-cols-3 gap-x-3 gap-y-2 ">
-            {topLikedPosts.map((post) => {
-              const avatarImage = post?.author?.image || undefined;
-              const handlePostClick = () => {
-                Router.push("/p/[id]", `/p/${post.id}`);
-              };
-              const authorName = post.author
-                ? post.author.name
-                : "Unknown author";
-              return (
-                <li
-                  key={post.id}
-                  className="flex cursor-pointer flex-row gap-x-4 rounded bg-[#0f3951]/80 p-6 transition-all duration-300 ease-in-out hover:bg-[#0f3951]/95"
-                  onClick={handlePostClick}
-                >
-                  <div>
-                    <MapPin
-                      opacity={0.6}
-                      size={42}
-                      className="text-pal rounded text-zinc-600/75"
-                    />
-                  </div>
-                  <div className="flex h-full w-full flex-col justify-between">
-                    <h2 className="mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide text-palText">
-                      {post.title}
-                    </h2>
-                    <div className="flex w-full flex-row items-center justify-between">
-                      <div className="flex flex-row items-center gap-x-2">
-                        <Link
-                          className="flex cursor-pointer flex-row items-center gap-x-2"
-                          href={
-                            authorName !== "Unknown author"
-                              ? `/profile/${post.author?.email}`
-                              : ""
-                          }
-                          onClick={handleAuthorClick}
-                        >
-                          <Avatar className="h-5 w-5">
-                            <AvatarImage
-                              src={avatarImage}
-                              alt={authorName ?? undefined}
-                            />
-                            <AvatarFallback className="">
+    <>
+      <Layout>
+        <Hero />
+        <div className="-mt-52 gap-x-6">
+          {/* Top Like Posts */}
+          <section className="isolate z-30 mx-auto flex w-full flex-col flex-wrap overflow-y-visible rounded border-4 border-pal2/10 bg-[#697987]/40 p-4 shadow-xl backdrop-blur-lg">
+            <div className="mb-4 flex flex-row items-end justify-center gap-x-2">
+              <Flame
+                className="rounded-full fill-amber-700 p-[2px] text-red-500"
+                strokeWidth={1.8}
+              />
+              <h4 className="font-display text-sm font-semibold text-palText">
+                Hot Posts
+              </h4>
+            </div>
+            <ul className="grid grid-cols-3 gap-x-3 gap-y-2 ">
+              {topLikedPosts.map((post) => {
+                const avatarImage = post?.author?.image || undefined;
+                const handlePostClick = () => {
+                  Router.push("/p/[id]", `/p/${post.id}`);
+                };
+                const authorName = post.author
+                  ? post.author.name
+                  : "Unknown author";
+                return (
+                  <li
+                    key={post.id}
+                    className="flex cursor-pointer flex-row gap-x-4 rounded bg-[#0f3951]/80 p-6 transition-all duration-300 ease-in-out hover:bg-[#0f3951]/95"
+                    onClick={handlePostClick}
+                  >
+                    <div>
+                      <MapPin
+                        opacity={0.6}
+                        size={42}
+                        className="text-pal rounded text-zinc-600/75"
+                      />
+                    </div>
+                    <div className="flex h-full w-full flex-col justify-between">
+                      <h2 className="mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide text-palText">
+                        {post.title}
+                      </h2>
+                      <div className="flex w-full flex-row items-center justify-between">
+                        <div className="flex flex-row items-center gap-x-2">
+                          <Link
+                            className="flex cursor-pointer flex-row items-center gap-x-2"
+                            href={
+                              authorName !== "Unknown author"
+                                ? `/profile/${post.author?.email}`
+                                : ""
+                            }
+                            onClick={handleAuthorClick}
+                          >
+                            <Avatar className="h-5 w-5">
+                              <AvatarImage
+                                src={avatarImage}
+                                alt={authorName ?? undefined}
+                              />
+                              <AvatarFallback className="">
+                                {authorName}
+                              </AvatarFallback>
+                            </Avatar>
+                            <p className="font-noto text-xs text-palText transition-colors duration-200 ease-in-out hover:text-[#c84575]/80">
                               {authorName}
-                            </AvatarFallback>
-                          </Avatar>
-                          <p className="font-noto text-xs text-palText transition-colors duration-200 ease-in-out hover:text-[#c84575]/80">
-                            {authorName}
-                          </p>
-                        </Link>
-                      </div>
-                      <div className="flex w-fit items-end gap-x-4">
-                        <Like post={post} colorMode="light" />
-                        <div className="flex flex-row items-center text-sm">
-                          <MessageCircle
-                            size={16}
-                            className="fill-none text-palText"
-                          />
-                          <span className="ml-1 text-palText">
-                            {post.commentCount}
-                          </span>
+                            </p>
+                          </Link>
+                        </div>
+                        <div className="flex w-fit items-end gap-x-4">
+                          <Like post={post} colorMode="light" />
+                          <div className="flex flex-row items-center text-sm">
+                            <MessageCircle
+                              size={16}
+                              className="fill-none text-palText"
+                            />
+                            <span className="ml-1 text-palText">
+                              {post.commentCount}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+          <div className="flex flex-row">
+            <main className="mt-16 flex-[3]">
+              {/* Pagination (need to test!) */}
+              <div className="mr-4 flex flex-col gap-y-4">
+                {paginatedPosts.map((post) => (
+                  <div key={post.id}>
+                    <div className="rounded bg-transparent text-white ">
+                      <Post post={post} />
+                    </div>
+                    <Separator className="mx-auto h-[2px] w-[98%] rounded-full bg-pal2/30" />
                   </div>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-        <div className="flex flex-row">
-          <main className="mt-16 flex-[3]">
-            {/* Pagination (need to test!) */}
-            <div className="mr-4 flex flex-col gap-y-4">
-              {paginatedPosts.map((post) => (
-                <div key={post.id}>
-                  <div className="rounded bg-transparent text-white ">
-                    <Post post={post} />
-                  </div>
-                  <Separator className="mx-auto h-[2px] w-[98%] rounded-full bg-pal2/30" />
-                </div>
-              ))}
-            </div>
-            {/* Pagination controls */}
-            {totalPages > 1 && (
-              <div className="mt-8 flex justify-center">
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <button
-                    key={i}
-                    className={`${
-                      i + 1 === currentPage
-                        ? "bg-pal4 text-white"
-                        : "bg-pal1 text-gray-600 transition-all duration-300 ease-in-out hover:bg-pal4 hover:text-white"
-                    } mx-1 rounded px-4 py-2`}
-                    onClick={() => setCurrentPage(i + 1)}
-                  >
-                    {i + 1}
-                  </button>
                 ))}
               </div>
-            )}
-          </main>
-          {/* Aside for all 12 tags */}
-          <aside className="sticky top-12 mt-16 h-fit w-full flex-1">
-            {/* Show the "Show Feed" button */}
-            {selectedTag && (
-              <div className="mb-4 flex justify-center">
-                <Badge
-                  className="cursor-pointer bg-pal4 px-4 py-1 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
-                  onClick={handleShowFeed}
-                >
-                  Show All
-                </Badge>
-              </div>
-            )}
-            {/* All 12 tags */}
-            <div className="flex w-full flex-row flex-wrap items-center justify-center">
-              {tagsArray.map((tag, i) => (
-                <div
-                  key={i}
-                  className="h-fit w-fit bg-transparent px-1 py-0.5 "
-                >
+              {/* Pagination controls */}
+              {totalPages > 1 && (
+                <div className="mt-8 flex justify-center">
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                      key={i}
+                      className={`${
+                        i + 1 === currentPage
+                          ? "bg-pal4 text-white"
+                          : "bg-pal1 text-gray-600 transition-all duration-300 ease-in-out hover:bg-pal4 hover:text-white"
+                      } mx-1 rounded px-4 py-2`}
+                      onClick={() => setCurrentPage(i + 1)}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </main>
+            {/* Aside for all 12 tags */}
+            <aside className="sticky top-12 mt-16 h-fit w-full flex-1">
+              {/* Show the "Show Feed" button */}
+              {selectedTag && (
+                <div className="mb-4 flex justify-center">
                   <Badge
-                    variant="outline"
-                    className="border border-[#988085] bg-[#bea5aa] px-2.5 font-sans text-sm text-stone-900 shadow-md hover:border-stone-500/40 hover:bg-pal4 hover:text-stone-50"
-                    onClick={() => setSelectedTag(tag)}
-                    style={{ cursor: "pointer" }}
+                    className="cursor-pointer bg-pal4 px-4 py-1 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                    onClick={handleShowFeed}
                   >
-                    {tag}
+                    Show All
                   </Badge>
                 </div>
-              ))}
-            </div>
-          </aside>
+              )}
+              {/* All 12 tags */}
+              <div className="flex w-full flex-row flex-wrap items-center justify-center">
+                {tagsArray.map((tag, i) => (
+                  <div
+                    key={i}
+                    className="h-fit w-fit bg-transparent px-1 py-0.5 "
+                  >
+                    <Badge
+                      variant="outline"
+                      className="border border-[#988085] bg-[#bea5aa] px-2.5 font-sans text-sm text-stone-900 shadow-md hover:border-stone-500/40 hover:bg-pal4 hover:text-stone-50"
+                      onClick={() => setSelectedTag(tag)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {tag}
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            </aside>
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+      <Head>
+        <title>Odyssey</title>
+        <meta
+          name="description"
+          content="Odyssey Oracles, a community of global storytellers where you can share your experiences, emotions, and imagination while exploring the world through the eyes of others."
+        />
+        <meta
+          name="keywords"
+          content="Oracles of the Odyssey, Global, Blog, Create, Upload, Like, Comment, Publish, Community Uploads, Community, Uploads, Oracles, Odyssey, Whispers, Earth"
+        />
+        <meta name="author" content="Ibrahim Kalam" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+    </>
   );
 };
 
