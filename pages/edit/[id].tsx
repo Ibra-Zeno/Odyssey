@@ -3,6 +3,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
+import Head from "next/head";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -111,59 +112,67 @@ const EditPost: React.FC = () => {
     label: tag,
   }));
   return (
-    <Layout>
-      <div className="pointer-events-none absolute inset-0 -z-0">
-        <Image
-          src="/images/Moon.svg"
-          alt="Hero"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
-        ></Image>
-      </div>
-      <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
-        <form onSubmit={updatePost} className="flex w-full max-w-3xl flex-col">
-          <h3 className="mb-4 font-display text-2xl font-bold">Edit Post</h3>
-          <Input
-            autoFocus
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
-            type="text"
-            className="mb-4 rounded-md border bg-stone-50 p-2"
-          />
-          <Select
-            options={options}
-            className="rounded-md bg-stone-50 font-noto text-sm"
-            placeholder="Select tags"
-            isMulti
-            onChange={(selected) =>
-              setSelectedTags(selected.map((tag) => tag.value))
-            }
-            value={selectedTags.map((obj) => ({ value: obj, label: obj }))}
-          />
-          <div className="mt-6 rounded-lg bg-stone-50 font-noto">
-            <QuillEditor content={content} setContent={setContent} />
-          </div>
-          <div className="mx-auto mt-6 flex flex-row gap-x-6">
-            <Button
-              type="submit"
-              disabled={!content && !title}
-              className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
-            >
-              Save Changes
-            </Button>
-            <Button
-              className="ml-4 cursor-pointer font-display text-base font-bold tracking-wide shadow-lg"
-              variant={"destructive"}
-              onClick={() => router.push(`/p/${router.query.id}`)}
-            >
-              Cancel
-            </Button>
-          </div>
-        </form>
-      </div>
-    </Layout>
+    <>
+      <Layout>
+        <div className="pointer-events-none absolute inset-0 -z-0">
+          <Image
+            src="/images/Moon.svg"
+            alt="Hero"
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+          ></Image>
+        </div>
+        <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
+          <form
+            onSubmit={updatePost}
+            className="flex w-full max-w-3xl flex-col"
+          >
+            <h3 className="mb-4 font-display text-2xl font-bold">Edit Post</h3>
+            <Input
+              autoFocus
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Title"
+              type="text"
+              className="mb-4 rounded-md border bg-stone-50 p-2"
+            />
+            <Select
+              options={options}
+              className="rounded-md bg-stone-50 font-noto text-sm"
+              placeholder="Select tags"
+              isMulti
+              onChange={(selected) =>
+                setSelectedTags(selected.map((tag) => tag.value))
+              }
+              value={selectedTags.map((obj) => ({ value: obj, label: obj }))}
+            />
+            <div className="mt-6 rounded-lg bg-stone-50 font-noto">
+              <QuillEditor content={content} setContent={setContent} />
+            </div>
+            <div className="mx-auto mt-6 flex flex-row gap-x-6">
+              <Button
+                type="submit"
+                disabled={!content && !title}
+                className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+              >
+                Save Changes
+              </Button>
+              <Button
+                className="ml-4 cursor-pointer font-display text-base font-bold tracking-wide shadow-lg"
+                variant={"destructive"}
+                onClick={() => router.push(`/p/${router.query.id}`)}
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </div>
+      </Layout>
+      <Head>
+        <title>Edit Post</title>
+      </Head>
+    </>
   );
 };
 

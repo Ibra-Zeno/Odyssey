@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useToast } from "@/components/ui/use-toast";
+import Head from "next/head";
 import Layout from "../components/Layout";
 import { tagsArray } from "../utils/tags";
 import { Loader2 } from "lucide-react";
@@ -81,61 +82,69 @@ const Draft: React.FC = () => {
   }));
 
   return (
-    <Layout>
-      <div className="pointer-events-none absolute inset-0 -z-0">
-        <Image
-          src="/images/Moon.svg"
-          alt="Hero"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
-        ></Image>
-      </div>
-      <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
-        <form onSubmit={submitData} className="flex w-full max-w-3xl flex-col">
-          <h3 className="mb-4 font-display text-2xl font-bold text-[#350013]">
-            New Draft
-          </h3>
-          <Input
-            autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
-            type="text"
-            value={title}
-            className="mb-4 rounded-md border bg-stone-50 p-2"
-          />
-          <Select
-            options={options}
-            isMulti
-            placeholder="Select tags"
-            className="rounded-md bg-stone-50 font-noto text-sm"
-            onChange={(selected) =>
-              setSelectedTags(selected.map((tag) => tag.value))
-            }
-            value={selectedTags.map((tag) => ({ value: tag, label: tag }))}
-          />
-          <div className="mt-6 rounded-lg bg-stone-50 font-noto">
-            <QuillEditor content={content} setContent={setContent} />
-          </div>
-          <div className="mx-auto mt-6 flex flex-row gap-x-6">
-            <Button
-              type="submit"
-              disabled={!content && !title}
-              className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
-            >
-              Save
-            </Button>
-            <Button
-              className="ml-4 cursor-pointer font-display text-base font-bold tracking-wide shadow-lg"
-              variant={"destructive"}
-              onClick={() => router.push("/")}
-            >
-              Cancel
-            </Button>
-          </div>
-        </form>
-      </div>
-    </Layout>
+    <>
+      <Layout>
+        <div className="pointer-events-none absolute inset-0 -z-0">
+          <Image
+            src="/images/Moon.svg"
+            alt="Hero"
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+          ></Image>
+        </div>
+        <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
+          <form
+            onSubmit={submitData}
+            className="flex w-full max-w-3xl flex-col"
+          >
+            <h3 className="mb-4 font-display text-2xl font-bold text-[#350013]">
+              New Draft
+            </h3>
+            <Input
+              autoFocus
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Title"
+              type="text"
+              value={title}
+              className="mb-4 rounded-md border bg-stone-50 p-2"
+            />
+            <Select
+              options={options}
+              isMulti
+              placeholder="Select tags"
+              className="rounded-md bg-stone-50 font-noto text-sm"
+              onChange={(selected) =>
+                setSelectedTags(selected.map((tag) => tag.value))
+              }
+              value={selectedTags.map((tag) => ({ value: tag, label: tag }))}
+            />
+            <div className="mt-6 rounded-lg bg-stone-50 font-noto">
+              <QuillEditor content={content} setContent={setContent} />
+            </div>
+            <div className="mx-auto mt-6 flex flex-row gap-x-6">
+              <Button
+                type="submit"
+                disabled={!content && !title}
+                className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+              >
+                Save
+              </Button>
+              <Button
+                className="ml-4 cursor-pointer font-display text-base font-bold tracking-wide shadow-lg"
+                variant={"destructive"}
+                onClick={() => router.push("/")}
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </div>
+      </Layout>
+      <Head>
+        <title>New Draft</title>
+      </Head>
+    </>
   );
 };
 
