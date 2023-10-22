@@ -34,7 +34,8 @@ const Like: React.FC<{ post: PostProps; colorMode: "light" | "dark" }> = ({
     setLikesCount(post.Like.length);
   }, [postId, post.Like, session]);
 
-  const toggleLike = async () => {
+  const toggleLike = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     if (!session || isUpdating) return;
 
     // Optimistically update the UI
@@ -81,7 +82,7 @@ const Like: React.FC<{ post: PostProps; colorMode: "light" | "dark" }> = ({
   return (
     <div className="flex items-center text-inherit">
       <button
-        onClick={toggleLike}
+        onClick={(e) => toggleLike(e)}
         disabled={isUpdating}
         className={`mr-1.5 ${
           session ? "cursor-pointer" : "cursor-not-allowed"
