@@ -65,18 +65,18 @@ const Comment: React.FC<{ postId: string }> = ({ postId }) => {
           />
           <Button
             onClick={submitComment}
-            className="mt-2.5 h-fit rounded bg-pal5 px-4 py-2.5 font-display text-xs font-medium tracking-wide text-stone-100 shadow-md hover:bg-pal5/80"
+            className="mt-2.5 h-fit w-full rounded bg-pal5 px-4 py-2.5 font-display text-xs font-medium tracking-wide text-stone-100 shadow-md hover:bg-pal5/80 sm:w-fit"
           >
             Submit
           </Button>
         </div>
       ) : (
-        <p className="font-display text-sm font-medium text-stone-700">
+        <p className="text-center font-display text-xs font-medium text-stone-700 md:text-left md:text-sm">
           Please sign in to leave a comment.
         </p>
       )}
       <div className="mt-4">
-        <h3 className="mb-3  pl-0.5 font-display text-base font-bold text-stone-700">
+        <h3 className="mb-3  pl-0.5 font-display text-sm font-bold text-stone-700 md:text-base">
           Comments
         </h3>
         <section className="flex flex-col gap-y-1">
@@ -87,7 +87,7 @@ const Comment: React.FC<{ postId: string }> = ({ postId }) => {
                 className="relative mb-2 flex flex-row items-start justify-between gap-x-4 rounded border-b-2 border-stone-600/5 p-2 shadow-sm"
               >
                 <div className="flex flex-col">
-                  <p className=" text-justify font-noto text-sm text-stone-700">
+                  <p className=" text-justify font-noto text-xs text-stone-700 md:text-sm">
                     {comment.content}
                   </p>
                   {comment.author && (
@@ -108,7 +108,7 @@ const Comment: React.FC<{ postId: string }> = ({ postId }) => {
                           {comment.author.name}
                         </AvatarFallback>
                       </Avatar>
-                      <p className="font-noto text-xs italic text-stone-600 transition-colors duration-200 ease-in-out hover:text-stone-800">
+                      <p className="font-noto text-[10px] italic text-stone-600 transition-colors duration-200 ease-in-out hover:text-stone-800 sm:text-xs">
                         {comment.author.name}
                       </p>
                     </Link>
@@ -129,7 +129,7 @@ const Comment: React.FC<{ postId: string }> = ({ postId }) => {
               </div>
             ))
           ) : (
-            <p className="font-display text-sm font-medium text-stone-700">
+            <p className="font-display text-xs font-medium text-stone-700 md:text-sm">
               No comments yet.
             </p>
           )}
