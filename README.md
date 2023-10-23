@@ -6,34 +6,45 @@ Odyssey
 
 Odyssey is a blogging project where users can create, upload and publish blog posts, created using NextJs and styled with TailwindCSS. Users can also view posts from others using the platform. For users to create, like and comment on posts they must be logged in to Odyssey which is using NextAuth.
 
+![image](https://github.com/Ibra-Zeno/Odyssey/assets/95757707/b7bfdb3e-c04c-4275-9238-970d0c96ef92)
+
+
 ## Table of Contents
 
 - [Usage](#usage)
-- [Features](#features)
 - [Languages and Frameworks](#Languages)
+- [Features](#features)
 
 ## Usage
 
 Explain how to use your blog project, and mention any Next.js-specific concepts, Tailwind CSS classes, or NextAuth.js authentication flows users should be aware of.
+
+## Languages & Frameworks
+
+- [NextJs]([url](https://nextjs.org/))
+- [TailwindCSS]([url](https://tailwindcss.com/))
+- [TypeScript]([url](https://www.typescriptlang.org/))
+- [NextAuth]([url](https://next-auth.js.org/))
+- [Prisma]([url](https://www.prisma.io/))
+- [PostgreSQL]([url](https://www.postgresql.org/))
+- [QuillJs]([url](https://quilljs.com/))
+- [Shadcn]([url](https://ui.shadcn.com/))
+- [Lucide Icons]([url](https://lucide.dev/icons/))
 
 ## Features
 
 List the main features of your blog project, emphasizing any features related to Next.js, Tailwind CSS, and NextAuth.js.
 
 - User registration and authentication using NextAuth.js
-- Create, edit, and delete blog posts with Next.js
+- Create, edit, delete and publish blog posts with Next.js
+- Mobile optimised
+- Like blog posts
+- User posts and likes available on profile pages
+- Upload and edit user biographies
+- Save unpublished posts in drafts
+- Sanitisation of content
+- Data stored and retrieved using PostgerSQL and Prisma
+- Search through published posts
 - Styling with Tailwind CSS
 - Comment on blog posts
 - Search and filter posts by category or author
-
-## Contributing
-
-Explain how others can contribute to your project, keeping in mind the technologies you've used. Mention any specific conventions or practices for Next.js, Tailwind CSS, and NextAuth.js.
-
-## License
-
-Specify the license under which your project is distributed. Include a link to the full license text if applicable.
-
----
-
-Customize this template according to your specific project details and requirements. Make sure to include any relevant Next.js, Tailwind CSS, and NextAuth.js documentation or links to external resources that can help users understand these technologies better.
