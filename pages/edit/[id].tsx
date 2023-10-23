@@ -15,7 +15,7 @@ import Select from "react-select";
 const QuillEditor = dynamic(() => import("../../components/QuillEditor"), {
   ssr: false, // This will load the component on the client side only
   loading: () => (
-    <div className="flex justify-center border-t-2 border-slate-300  border-opacity-5 px-2 py-4 ">
+    <div className="flex min-h-[10rem] justify-center border-t-2 border-slate-300  border-opacity-5 px-2 py-4 ">
       <Loader2 className="animate-spin text-stone-700" />
     </div>
   ),
@@ -28,7 +28,7 @@ const EditPost: React.FC = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const router = useRouter();
   const { toast } = useToast();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     // Fetch the post to be edited
@@ -54,6 +54,15 @@ const EditPost: React.FC = () => {
     fetchData();
   }, [router.query.id]);
 
+  if (status === "loading") {
+    // Display a loading indicator while session data is being fetched
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="animate-spin text-stone-700" />
+      </div>
+    );
+  }
+
   if (!session) {
     return (
       <Layout>
@@ -72,7 +81,7 @@ const EditPost: React.FC = () => {
     );
   }
 
-  if (session?.user?.email !== postAuthor) {
+  if (status === "authenticated" && session?.user?.email !== postAuthor) {
     return (
       <Layout>
         <section className="flex h-full w-full flex-col items-center justify-center">
@@ -123,14 +132,15 @@ const EditPost: React.FC = () => {
             objectPosition="center"
           ></Image>
         </div>
-        <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
+        <div className="isolate mx-auto my-6 flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-3 py-6 shadow-lg md:my-0 md:p-12">
           <form
             onSubmit={updatePost}
             className="flex w-full max-w-3xl flex-col"
           >
-            <h3 className="mb-4 font-display text-2xl font-bold">Edit Post</h3>
+            <h3 className="mb-2 font-display text-lg font-bold text-[#350013] md:mb-4 md:text-2xl">
+              Edit Post
+            </h3>
             <Input
-              autoFocus
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Title"
@@ -154,12 +164,13 @@ const EditPost: React.FC = () => {
               <Button
                 type="submit"
                 disabled={!content && !title}
-                className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                className="bg-pal4 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
               >
                 Save Changes
               </Button>
               <Button
-                className="ml-4 cursor-pointer font-display text-base font-bold tracking-wide shadow-lg"
+                type="button"
+                className="ml-4 cursor-pointer font-display text-sm font-bold tracking-wide shadow-lg"
                 variant={"destructive"}
                 onClick={() => router.push(`/p/${router.query.id}`)}
               >
