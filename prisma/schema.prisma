@@ -96,7 +96,7 @@ model Tag {
   id     String    @id @default(cuid())
   name   String    @unique
   posts  PostTag[]
-  Post   Post?     @relation(fields: [postId], references: [id])
+  Post   Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId String?
 }
 
