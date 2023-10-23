@@ -93,12 +93,12 @@ const Draft: React.FC = () => {
             objectPosition="center"
           ></Image>
         </div>
-        <div className="isolate mx-auto flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-12 shadow-lg">
+        <div className="isolate mx-auto my-6 flex min-h-[80vh] max-w-6xl items-center justify-center rounded bg-pal3/90 p-3 py-6 shadow-lg md:my-0 md:p-12">
           <form
             onSubmit={submitData}
             className="flex w-full max-w-3xl flex-col"
           >
-            <h3 className="mb-4 font-display text-2xl font-bold text-[#350013]">
+            <h3 className="mb-2 font-display text-lg font-bold text-[#350013] md:mb-4 md:text-2xl">
               New Draft
             </h3>
             <Input
@@ -126,12 +126,12 @@ const Draft: React.FC = () => {
               <Button
                 type="submit"
                 disabled={!content && !title}
-                className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                className="bg-pal4 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
               >
                 Save
               </Button>
               <Button
-                className="ml-4 cursor-pointer font-display text-base font-bold tracking-wide shadow-lg"
+                className="ml-4 cursor-pointer font-display text-sm font-bold tracking-wide shadow-lg"
                 variant={"destructive"}
                 onClick={() => router.push("/")}
               >
