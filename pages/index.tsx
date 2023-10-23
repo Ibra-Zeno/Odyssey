@@ -102,6 +102,12 @@ const Blog: React.FC<BlogProps> = ({
     (selectedTag ? paginatedPosts.length : feed.length) / postsPerPage,
   );
 
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    // Scroll to the top of the page
+    window.scrollTo(0, 800);
+  };
+
   const handleAuthorClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
@@ -218,7 +224,7 @@ const Blog: React.FC<BlogProps> = ({
                           ? "bg-pal4 text-white"
                           : "bg-pal1 text-gray-600 transition-all duration-300 ease-in-out hover:bg-pal4 hover:text-white"
                       } mx-1 rounded px-4 py-2 font-noto font-bold`}
-                      onClick={() => setCurrentPage(i + 1)}
+                      onClick={() => handlePageChange(i + 1)}
                     >
                       {i + 1}
                     </button>
