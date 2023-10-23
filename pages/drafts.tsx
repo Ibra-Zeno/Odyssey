@@ -69,8 +69,8 @@ const Drafts: React.FC<DraftsProps> = ({ drafts }) => {
             objectPosition="center"
           ></Image>
         </div>
-        <div className="isolate mx-auto max-w-7xl">
-          <h3 className="mb-4 font-display text-2xl font-bold text-stone-200">
+        <div className="isolate mx-auto max-w-6xl">
+          <h3 className="my-4 font-display text-2xl font-bold text-stone-200">
             My Drafts
           </h3>
           <main>
