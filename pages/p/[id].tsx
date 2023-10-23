@@ -122,18 +122,18 @@ const Post: React.FC<PostProps> = (props) => {
             objectPosition="center"
           ></Image>
         </div>
-        <div className="isolate mx-auto max-w-4xl rounded-md bg-pal3 p-8">
-          <h2 className="mb-2 text-left font-display text-3xl font-bold text-slate-800">
+        <div className="isolate mx-auto my-3 max-w-4xl rounded-md bg-pal3 p-3 sm:my-0 md:p-8">
+          <h2 className="mb-2 mt-2 text-center font-display text-xl font-bold text-slate-800 sm:text-2xl md:text-left md:text-3xl">
             {title}
           </h2>
           {props.tags.length !== 0 ? (
-            <div className="mb-6 mt-4 flex flex-row justify-between">
+            <div className="mb-6 mt-4 flex flex-col items-center justify-center gap-y-3 md:flex-row md:justify-between">
               {props.tags && (
-                <div className="flex items-center space-x-1">
+                <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-1">
                   {props.tags.map((postTag) => (
                     <Badge
                       key={postTag.tag.id}
-                      className={`font-display font-semibold tracking-wider text-sky-950 shadow-sm ${
+                      className={`font-display text-[10px] font-semibold tracking-wider text-sky-950 shadow-sm sm:text-[11px] ${
                         tagColourMap[postTag.tag.name] || "bg-gray-300"
                       } text-xs`}
                     >
@@ -150,14 +150,14 @@ const Post: React.FC<PostProps> = (props) => {
                     : ""
                 }
               >
-                <Avatar className="h-8 w-8">
+                <Avatar className="h-6 w-6 md:h-8 md:w-8">
                   <AvatarImage
                     src={avatarImage}
                     alt={authorName ?? undefined}
                   />
                   <AvatarFallback className="">{authorName}</AvatarFallback>
                 </Avatar>
-                <p className="font-noto text-xs italic text-slate-800">
+                <p className="font-noto text-[10px] italic text-slate-800 transition-colors duration-150 ease-in-out hover:text-[#c84575] sm:text-xs">
                   {authorName}
                 </p>
               </Link>
@@ -183,7 +183,7 @@ const Post: React.FC<PostProps> = (props) => {
           )}
 
           {props.published ? (
-            <div className="mb-4 flex flex-row items-center gap-x-4 border-y border-y-pal5 py-3">
+            <div className="mb-4 flex flex-row items-center justify-center gap-x-4 border-y border-y-pal5 py-3 md:justify-start">
               <Like post={props} colorMode="dark" />
               <div className="flex flex-row items-end text-sm">
                 <MessageCircle size={16} className="fill-none text-stone-800" />
@@ -197,18 +197,18 @@ const Post: React.FC<PostProps> = (props) => {
           )}
 
           <div
-            className="blog-content font-noto text-[20px] leading-[32px] text-slate-800"
+            className="blog-content font-noto text-slate-800 "
             dangerouslySetInnerHTML={{ __html: props.content ?? "" }}
           />
-          <div className="flex justify-between gap-x-4">
+          <div className="mt-8 flex flex-col justify-between gap-x-4 gap-y-2 sm:flex-row">
             {userHasValidSession && postBelongsToUser && (
               <>
-                <div className="flex gap-x-4">
+                <div className="flex flex-col gap-x-4 gap-y-2 sm:flex-row">
                   {!props.published ? (
                     <Button
                       variant={"default"}
                       onClick={() => publishPost(props.id)}
-                      className="bg-pal4 px-6 font-display text-base font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                      className="bg-pal4 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
                     >
                       Publish
                     </Button>
@@ -217,7 +217,7 @@ const Post: React.FC<PostProps> = (props) => {
                   )}
                   <Button
                     onClick={() => editPost(props.id)}
-                    className="bg-pal5 px-5 font-display font-medium tracking-wider text-stone-50 hover:bg-pal5/90 hover:text-stone-200"
+                    className="bg-pal5 font-display text-sm font-medium tracking-wider text-stone-50 hover:bg-pal5/90 hover:text-stone-200"
                     variant={"ghost"}
                   >
                     Edit
@@ -226,7 +226,7 @@ const Post: React.FC<PostProps> = (props) => {
                 <div>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button className="bg-red-400 px-5 font-display font-medium tracking-wider text-stone-50 hover:bg-red-600 hover:text-stone-200">
+                      <Button className="tex-sm w-full bg-red-400 font-display font-medium tracking-wider text-stone-50 hover:bg-red-600 hover:text-stone-200 sm:w-fit">
                         Delete
                       </Button>
                     </AlertDialogTrigger>
