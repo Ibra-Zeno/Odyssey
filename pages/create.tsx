@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 const QuillEditor = dynamic(() => import("../components/QuillEditor"), {
   ssr: false, // This will load the component on the client side only
   loading: () => (
-    <div className="flex justify-center border-t-2 border-slate-300  border-opacity-5 px-2 py-4 ">
+    <div className="flex min-h-[10rem] justify-center border-t-2 border-slate-300  border-opacity-5 px-2 py-4 ">
       <Loader2 className="animate-spin text-stone-700" />
     </div>
   ), // Optional loading component
