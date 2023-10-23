@@ -14,7 +14,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { tagsArray, tagColourMap } from "../utils/tags";
 import { PostProps, BlogProps } from "../utils/types";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 
 const postsPerPage = 10;
 
