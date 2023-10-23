@@ -35,6 +35,7 @@ List the main features of your blog project, emphasizing any features related to
 ## Languages & Frameworks
 
 - [NextJs]([url](https://nextjs.org/))
+- [React](https://react.dev/)
 - [TailwindCSS]([url](https://tailwindcss.com/))
 - [TypeScript]([url](https://www.typescriptlang.org/))
 - [NextAuth]([url](https://next-auth.js.org/))
