@@ -23,111 +23,36 @@
   background-image: url("/images/bamboo.svg");
 }
 
-.blog-content h1 {
-  font-family: "Raleway", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 2.5rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-.blog-content h2 {
-  font-family: "Raleway", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 2rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-.blog-content h3 {
-  font-family: "Raleway", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 1.5rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-.blog-content h4 {
-  font-family: "Raleway", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 1.25rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-.blog-content h5 {
-  font-family: "Raleway", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 1rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-.blog-content h6 {
-  font-family: "Raleway", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 0.875rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-.blog-content p {
+/* Common styles for all screen sizes */
+.blog-content,
+.blog-content-post {
   font-family: "Source Serif 4", serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 1.125rem;
   line-height: 1.75;
   letter-spacing: -0.02em;
-  margin-bottom: 1.8rem;
-}
-.blog-content ul {
-  font-family: "Source Serif 4", serif;
-  font-weight: 400;
-  list-style-type: disc;
-  font-style: normal;
-  font-size: 1.125rem;
-  line-height: 1.75;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.5rem;
-  margin-left: 1rem;
-}
-.blog-content ol {
-  font-family: "Source Serif 4", serif;
-  font-weight: 400;
-  list-style-type: decimal;
-  font-style: normal;
-  font-size: 1.125rem;
-  line-height: 1.75;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.5rem;
-  margin-left: 1rem;
-}
-.blog-content li {
-  font-family: "Source Serif 4", serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 1.125rem;
-  line-height: 1.75;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.9rem;
 }
 
 .blog-content a {
   color: #6d9886;
   text-decoration: underline;
 }
-.blog-content blockquote {
+
+.blog-content blockquote,
+.blog-content-post blockquote {
   font-family: "Source Serif 4", serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 1.125rem;
   line-height: 1.75;
+  word-spacing: 0.4em;
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
   margin-left: 1rem;
   border-left: 0.25rem solid #6d9886;
   padding-left: 1rem;
 }
+
 .blog-content pre,
 .blog-content-post pre {
   background-color: #3e372b;
@@ -144,18 +69,159 @@
   text-decoration: none;
 }
 
-.blog-content-post h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  display: block;
-  font-weight: 600;
-  font-size: 15px;
-  margin-bottom: 0.1rem;
+.blog-content ul,
+.blog-content-post ul {
+  list-style-type: disc;
+  margin-left: 1rem;
 }
-.blog-content-post p {
-  display: block;
-  margin-bottom: 0.1rem;
+.blog-content ol,
+.blog-content-post ol {
+  list-style-type: decimal;
+  margin-left: 1rem;
+}
+
+/* Larger screens */
+@media (min-width: 768px) {
+  .blog-content h1,
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4,
+  .blog-content h5,
+  .blog-content h6,
+  .blog-content-post h1,
+  .blog-content-post h2,
+  .blog-content-post h3,
+  .blog-content-post h4,
+  .blog-content-post h5,
+  .blog-content-post h6 {
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.3rem;
+    font-style: normal;
+  }
+
+  .blog-content h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content h2 {
+    font-size: 2rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content h3 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content h4 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content h5 {
+    font-size: 1rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content h6 {
+    font-size: 0.875rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content p {
+    font-size: 1.125rem;
+    margin-bottom: 1.8rem;
+  }
+  .blog-content ul,
+  .blog-content ol,
+  .blog-content li {
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+    margin-left: 1rem;
+  }
+  .blog-content blockquote,
+  .blog-content-post blockquote {
+    font-size: 13px;
+  }
+}
+
+/* Smaller screens */
+@media (max-width: 767px) {
+  .blog-content h1,
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4,
+  .blog-content h5,
+  .blog-content h6,
+  .blog-content-post h1,
+  .blog-content-post h2,
+  .blog-content-post h3,
+  .blog-content-post h4,
+  .blog-content-post h5,
+  .blog-content-post h6 {
+    margin-bottom: 0.1rem;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .blog-content h1 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content h2 {
+    font-size: 1.4rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content h3 {
+    font-size: 1.3rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content h4 {
+    font-size: 1.2rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content h5 {
+    font-size: 1rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content h6 {
+    font-size: 0.875rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .blog-content p,
+  .blog-content ul,
+  .blog-content ol,
+  .blog-content li,
+  .blog-content-post p {
+    font-size: 0.82rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-content pre,
+  .blog-content-post pre {
+    background-color: #3e372b;
+    color: white;
+    border-radius: 3px;
+    font-family: "Source Code Pro", monospace;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 12px;
+  }
+
+  .blog-content-post blockquote {
+    font-size: 12px;
+  }
+  .blog-content blockquote {
+    font-size: 13px;
+  }
 }
