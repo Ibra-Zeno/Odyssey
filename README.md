@@ -11,25 +11,8 @@ Odyssey is a blogging project where users can create, upload and publish blog po
 
 ## Table of Contents
 
-- [Usage](#usage)
-- [Languages and Frameworks](#Languages)
 - [Features](#features)
-
-## Usage
-
-Explain how to use your blog project, and mention any Next.js-specific concepts, Tailwind CSS classes, or NextAuth.js authentication flows users should be aware of.
-
-## Languages & Frameworks
-
-- [NextJs]([url](https://nextjs.org/))
-- [TailwindCSS]([url](https://tailwindcss.com/))
-- [TypeScript]([url](https://www.typescriptlang.org/))
-- [NextAuth]([url](https://next-auth.js.org/))
-- [Prisma]([url](https://www.prisma.io/))
-- [PostgreSQL]([url](https://www.postgresql.org/))
-- [QuillJs]([url](https://quilljs.com/))
-- [Shadcn]([url](https://ui.shadcn.com/))
-- [Lucide Icons]([url](https://lucide.dev/icons/))
+- [Languages and Frameworks](#Languages--Frameworks)
 
 ## Features
 
@@ -48,3 +31,17 @@ List the main features of your blog project, emphasizing any features related to
 - Styling with Tailwind CSS
 - Comment on blog posts
 - Search and filter posts by category or author
+
+## Languages & Frameworks
+
+- [NextJs]([url](https://nextjs.org/))
+- [TailwindCSS]([url](https://tailwindcss.com/))
+- [TypeScript]([url](https://www.typescriptlang.org/))
+- [NextAuth]([url](https://next-auth.js.org/))
+- [Prisma]([url](https://www.prisma.io/))
+- [PostgreSQL]([url](https://www.postgresql.org/))
+- [QuillJs]([url](https://quilljs.com/))
+- [Shadcn]([url](https://ui.shadcn.com/))
+- [Lucide Icons]([url](https://lucide.dev/icons/))
+
+
