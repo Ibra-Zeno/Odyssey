@@ -59,7 +59,7 @@ const Header: React.FC = () => {
   return (
     <>
       {/*Larger Navbar */}
-      <nav className="relative z-30 mx-auto hidden w-full max-w-7xl items-center justify-between space-x-0 rounded-sm bg-transparent p-3 px-4 text-pal3 md:flex xl:px-8">
+      <nav className="relative z-30 mx-auto hidden w-full max-w-7xl items-center justify-between space-x-0 rounded-sm bg-transparent p-3 px-4 text-pal3 lg:flex xl:px-8">
         <Link href="/" about="Home">
           <Orbit
             className="h-14 w-14 animate-spin-slow cursor-pointer text-[#f0ddeb] transition-colors hover:text-[#bea5ab]"
@@ -232,7 +232,7 @@ const Header: React.FC = () => {
       </nav>
       {/* Mobile Nav */}
       <nav>
-        <div className="md:hidden">
+        <div className="lg:hidden">
           {/* Circular button */}
           <div className="aboslute left-0 top-0 flex justify-center pt-2">
             <SearchBar />
