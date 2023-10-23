@@ -72,20 +72,7 @@ export const sanitizeContent = (dirtyHtml: string): string => {
       // Remove unwanted newlines for specific patterns
       text = text.replace(/(\s*)=&gt;(\s*)/g, " => "); // Normalize spaces around =>
       text = text.replace(/(\s*)&(\s*)/g, " & "); // Normalize spaces around &
-      text = text.replace(/(\s*)\|(\s*)/g, " | "); // Normalize spaces around |
-      text = text.replace(/(\s*)!(\s*)/g, " ! "); // Normalize spaces around !
-      text = text.replace(/(\s*)=(\s*)/g, " = "); // Normalize spaces around =
-      text = text.replace(/(\s*)\+(\s*)/g, " + "); // Normalize spaces around +
-      text = text.replace(/(\s*)-(\s*)/g, " - "); // Normalize spaces around -
-      text = text.replace(/(\s*)\*(\s*)/g, " * "); // Normalize spaces around *
-      text = text.replace(/(\s*)\/(\s*)/g, " / "); // Normalize spaces around /
-      text = text.replace(/(\s*)\((\s*)/g, " ( "); // Normalize spaces around (
-      text = text.replace(/(\s*)\)(\s*)/g, " ) "); // Normalize spaces around )
-      text = text.replace(/(\s*)\[(\s*)/g, " [ "); // Normalize spaces around [
-      text = text.replace(/(\s*)\](\s*)/g, " ] "); // Normalize spaces around ]
-      text = text.replace(/(\s*)\{(\s*)/g, " { "); // Normalize spaces around {
-      text = text.replace(/(\s*)\}(\s*)/g, " } "); // Normalize spaces around }
-      text = text.replace(/(\s*)\:(\s*)/g, " : "); // Normalize spaces around :
+      text = text.replace(/(\s*)&gt;(\s*)/g, ">");
 
       if (tagName === "pre" && text.charAt(0) !== "\n") {
         // Ensure there's a newline at the start for code blocks
