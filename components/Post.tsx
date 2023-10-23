@@ -22,22 +22,22 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
 
   return (
     <div
-      className="cursor-pointer rounded bg-pal3/90 p-8 transition-all duration-300 ease-in-out  hover:bg-[#ffe3f0] hover:shadow-2xl"
+      className="relative cursor-pointer rounded bg-pal3/90 px-4 py-6 transition-all duration-300 ease-in-out hover:bg-[#ffe3f0]  hover:shadow-2xl md:p-8"
       onClick={handlePostClick}
     >
       {post.tags.length !== 0 ? (
         <div>
-          <h2 className="mb-4 cursor-pointer font-display text-xl font-bold text-slate-800">
+          <h2 className="mb-2 cursor-pointer font-display text-base font-bold text-slate-800 sm:mb-4 sm:text-xl">
             {post.title}
           </h2>
-          <div className="mb-3 flex flex-row justify-between">
+          <div className="mb-1.5 flex flex-row  justify-between sm:mb-3">
             {post.tags.length > 0 && (
-              <div className="flex items-center space-x-1">
+              <div className="flex flex-wrap items-center gap-x-1 gap-y-1">
                 {post.tags.map((postTag) => (
                   <Badge
                     variant="outline"
                     key={postTag.tag.id}
-                    className={`font-display text-[11px] font-semibold tracking-wider text-sky-950 shadow-sm ${
+                    className={`font-display text-[10px] font-semibold tracking-wider text-sky-950 shadow-sm sm:text-[11px] ${
                       tagColourMap[postTag.tag.name] || "bg-gray-300"
                     } border-gray-300/30`}
                   >
@@ -46,7 +46,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
                 ))}
               </div>
             )}
-            <div className="flex flex-row gap-x-2">
+            <div className="hidden flex-row gap-x-2 sm:flex">
               <Link
                 className="flex cursor-pointer flex-row items-center gap-x-2"
                 href={
@@ -63,7 +63,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
                   />
                   <AvatarFallback className="">{authorName}</AvatarFallback>
                 </Avatar>
-                <p className="font-noto text-xs italic text-slate-800 transition-colors duration-200 ease-in-out hover:text-[#c84575]">
+                <p className="font-noto text-[10px] italic text-slate-800 transition-colors duration-150 ease-in-out hover:text-[#c84575] sm:text-xs">
                   {authorName}
                 </p>
               </Link>
@@ -72,10 +72,36 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </div>
       ) : (
         <div className="flex flex-row items-center justify-between">
-          <h2 className="cursor-pointer font-display text-xl font-bold text-slate-800">
+          <h2 className="mb-2 cursor-pointer font-display text-base font-bold text-slate-800 sm:mb-4 sm:text-xl">
             {post.title}
           </h2>
           <div className="flex min-w-fit flex-row gap-x-2">
+            <Link
+              className="hidden cursor-pointer flex-row items-center gap-x-2 sm:flex"
+              href={
+                authorName !== "Unknown author"
+                  ? `/profile/${post.author?.email}`
+                  : ""
+              }
+            >
+              <Avatar className="h-5 w-5">
+                <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
+                <AvatarFallback className="">{authorName}</AvatarFallback>
+              </Avatar>
+              <p className="font-noto text-[10px] italic text-slate-800 transition-colors duration-150 ease-in-out hover:text-[#c84575] sm:text-xs">
+                {authorName}
+              </p>
+            </Link>
+          </div>
+        </div>
+      )}
+      <div
+        className=" blog-content-post mt-4 h-fit max-h-10 cursor-pointer overflow-y-hidden font-noto text-xs text-slate-800 sm:block sm:max-h-16 sm:text-sm"
+        dangerouslySetInnerHTML={{ __html: post.content || "" }}
+      />
+      {post.published && (
+        <div className="mt-4 flex flex-row items-center justify-between sm:justify-start">
+          <div className="flex min-w-fit flex-row gap-x-2 sm:hidden">
             <Link
               className="flex cursor-pointer flex-row items-center gap-x-2"
               href={
@@ -88,20 +114,12 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
                 <AvatarImage src={avatarImage} alt={authorName ?? undefined} />
                 <AvatarFallback className="">{authorName}</AvatarFallback>
               </Avatar>
-              <p className="font-noto text-xs italic text-slate-800 transition-colors duration-150 ease-in-out hover:text-white">
+              <p className="font-noto text-[10px] italic text-slate-800 transition-colors duration-150 ease-in-out hover:text-[#c84575] sm:text-xs">
                 {authorName}
               </p>
             </Link>
           </div>
-        </div>
-      )}
-      <div
-        className=" blog-content-post mt-4 max-h-16 cursor-pointer overflow-y-hidden font-noto text-sm text-slate-800"
-        dangerouslySetInnerHTML={{ __html: post.content || "" }}
-      />
-      {post.published && (
-        <>
-          <div className="mt-4 flex items-end gap-x-4">
+          <div className=" flex items-end gap-x-4">
             <Like post={post} colorMode="dark" />
             <div className="flex flex-row items-center text-sm">
               <MessageCircle size={16} className="fill-none text-stone-800" />
@@ -110,7 +128,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
               </span>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
