@@ -61,6 +61,7 @@ export const sanitizeContent = (dirtyHtml: string): string => {
       },
     },
     textFilter: function (text, tagName) {
+      text = text.replace(/&gt;/g, ">").replace(/&amp;/g, "&");
       if (tagName === "pre" && text.charAt(0) !== "\n") {
         // Ensure there's a newline at the start for code blocks
         return "\n" + text;
