@@ -206,7 +206,7 @@ const Blog: React.FC<BlogProps> = ({
               <div className="flex flex-col gap-y-4 lg:mr-4">
                 {paginatedPosts.map((post) => (
                   <div key={post.id}>
-                    <div className="rounded bg-transparent text-white ">
+                    <div className="rounded bg-transparent text-stone-50 ">
                       <Post post={post} />
                     </div>
                     <Separator className="mx-auto h-[2px] w-[98%] rounded-full bg-pal2/30" />
