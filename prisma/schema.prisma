@@ -78,7 +78,7 @@ model Comment {
   id        String   @id @default(cuid())
   content   String
   postId    String
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?
@@ -87,7 +87,7 @@ model Comment {
 model Like {
   id       String  @id @default(cuid())
   postId   String
-  post     Post    @relation(fields: [postId], references: [id])
+  post     Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
   authorId String?
   author   User?   @relation(fields: [authorId], references: [id])
 }
