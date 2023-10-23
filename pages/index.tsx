@@ -112,10 +112,10 @@ const Blog: React.FC<BlogProps> = ({
     <>
       <Layout>
         <Hero />
-        <div className="-mt-52 gap-x-6">
+        <div>
           {/* Top Like Posts */}
-          <section className="isolate z-30 mx-auto flex w-full flex-col flex-wrap overflow-y-visible rounded border-4 border-pal2/10 bg-[#697987]/40 p-4 shadow-xl backdrop-blur-lg">
-            <div className="mb-4 flex flex-row items-end justify-center gap-x-2">
+          <section className="isolate z-30 mx-auto flex w-full flex-col flex-wrap overflow-y-visible rounded border-4 border-pal2/10 bg-[#697987]/40 p-1 shadow-xl backdrop-blur-lg md:p-4">
+            <div className="mb-4 flex flex-row items-end justify-center gap-x-2 pt-2">
               <Flame
                 className="rounded-full fill-amber-700 p-[2px] text-red-500"
                 strokeWidth={1.8}
@@ -124,7 +124,7 @@ const Blog: React.FC<BlogProps> = ({
                 Hot Posts
               </h4>
             </div>
-            <ul className="grid grid-cols-3 gap-x-3 gap-y-2 ">
+            <ul className="flex flex-col gap-y-2 sm:grid sm:grid-cols-2 sm:gap-x-3 lg:grid lg:grid-cols-3 ">
               {topLikedPosts.map((post) => {
                 const avatarImage = post?.author?.image || undefined;
                 const handlePostClick = () => {
@@ -136,18 +136,18 @@ const Blog: React.FC<BlogProps> = ({
                 return (
                   <li
                     key={post.id}
-                    className="flex cursor-pointer flex-row gap-x-4 rounded bg-[#0f3951]/80 p-6 transition-all duration-300 ease-in-out hover:bg-[#0f3951]/95"
+                    className="mx-2 flex cursor-pointer flex-row gap-x-2 rounded bg-[#0f3951]/80 p-4 transition-all duration-300 ease-in-out hover:bg-[#0f3951]/95 sm:gap-x-4 md:p-6 lg:mx-0"
                     onClick={handlePostClick}
                   >
                     <div>
                       <MapPin
                         opacity={0.6}
-                        size={42}
-                        className="text-pal rounded text-zinc-600/75"
+                        // size={42}
+                        className="text-pal h-6 w-6 rounded  text-zinc-600/75 md:h-10 md:w-10"
                       />
                     </div>
                     <div className="flex h-full w-full flex-col justify-between">
-                      <h2 className="mb-5 w-fit cursor-pointer font-display text-sm font-semibold tracking-wide text-palText">
+                      <h2 className="mb-5 w-fit cursor-pointer font-display text-xs font-bold tracking-wide text-palText sm:text-sm sm:font-semibold">
                         {post.title}
                       </h2>
                       <div className="flex w-full flex-row items-center justify-between">
@@ -170,7 +170,7 @@ const Blog: React.FC<BlogProps> = ({
                                 {authorName}
                               </AvatarFallback>
                             </Avatar>
-                            <p className="font-noto text-xs text-palText transition-colors duration-200 ease-in-out hover:text-[#c84575]/80">
+                            <p className="font-noto text-[10px] text-palText transition-colors duration-200 ease-in-out hover:text-[#c84575]/80">
                               {authorName}
                             </p>
                           </Link>
@@ -194,10 +194,10 @@ const Blog: React.FC<BlogProps> = ({
               })}
             </ul>
           </section>
-          <div className="flex flex-row">
-            <main className="mt-16 flex-[3]">
+          <div className="relative flex h-full flex-col lg:flex-row">
+            <main className="order-2 mt-8 w-full flex-[3] lg:order-none lg:mt-16">
               {/* Pagination (need to test!) */}
-              <div className="mr-4 flex flex-col gap-y-4">
+              <div className="flex flex-col gap-y-4 lg:mr-4">
                 {paginatedPosts.map((post) => (
                   <div key={post.id}>
                     <div className="rounded bg-transparent text-white ">
@@ -217,7 +217,7 @@ const Blog: React.FC<BlogProps> = ({
                         i + 1 === currentPage
                           ? "bg-pal4 text-white"
                           : "bg-pal1 text-gray-600 transition-all duration-300 ease-in-out hover:bg-pal4 hover:text-white"
-                      } mx-1 rounded px-4 py-2`}
+                      } mx-1 rounded px-4 py-2 font-noto font-bold`}
                       onClick={() => setCurrentPage(i + 1)}
                     >
                       {i + 1}
@@ -227,35 +227,37 @@ const Blog: React.FC<BlogProps> = ({
               )}
             </main>
             {/* Aside for all 12 tags */}
-            <aside className="sticky top-12 mt-16 h-fit w-full flex-1">
+            <aside className="mt-8 flex flex-1 flex-col md:mt-16">
               {/* Show the "Show Feed" button */}
-              {selectedTag && (
-                <div className="mb-4 flex justify-center">
-                  <Badge
-                    className="cursor-pointer bg-pal4 px-4 py-1 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
-                    onClick={handleShowFeed}
-                  >
-                    Show All
-                  </Badge>
-                </div>
-              )}
-              {/* All 12 tags */}
-              <div className="flex w-full flex-row flex-wrap items-center justify-center">
-                {tagsArray.map((tag, i) => (
-                  <div
-                    key={i}
-                    className="h-fit w-fit bg-transparent px-1 py-0.5 "
-                  >
+              <div className="sticky top-12 flex h-fit flex-col border-y-2 border-pal6/50 py-2.5">
+                {selectedTag && (
+                  <div className="relative mb-4 flex justify-center">
                     <Badge
-                      variant="outline"
-                      className="border border-[#988085] bg-[#bea5aa] px-2.5 font-sans text-sm text-stone-900 shadow-md hover:border-stone-500/40 hover:bg-pal4 hover:text-stone-50"
-                      onClick={() => setSelectedTag(tag)}
-                      style={{ cursor: "pointer" }}
+                      className="cursor-pointer bg-pal4 px-4 py-1 font-display text-xs font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6 focus:bg-pal6 md:text-sm"
+                      onClick={handleShowFeed}
                     >
-                      {tag}
+                      Show All
                     </Badge>
                   </div>
-                ))}
+                )}
+                {/* All 12 tags */}
+                <div className="relative flex w-full flex-row flex-wrap items-center justify-center">
+                  {tagsArray.map((tag, i) => (
+                    <div
+                      key={i}
+                      className="h-fit w-fit bg-transparent px-1 py-0.5 "
+                    >
+                      <Badge
+                        variant="outline"
+                        className="border border-[#988085] bg-[#bea5aa] font-sans text-xs text-stone-900 shadow-md hover:border-stone-500/40 hover:bg-pal4 hover:text-stone-50 focus:border-stone-500/40 focus:bg-pal4 focus:text-stone-50 md:px-2.5 md:text-sm"
+                        onClick={() => setSelectedTag(tag)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {tag}
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
               </div>
             </aside>
           </div>
