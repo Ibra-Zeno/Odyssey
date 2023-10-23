@@ -116,9 +116,9 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
     <>
       <Layout>
         <div>
-          <div className="mx-auto mb-10 max-w-4xl">
+          <div className="mx-auto my-6 mb-10 max-w-4xl sm:mt-0">
             <div className=" flex flex-col items-center justify-center gap-x-2">
-              <Avatar className="h-28 w-28 shadow-xl shadow-palText/10">
+              <Avatar className="h-20 w-20 shadow-xl shadow-palText/10 md:h-28 md:w-28">
                 <AvatarImage
                   src={avatarImage}
                   className=""
@@ -128,19 +128,19 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
               </Avatar>
               <div className="mt-3 flex flex-col gap-y-1 text-center font-display ">
                 <p className="text-lg font-bold text-palText">{authorName}</p>
-                <p className="font-noto text-sm font-light italic tracking-wide text-palText">
+                <p className="font-noto text-xs font-light italic tracking-wide text-palText sm:text-sm">
                   {user.email}
                 </p>
               </div>
             </div>
             {/* Creating bio */}
-            <div className="pb-8 pt-3">
+            <div className="pt-3">
               {!user.bio && isUser && (
                 <div className="mb-8 flex justify-center">
                   {!isEditingBio && (
                     <Button
                       onClick={handleEditClick}
-                      className="mt-6 bg-pal4 px-5 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                      className="mt-6 w-full bg-pal4 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6 sm:w-fit"
                       hidden={isEditingBio}
                     >
                       Create Bio
@@ -158,7 +158,7 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
                         </div>
                         <div className="mt-3 flex flex-row justify-center gap-x-4">
                           <Button
-                            className="bg-pal4 px-6 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                            className="bg-pal4 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
                             onClick={handleBioUpdate}
                           >
                             Save
@@ -205,12 +205,12 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
                     </div>
                   ) : (
                     <>
-                      <div className="mb-3 block rounded  bg-transparent p-3 text-center font-noto text-base text-palText">
+                      <div className="mb-3 block rounded  bg-transparent p-3 text-center font-noto text-sm text-palText md:text-base">
                         {user.bio}
                       </div>
                       {isUser && (
                         <Button
-                          className="mx-auto w-fit bg-pal4 px-6 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6"
+                          className="mx-auto w-full bg-pal4 font-display text-sm font-bold tracking-wide text-stone-50 shadow-lg hover:bg-pal6 sm:w-fit"
                           onClick={handleEditClick}
                         >
                           Edit Bio
@@ -224,7 +224,7 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
           </div>
           <Tabs
             defaultValue="posts"
-            className="mx-auto max-w-6xl rounded bg-[#474554] pb-4"
+            className="mx-auto max-w-6xl rounded bg-[#17242e] pb-4 shadow-2xl"
           >
             <TabsList className="grid w-full grid-cols-2 bg-[#4e5a6e] bg-transparent font-display text-lg font-semibold text-stone-50">
               <TabsTrigger
@@ -238,14 +238,14 @@ const UserProfile: React.FC<{ user: UserProps }> = ({ user }) => {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="posts">
-              <div className="my-12 flex flex-col gap-y-8 px-8">
+              <div className="my-8 flex flex-col gap-y-4 px-3 md:gap-y-6 md:px-8">
                 {user.posts.map((post) => (
                   <Post key={post.id} post={post} />
                 ))}
               </div>
             </TabsContent>
             <TabsContent value="likes">
-              <div className="my-12 flex flex-col gap-y-8 px-8">
+              <div className="my-8 flex flex-col gap-y-5 px-3 md:gap-y-6 md:px-8">
                 {user.Like &&
                   user.Like.map((like) => (
                     <Post key={like.id} post={like.post} />
