@@ -17,8 +17,8 @@ model Post {
   published Boolean   @default(false)
   author    User?     @relation(fields: [authorId], references: [id])
   authorId  String?
-  Comment   Comment[]
-  Like      Like[]
+  Comment Comment[] 
+  Like    Like[]    
   tags      PostTag[] // Many-to-many relationship with tags
   Tag       Tag[]
 }
@@ -103,13 +103,10 @@ model Tag {
 model PostTag {
   postId String
   tagId  String
-  post   Post   @relation(fields: [postId], references: [id])
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
   tag    Tag    @relation(fields: [tagId], references: [id])
 
   @@id([postId, tagId])
 }
 
-generator dbml {
-  provider = "prisma-dbml-generator"
-}
 
