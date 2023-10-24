@@ -14,7 +14,7 @@ const QuillEditor: FC<QuillEditorProps> = ({ content, setContent }) => {
       [{ color: [] }, { background: [] }], // Color functionality
       ["link"],
       [{ list: "ordered" }, { list: "bullet" }],
-      ["blockquote", "code-block"],
+      ["blockquote" /* "code-block" */],
       [{ script: "sub" }, { script: "super" }],
     ],
   };
@@ -25,21 +25,21 @@ const QuillEditor: FC<QuillEditorProps> = ({ content, setContent }) => {
     const editorContentHeadings = document.querySelectorAll(
       ".ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6",
     ) as NodeListOf<HTMLElement>;
-    const editorCodeBlock = document.querySelector(".ql-syntax") as HTMLElement;
+    /* const editorCodeBlock = document.querySelector(".ql-syntax") as HTMLElement;
     if (editorContent) {
       editorContent.style.minHeight = "300px"; // Adjust this value as needed
       editorContent.style.fontFamily = "Source Serif 4";
       editorContent.style.fontSize = "14px";
-    }
+    } */
     if (editorContentHeadings) {
       editorContentHeadings.forEach((heading) => {
         heading.style.fontFamily = "Raleway";
       });
     }
-    if (editorCodeBlock) {
+    /* if (editorCodeBlock) {
       editorCodeBlock.style.fontFamily = "Source Code Pro";
       editorCodeBlock.style.fontSize = "12px";
-    }
+    } */
   }, []);
 
   return (

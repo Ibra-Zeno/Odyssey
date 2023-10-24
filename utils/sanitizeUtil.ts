@@ -21,7 +21,7 @@ export const sanitizeContent = (dirtyHtml: string): string => {
       "h6",
       "u",
       "blockquote",
-      "pre",
+      // "pre",
       "code",
       "em",
       "strong",
@@ -29,7 +29,7 @@ export const sanitizeContent = (dirtyHtml: string): string => {
     ],
     allowedAttributes: {
       a: ["href", "target", "rel"],
-      pre: ["class"],
+      // pre: ["class"],
       span: ["style"],
     },
     allowedStyles: {
@@ -40,7 +40,7 @@ export const sanitizeContent = (dirtyHtml: string): string => {
     },
     transformTags: {
       // Allow certain class values for <pre> elements
-      pre: function (tagName, attribs) {
+      /*       pre: function (tagName, attribs) {
         return {
           tagName: "pre",
           attribs: {
@@ -48,7 +48,7 @@ export const sanitizeContent = (dirtyHtml: string): string => {
             spellcheck: "false",
           },
         };
-      },
+      }, */
       a: function (tagName, attribs) {
         return {
           tagName: "a",
