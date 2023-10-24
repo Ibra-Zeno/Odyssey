@@ -64,16 +64,23 @@ export const sanitizeContent = (dirtyHtml: string): string => {
       // Decode special HTML entities
       text = text.replace(/&gt;/g, ">").replace(/&amp;/g, "&");
 
-      // Remove unwanted newlines and spaces for specific patterns
-      text = text.replace(/=\s*\>\s*\{/g, " => {"); // This cleans up around => {
+      // 1. Remove spaces around "-"
+      text = text.replace(/\s-\s/g, "-");
+
+      // 2. Clean up code blocks
+      text = text.replace(/=\s*\>\s*\{/g, " => {"); // Adjust for => {
       text = text.replace(/&\s*/g, " & ");
+      text = text.replace(/\{\s+/g, "{").replace(/\s+\}/g, "}"); // Clean inside curly braces
+      text = text.replace(/\(\s+/g, "(").replace(/\s+\)/g, ")"); // Clean inside parentheses
+      text = text.replace(/;\s+/g, "; "); // Clean after semicolons
+      text = text.replace(/\s*\}\s*;/g, "};"); // Clean before closing curly braces followed by semicolon
 
-      // Clean up excessive spaces and newlines inside curly braces
-      text = text.replace(/\{\s+/g, "{ ").replace(/\s+\}/g, " }");
+      // 3. Clean spaces around ":"
+      text = text.replace(/\s:\s/g, ": ");
 
-      // Clean up excessive spaces and newlines around parentheses and semicolons
-      text = text.replace(/\(\s+/g, "(").replace(/\s+\)/g, ")");
-      text = text.replace(/;\s+/g, "; ");
+      // 4. Additional clean-up
+      text = text.replace(/\s{2,}/g, " "); // Remove extra spaces
+      text = text.replace(/\s*\n\s*/g, "\n"); // Remove spaces around newlines
 
       // Ensure there's a newline at the start for code blocks
       if (tagName === "pre" && text.charAt(0) !== "\n") {
