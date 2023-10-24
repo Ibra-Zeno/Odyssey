@@ -61,23 +61,25 @@ export const sanitizeContent = (dirtyHtml: string): string => {
       },
     },
     textFilter: function (text, tagName) {
-      text = text
-        .replace(/&gt;/g, ">")
-        .replace(/&amp;/g, "&")
-        .replace(/&lt;/g, "<")
-        .replace(/&nbsp;/g, " ")
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'");
+      // Decode special HTML entities
+      text = text.replace(/&gt;/g, ">").replace(/&amp;/g, "&");
 
-      // Remove unwanted newlines for specific patterns
-      text = text.replace(/(\s*)=&gt;(\s*)/g, " => "); // Normalize spaces around =>
-      text = text.replace(/(\s*)&(\s*)/g, " & "); // Normalize spaces around &
-      text = text.replace(/(\s*)&gt;(\s*)/g, ">");
+      // Remove unwanted newlines and spaces for specific patterns
+      text = text.replace(/=\s*\>\s*\{/g, " => {"); // This cleans up around => {
+      text = text.replace(/&\s*/g, " & ");
 
+      // Clean up excessive spaces and newlines inside curly braces
+      text = text.replace(/\{\s+/g, "{ ").replace(/\s+\}/g, " }");
+
+      // Clean up excessive spaces and newlines around parentheses and semicolons
+      text = text.replace(/\(\s+/g, "(").replace(/\s+\)/g, ")");
+      text = text.replace(/;\s+/g, "; ");
+
+      // Ensure there's a newline at the start for code blocks
       if (tagName === "pre" && text.charAt(0) !== "\n") {
-        // Ensure there's a newline at the start for code blocks
-        return "\n" + text;
+        text = "\n" + text;
       }
+
       return text;
     },
   });
