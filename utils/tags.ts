@@ -9,7 +9,7 @@ export const tagsArray: string[] = [
   "Sports" /* Nature -> Sports */,
   "Education",
   "Music" /* Entertainment -> Music */,
-  "Coding",
+  "Food" /* Coding -> Food */,
   "Books" /* Food -> Books */,
 ];
 
@@ -24,6 +24,6 @@ export const tagColourMap: { [tagName: string]: string } = {
   Sports: "bg-lime-300",
   Education: "bg-pink-300",
   Music: "bg-indigo-300",
-  Coding: "bg-amber-300",
+  Food: "bg-amber-300",
   Books: "bg-rose-300",
 };
